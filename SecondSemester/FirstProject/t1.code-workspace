@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"avl_tree.h": "c",
+			"stdlib.h": "c",
+			"pm_operations.h": "c",
+			"geo_operations.h": "c",
+			"__locale": "c",
+			"string_editing.h": "c",
+			"property_lease_qry.h": "c",
+			"property.h": "c",
+			"block.h": "c",
+			"stdio.h": "c",
+			"mm_avl_tree.h": "c",
+			"mm_avl_tree_wlist.h": "c",
+			"del_m_dm_mud_qry.h": "c",
+			"hash_table.h": "c",
+			"rectangle.h": "c",
+			"qry_del_m_dm_mud.h": "c",
+			"qry_auxiliary_functions.h": "c"
+		}
+	}
+}

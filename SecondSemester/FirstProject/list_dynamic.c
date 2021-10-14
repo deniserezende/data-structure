@@ -20,6 +20,7 @@ typedef struct list_structure{
 	NODE *head;
 	NODE *current;
 	NODE *tail;
+	int size;
 }STRUCTURE;
 
 void set_list_max_size(int size){
@@ -36,6 +37,7 @@ type_list create_list(){
 	new_list->head = object;
 	new_list->current = object;
 	new_list->tail = object;
+	new_list->size = 0;
 
 	return new_list;
 }
@@ -64,6 +66,7 @@ void destroi_list(type_list list){
 		aux = nodes;
 	}
 	free(nodes);
+	free(stru);
 }
 
 void insert_item_at_the_end_of_list(type_list list, type_litems item){	
@@ -77,6 +80,7 @@ void insert_item_at_the_end_of_list(type_list list, type_litems item){
 	new_node->next = NULL;
 
 	stru->tail = old_node->next; 
+	stru->size += 1;
 }
 
 type_litems get_current_item_in_list(type_list list){
@@ -116,6 +120,7 @@ void delete_current_item_in_list(type_list list){
 	// Setting current to the previous item
 	stru->current = del->previous;
 	free(del);
+	stru->size -= 1;
 }
 
 void delete_item_in_list(type_list list, type_litems item, type_lptrf_twoitems compare){
@@ -143,6 +148,7 @@ void delete_item_in_list(type_list list, type_litems item, type_lptrf_twoitems c
 			}
 			free(del);
 			temp = previous;
+			stru->size -= 1;
 		}
 		previous = temp;
 		temp = temp->next;
@@ -233,3 +239,7 @@ void traverse_full_list_with_conditional_action(type_list list, type_lptrf_oneit
 	}while(!done);
 }
 
+int list_current_size(type_list list){
+	STRUCTURE *stru = list;
+	return stru->size;
+}

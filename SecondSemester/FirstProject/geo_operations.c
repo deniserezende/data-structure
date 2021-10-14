@@ -13,6 +13,7 @@
 type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, type_hashtable cityblocks_table){
 FILE *geofile = fopen(filename, "r");
     if(geofile == NULL){
+        printf("GEO NULL\n");
         return NULL;
     }
 
@@ -33,6 +34,10 @@ FILE *geofile = fopen(filename, "r");
     long(*get_rect_key_ptr)(type_rect);
     get_rect_key_ptr = get_key_from_block;
 
+    // Creating a pointer to the function
+    long(*compare_rect_blocks_cep_ptr)(type_rect, type_rect);
+    compare_rect_blocks_cep_ptr = compare_rect_blocks_cep;
+
     while(!feof(geofile)){
         fscanf(geofile, "\n%[^\n]s\n", line);
         
@@ -47,7 +52,7 @@ FILE *geofile = fopen(filename, "r");
                 add_rectangles_stroke_width(block, stroke_width);
                 insert_data_in_rect(block, block_data);
 
-                insert_item_in_hash_table(cityblocks_table, block,  get_key_from_block(block), (void*)get_rect_key_ptr);
+                insert_item_in_hash_table(cityblocks_table, block,  get_key_from_block(block), (void*)get_rect_key_ptr, (void*)compare_rect_blocks_cep_ptr);
                 cityblocks_tree = insert_item_in_mMl_avl_tree(cityblocks_tree, block, (void*)compare_rects_x_ptr);
                 //adicionar uma lista e nao o bloco!
             }

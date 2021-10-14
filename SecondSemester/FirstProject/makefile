@@ -12,9 +12,9 @@ all: $(LINK_TARGET)
 main.o: commandline.h path.h pm_operations.h geo_operations.h qry_operations.h hash_table.h mM_avl_tree_wlist.h output_svg.h SVG.h TXT.h
 commandline.o: commandline.h
 path.o: path.h
-pm_operations.o: hash_table.h person.h property.h
+pm_operations.o: hash_table.h person.h property.h _auxiliary_functions.h
 geo_operations.o: hash_table.h mM_avl_tree_wlist.h rectangle.h block.h _auxiliary_functions.h
-qry_operations.o : qry_operations.h SVG.h TXT.h qry_del_m_dm_mud.h qry_dmpt_catac.h qry_property_lease.h qry_mul_hom.h
+qry_operations.o : qry_operations.h SVG.h TXT.h qry_del_m_dm_mud.h qry_dmpt_catac.h qry_property_lease.h qry_mul_hom.h output_svg.h
 hash_table.o: hash_table.h list.h
 mM_avl_tree_wlist.o: mM_avl_tree_wlist.h list.h
 list_dynamic.o: list.h
@@ -37,12 +37,14 @@ $(LINK_TARGET): $(OBJECTS)
 # $@ expands to the rule's target (LINK_TARGET)
 # $^ expands to the rule's dependencies (OBJECTS)
 # Note that -lm is used because of the dependency on math.h
-	gcc -fstack-protector-all -std=c99 -o $@ $^ -lm
+# gcc -fstack-protector-all -std=c99 -g -o $@ $^ -lm
+	gcc -std=c99 -Wall -o $@ $^ -lm
 
 %.o : %.c
 # $@ for the pattern-matched target
 # $< for the pattern-matched dependency
-	gcc -fstack-protector-all -std=c99 -o $@ -c $<
+# gcc -fstack-protector-all -std=c99 -g -o $@ -c $<
+	gcc -std=c17 -Wall -g -o $@ -c $<
 
 # Cleaning build environment
 clean:

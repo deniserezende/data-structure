@@ -35,6 +35,10 @@ int full_list(type_list list);
 
 // Pre-condition: The list has to have been created
 // Post-condition: None
+int list_current_size(type_list list);
+
+// Pre-condition: The list has to have been created
+// Post-condition: None
 // Returns a boolean: True if the list is empty and false otherwise.
 int empty_list(type_list list);
 

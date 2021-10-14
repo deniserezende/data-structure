@@ -60,6 +60,19 @@ double get_property_area(type_property property){
     return(prop->area);
 }
 
+long compare_properties_cep(type_property property1, type_property property2){
+    PROPERTY *prop1 = property1;
+    PROPERTY *prop2 = property2;
+    return(strcmp(prop1->cep, prop2->cep));
+}
+
+long compare_properties_leases_id(type_property property1, type_property property2){
+    PROPERTY *prop1 = property1;
+    PROPERTY *prop2 = property2;
+    return(strcmp(prop1->lease_id, prop2->lease_id));
+}
+
+
 void add_property_monthly_rent(type_property property, double monthly_rent){
     PROPERTY *prop = property;
     prop->monthly_rent = monthly_rent;
@@ -142,6 +155,9 @@ char* get_property_additional_address_data(type_property property){
     PROPERTY *prop = property;
     return prop->add_address_data;
 }
+
+
+
 
 void remove_property(type_property property){
     PROPERTY *p = property;

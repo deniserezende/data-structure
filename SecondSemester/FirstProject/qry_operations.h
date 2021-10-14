@@ -16,6 +16,7 @@
 #include "qry_dmpt_catac.h"
 #include "qry_property_lease.h"
 #include "qry_mul_hom.h"
+#include "output_svg.h"
 
 
 void get_qry_input_and_generate_output(char *qryfilename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases);

@@ -157,7 +157,6 @@ void set_max_size_for_cartesian_coordinates_in_svg(double max_x, double max_y){
 }
 
 void insert_cartesian_axis_in_svg(type_svg file, double origin_x, double origin_y, double width, double height){
-	STRUCTSVG *fsf = file; 
 	delta_x = origin_x;
 	delta_y = origin_y;
 	axis_width = width;

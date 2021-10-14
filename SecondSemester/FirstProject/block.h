@@ -20,6 +20,8 @@ long get_block_formatted_cep(type_block block);
 
 char* get_block_cep(type_block block);
 
+long compare_blocks_cep(type_block block1, type_block block2);
+
 // void change_block_active(type_block block, int active);
 // long is_block_active(type_block block);
 

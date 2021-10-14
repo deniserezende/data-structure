@@ -10,14 +10,16 @@ type_txt QDMDM_TXTFILE;
 
 
 void _QDMDM_report_property_txt_(type_property property){
-    char cardinal_direction = get_property_cardinal_direction(property);
+    char *cardinal_direction = malloc(sizeof(char)*3);
+    sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, get_property_cep(property));
-    insert_string_in_txt(QDMDM_TXTFILE, &cardinal_direction);
+    insert_string_in_txt(QDMDM_TXTFILE, cardinal_direction);
     char *number = malloc(sizeof(char) * 7);
     sprintf(number, "%d%c", get_property_house_number(property), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, number);
     insert_string_in_txt(QDMDM_TXTFILE, get_property_additional_address_data(property));
 
+    free(cardinal_direction);
     free(number);
 }
 
@@ -38,13 +40,15 @@ void _QDMDM_report_property_lease_txt_(type_property property){
 }
 
 void _QDMDM_report_person_txt_(type_person person){
-    char gender = get_person_gender(person);
+    char *gender = malloc(sizeof(char)*3);
     char *name = get_person_full_name(person);
+    sprintf(gender, "%c%c", get_person_gender(person), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, get_person_cpf(person));
     insert_string_in_txt(QDMDM_TXTFILE, name);
-    insert_string_in_txt(QDMDM_TXTFILE, &gender);
+    insert_string_in_txt(QDMDM_TXTFILE, gender);
     insert_string_in_txt(QDMDM_TXTFILE, get_person_birthday(person));
     free(name);
+    free(gender);
 }
 
 void _QDMDM_report_block_txt_(type_rect block_rect){
@@ -88,7 +92,7 @@ void _del_insert_svg(type_rect block_rect){
 // No arquivo .svg: quadra deve ser colocada uma linha vertical com início no centro do elemento 
 // removido até o topo do mapa. Também colocar (no topo) ao lado da linha vertical o cep.
 // No arquivo .txt: reportar todos os dados relacionados aos elementos removidos.
-void del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable property_leases, char block_cep[]){
+type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable property_leases, char block_cep[]){
     
     QDMDM_SVGFILE = SVGFILE;
     QDMDM_TXTFILE = TXTFILE;
@@ -100,7 +104,9 @@ void del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_ha
     // AQUIDE verificar se apagando assim apaga também da avl, se seta pra null ou se da problema com os ponteiros
     // ajustei +-, verificar se agora ta apagando certo o block
     type_hashitem block_rect = delete_item_in_hash_table(blocks_table, formatted_cep, (void*)get_key_from_block, (void*)verify_block_found);
-    type_mMlavltree block_avl = delete_item_in_mMl_avl_tree(blocks_avl, block_rect, (void*)compare_rectangles_by_x_coordinate);
+    //type_mMlavltree block_avl = delete_item_in_mMl_avl_tree(blocks_avl, block_rect, (void*)compare_rectangles_by_x_coordinate);
+    blocks_avl = delete_item_in_mMl_avl_tree(blocks_avl, block_rect, (void*)compare_rectangles_by_x_coordinate, (void*)compare_rect_blocks_cep);
+
 
     _del_insert_svg(block_rect);
     _QDMDM_report_block_txt_(block_rect);
@@ -158,6 +164,7 @@ void del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_ha
 
     printf("aquide\n");
     printf("reportar svg e txt\n");
+    return blocks_avl;
 }
 
 
@@ -292,8 +299,8 @@ void _mud_svg(type_property old_property, type_property new_property, type_rect 
 
     char color_red[8], color_white[8], color_blue[8];
     sprintf(color_red, "red%c", '\0');
-    sprintf(color_red, "white%c", '\0');
-    sprintf(color_red, "blue%c", '\0');
+    sprintf(color_white, "white%c", '\0');
+    sprintf(color_blue, "blue%c", '\0');
 
     int old_house_number = get_property_house_number(old_property);
     int new_house_number = get_property_house_number(new_property);
@@ -309,7 +316,7 @@ void _mud_svg(type_property old_property, type_property new_property, type_rect 
 // Um pequeno círculo vermelho no endereço antigo, outro círculo azul no novo endereço. 
 // Ambos círculos com borda branca grossa.
 void mud(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_hashtable people_table, type_hashtable properties_table, char person_cpf[], char property_cep[], char cardinal_direction, int house_number, char addicional_data[]){
-    
+    printf("estou no mud\n");
     QDMDM_SVGFILE = SVGFILE;
     QDMDM_TXTFILE = TXTFILE;
     long cpf = format_cpf(person_cpf);
@@ -325,16 +332,23 @@ void mud(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 
     long cep = format_cep_from_base36_to_base10(property_cep);
     type_property new_property_ = new_property(property_cep, cardinal_direction, house_number, addicional_data);
-    type_property old_property = remove_owned_property_from_person(person, 0);
+    type_property old_property = remove_owned_property_from_person(person, 0);    
 
     set_owned_properties_to_person(person, 1);
     add_persons_owned_property(person, new_property_);
     add_property_owner(new_property_, person);
-    insert_item_in_hash_table(properties_table, new_property_, cep, (void*)get_property_cep_key);
+    insert_item_in_hash_table(properties_table, new_property_, cep, (void*)get_property_cep_key, (void*)compare_properties_cep);
 
+    long(*get_key_from_block_ptr)(type_block);
+    get_key_from_block_ptr = get_key_from_block;
 
-    type_rect old_block = lookup_item_in_hash_table(blocks_table, get_property_cep_key(old_property), (void*)get_key_from_block, (void*)verify_block_found);
-    type_rect new_block = lookup_item_in_hash_table(blocks_table, get_property_cep_key(new_property_), (void*)get_key_from_block, (void*)verify_block_found);
+    long(*verify_block_found_ptr)(type_block);
+    verify_block_found_ptr = verify_block_found;
+
+    set_id(get_property_cep(old_property));
+    type_rect old_block = lookup_item_in_hash_table(blocks_table, (long)get_property_cep_key(old_property), (void*)get_key_from_block_ptr, (void*)verify_block_found_ptr);
+    set_id(get_property_cep(new_property_));
+    type_rect new_block = lookup_item_in_hash_table(blocks_table, (long)get_property_cep_key(new_property_), (void*)get_key_from_block_ptr, (void*)verify_block_found_ptr);
 
     _mud_txt(person, old_property, new_property_);
     _mud_svg(old_property, new_property_, old_block, new_block);

@@ -20,6 +20,8 @@ typedef void* type_mMlavlptrf_fiveitems(type_mMlavlitems, type_mMlavlitems, type
 typedef void* type_mMlavlptrf_twoitems(type_mMlavlitems, type_mMlavlitems);
 typedef void* type_mMlavlptrf_oneitem(type_mMlavlitems);
 
+typedef void* type_mMlavlptrf_threelists(type_list, type_list, type_list);
+
 
 // typedef void *type_avlkey; // a chave em si
 // typedef void *type_avlkeyinfo;
@@ -49,8 +51,8 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
 // if item is less than current item, compare should return number < 0
 // if both items are equal, compare should return 0
 // the function 'compare' should return a value convertable to 'long'
-type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare);
-
+//type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare);
+type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare, type_mMlavlptrf_twoitems verify_item);
 
 // Pre-condition: The avl tree exists.
 // Post-condition: None.
@@ -70,9 +72,10 @@ void traverse_mMlavltree_with_conditional_action(type_mMlavltree tree, type_mMla
 // debugging function that can be ignored.
 void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_oneitem print_item);
 
-type_mMlavlitems get_right_child_in_mM_avl_tree(type_mMlavltree tree);
-type_mMlavlitems get_left_child_in_mM_avl_tree(type_mMlavltree tree);
+// type_mMlavlitems get_right_child_in_mM_avl_tree(type_mMlavltree tree);
+// type_mMlavlitems get_left_child_in_mM_avl_tree(type_mMlavltree tree);
 
+void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree tree, type_mMlavlptrf_threelists action);
 
 // EVANDRO
 // void destroi_avl_tree(type_mMlavltree tree);

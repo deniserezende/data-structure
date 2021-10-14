@@ -18,14 +18,16 @@ type_txt QPL_TXTFILE;
 
 
 void _QPL_report_property_txt_(type_property property){
-    char cardinal_direction = get_property_cardinal_direction(property);
+    char *cardinal_direction = malloc(sizeof(char)*3);
+    sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
     insert_string_in_txt(QPL_TXTFILE, get_property_cep(property));
-    insert_string_in_txt(QPL_TXTFILE, &cardinal_direction);
+    insert_string_in_txt(QPL_TXTFILE, cardinal_direction);
     char *number = malloc(sizeof(char) * 7);
     sprintf(number, "%d%c", get_property_house_number(property), '\0');
     insert_string_in_txt(QPL_TXTFILE, number);
     insert_string_in_txt(QPL_TXTFILE, get_property_additional_address_data(property));
 
+    free(cardinal_direction);
     free(number);
 }
 
@@ -46,13 +48,15 @@ void _QPL_report_property_lease_txt_(type_property property){
 }
 
 void _QPL_report_person_txt_(type_person person){
-    char gender = get_person_gender(person);
+    char *gender = malloc(sizeof(char)*3);
     char *name = get_person_full_name(person);
+    sprintf(gender, "%c%c", get_person_gender(person), '\0');
     insert_string_in_txt(QPL_TXTFILE, get_person_cpf(person));
     insert_string_in_txt(QPL_TXTFILE, name);
-    insert_string_in_txt(QPL_TXTFILE, &gender);
+    insert_string_in_txt(QPL_TXTFILE, gender);
     insert_string_in_txt(QPL_TXTFILE, get_person_birthday(person));
     free(name);
+    free(gender);
 }
 
 
@@ -69,7 +73,7 @@ void oloc(type_hashtable property_leases, char property_lease_id[], char cep[], 
     long(*get_key_ptr)(type_property);
     get_key_ptr = get_property_lease_key;
 
-    insert_item_in_hash_table(property_leases, new_lease, get_property_lease_key(new_lease), (void*)get_key_ptr);
+    insert_item_in_hash_table(property_leases, new_lease, get_property_lease_key(new_lease), (void*)get_key_ptr, (void*)compare_properties_leases_id);
     printf("terminei o oloc\n");
 }
 

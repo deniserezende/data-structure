@@ -18,7 +18,13 @@ type_hashtable create_hash_table();
 void print_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem print_item);
 
 // item cannot equal null
-int insert_item_in_hash_table(type_hashtable hash_table, type_hashitem item, long key, type_lptrf_oneitem get_item_key);
+//int insert_item_in_hash_table(type_hashtable hash_table, type_hashitem item, long key, type_lptrf_oneitem get_item_key);
+
+// Note that: 'compare' receives two items, the first is always the item to be inserted.
+// if item to be inserted is greater than current item, compare should return number > 0
+// if item to be inserted is less than current item, compare should return number < 0
+// if both items are equal, compare should return 0
+int insert_item_in_hash_table(type_hashtable hash_table, type_hashitem item, long key, type_lptrf_oneitem get_item_key, type_lptrf_twoitems compare_item_unformatted_key);
 
 type_hashitem lookup_item_in_hash_table(type_hashtable hash_table, long key, type_lptrf_oneitem get_item_key, type_lptrf_oneitem this_item);
 

@@ -98,6 +98,7 @@ type_property_copy remove_owned_property_from_person(type_person person, int ind
         }
     }
     p->own_properties = 0;
+    p->amount_of_owned_properties = 0;
     free(p->properties_owned);
     return old_property;
 }
@@ -116,6 +117,12 @@ type_property_copy remove_rented_property_from_person(type_person person, int in
     p->own_properties = 0;
     free(p->properties_leases);
     return old_property;
+}
+
+long compare_peoples_cpf(type_person person1, type_person person2){
+    PERSON *p1 = person1;
+    PERSON *p2 = person2;
+    return(strcmp(p1->cpf, p2->cpf));
 }
 
 void set_owned_properties_to_person(type_person person, int amount){

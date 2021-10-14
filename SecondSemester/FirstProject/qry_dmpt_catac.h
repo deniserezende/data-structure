@@ -16,5 +16,5 @@
 #include "SVG.h"
 #include "TXT.h"
 
-
+type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable property_leases, type_hashtable people_table, double x, double y, double w, double h);
 #endif /* qry_dmpt_catac_h */

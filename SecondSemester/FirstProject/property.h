@@ -22,6 +22,10 @@ void add_property_area(type_property property, double area);
 
 double get_property_area(type_property property);
 
+long compare_properties_cep(type_property property1, type_property property2);
+
+long compare_properties_leases_id(type_property property1, type_property property2);
+
 void add_property_monthly_rent(type_property property, double monthly_rent);
 
 double get_property_monthly_rent(type_property property);

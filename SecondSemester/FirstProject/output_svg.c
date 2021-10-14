@@ -20,12 +20,10 @@ type_hashtable CRV_properties;
 char cep_global[40];
 
 long returns_true_function(type_mMlavlitems item){
-    printf("entrei no true\n");
     return 1;
 }
 
 void insert_blocks_in_svg_aux(type_rect rect){
-    printf("vou inserir\n");
     double x, y, w, h;
     char *stroke, *fill;
     x = get_rect_x(rect);
@@ -43,12 +41,7 @@ long traverse_side_insert_blocks_in_svg_aux(type_rect rect, type_rect rect1, typ
 
 // Insert blocks in svg
 void insert_blocks_in_svg(type_svg svgfile, type_mMlavltree blocks){
-    printf("entrei no insert\n");
     CRV_svgfile = svgfile;
-    CRV_blocks = blocks;
-    if(empty_mMl_avl_tree(blocks)){
-        printf("empty avl\n");
-    }
 
     void(*ptr_insert)(type_mMlavlitems);
     ptr_insert= insert_blocks_in_svg_aux;
@@ -59,8 +52,6 @@ void insert_blocks_in_svg(type_svg svgfile, type_mMlavltree blocks){
     long(*ptr_traverse)(type_mMlavlitems, type_mMlavlitems, type_mMlavlitems, type_mMlavlitems, type_mMlavlitems);
     ptr_traverse = traverse_side_insert_blocks_in_svg_aux;
 
-    printf("começando o traverse\n");
-
     traverse_mMlavltree_with_conditional_action(blocks, (void*)ptr_traverse, (void*)ptr_true, (void*)ptr_insert);
     //traverse_full_hash_table_with_conditional_action(blocks, (void*)ptr_true, (void*)ptr_insert);
 }
@@ -68,7 +59,6 @@ void insert_blocks_in_svg(type_svg svgfile, type_mMlavltree blocks){
 
 
 long check_cep_aux(type_rect block){ 
-    type_block block_data = get_rect_data(block);
     char* cep_found = get_block_cep(block);
     if(strcmp(cep_found, cep_global) == 0) return 1;
     return 0; 

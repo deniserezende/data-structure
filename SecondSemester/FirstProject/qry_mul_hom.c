@@ -11,14 +11,16 @@ type_svg QMH_SVGFILE;
 type_txt QMH_TXTFILE;
 
 void _QMH_report_property_txt_(type_property property){
-    char cardinal_direction = get_property_cardinal_direction(property);
+    char *cardinal_direction = malloc(sizeof(char)*3);
+    sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
     insert_string_in_txt(QMH_TXTFILE, get_property_cep(property));
-    insert_string_in_txt(QMH_TXTFILE, &cardinal_direction);
+    insert_string_in_txt(QMH_TXTFILE, cardinal_direction);
     char *number = malloc(sizeof(char) * 7);
     sprintf(number, "%d%c", get_property_house_number(property), '\0');
     insert_string_in_txt(QMH_TXTFILE, number);
     insert_string_in_txt(QMH_TXTFILE, get_property_additional_address_data(property));
 
+    free(cardinal_direction);
     free(number);
 }
 
@@ -39,13 +41,15 @@ void _QMH_report_property_lease_txt_(type_property property){
 }
 
 void _QMH_report_person_txt_(type_person person){
-    char gender = get_person_gender(person);
+    char *gender = malloc(sizeof(char)*3);
     char *name = get_person_full_name(person);
+    sprintf(gender, "%c%c", get_person_gender(person), '\0');
     insert_string_in_txt(QMH_TXTFILE, get_person_cpf(person));
     insert_string_in_txt(QMH_TXTFILE, name);
-    insert_string_in_txt(QMH_TXTFILE, &gender);
+    insert_string_in_txt(QMH_TXTFILE, gender);
     insert_string_in_txt(QMH_TXTFILE, get_person_birthday(person));
     free(name);
+    free(gender);
 }
 
 
@@ -109,7 +113,7 @@ long action_mul(type_mMlavlitems block_rect){
 }
 
 // Semelhante a hom. Seleciona as mulheres. Pìnta a elipse de rosa.
-void mul(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_table, type_hashtable properties_table, type_hashtable property_leases, type_hashtable people_table, double x, double y, double w, double h){
+void mul(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable properties_table, type_hashtable property_leases, type_hashtable people_table, double x, double y, double w, double h){
     QMH_SVGFILE = SVGFILE;
     QMH_TXTFILE = TXTFILE;
 
@@ -120,7 +124,7 @@ void mul(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_table, type_
     action_ptr = action_mul;
 
     set_x1_x2_y1_y2(x, x+w, y, y+h);
-    traverse_mMlavltree_with_conditional_action(blocks_table, (void*)traverse_side_rect_in_rect_, (void*)condition_rect_in_rect_, (void*)action_ptr);   
+    traverse_mMlavltree_with_conditional_action(blocks_avl, (void*)traverse_side_rect_in_rect_, (void*)condition_rect_in_rect_, (void*)action_ptr);   
 }
 
 
@@ -163,12 +167,10 @@ void action_property_lease_hom_(type_hashitem property){
     }
 }
 
-long action_hom(type_mMlavlitems block_rect){
-    printf("action 0\n");
+void action_hom(type_mMlavlitems block_rect){
     type_block block = get_rect_data(block_rect);
     long cep = get_block_formatted_cep(block);
     sprintf(QMH_cep, "%s%c", get_block_cep(block), '\0');
-    printf("action 1\n");
 
 
     void(*action_property_ptr)(type_property);
@@ -182,27 +184,32 @@ long action_hom(type_mMlavlitems block_rect){
     QMH_h = get_rect_height(block_rect); 
     QMH_w = get_rect_width(block_rect);
 
-    printf("antes dos traverse\n");
 
     traverse_hash_table_with_conditional_action_optimal(QMH_properties_table, cep, (void*)get_property_cep_key, (void*)verify_property_found, (void*)action_property_ptr);
     traverse_hash_table_with_conditional_action_optimal(QMH_property_leases, cep, (void*)get_property_cep_key, (void*)verify_property_leases, (void*)action_property_lease_ptr);
 
-    return 0;
+    return;
 }
 
 // Homens que moram dentro da região especificada.
 // TXT: reportar dados da pessoa e da moradia SVG: marcar posição da moradia com uma pequena elipse azul.
-void hom(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_table, type_hashtable properties_table, type_hashtable property_leases, type_hashtable people_table, double x, double y, double w, double h){
+void hom(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable properties_table, type_hashtable property_leases, type_hashtable people_table, double x, double y, double w, double h){
     QMH_SVGFILE = SVGFILE;
     QMH_TXTFILE = TXTFILE;
 
     QMH_property_leases = property_leases;
     QMH_properties_table = properties_table;
 
-    long(*action_ptr)(type_mMlavlitems);
+    void(*action_ptr)(type_mMlavlitems);
     action_ptr = action_hom;
-    printf("estou no hom\n");
+    //action_hom;
+
+    long(*traverse_ptr)(type_mMlavlitems, type_mMlavlitems, type_mMlavlitems, type_mMlavlitems, type_mMlavlitems);
+    traverse_ptr = traverse_side_rect_in_rect_;
+
+    long(*condition_ptr)(type_mMlavlitems);
+    condition_ptr = condition_rect_in_rect_;
+
     set_x1_x2_y1_y2(x, x+w, y, y+h);
-    printf("estou no set_x1_x2_y1_y2\n");
-    traverse_mMlavltree_with_conditional_action(blocks_table, (void*)traverse_side_rect_in_rect_, (void*)condition_rect_in_rect_, (void*)action_ptr);    
+    traverse_mMlavltree_with_conditional_action(blocks_avl, (void*)traverse_ptr, (void*)condition_ptr, (void*)action_ptr);    
 }

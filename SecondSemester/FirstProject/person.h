@@ -23,6 +23,8 @@ char* get_person_birthday(type_person person);
 
 char* get_person_cpf(type_person person);
 
+long compare_peoples_cpf(type_person person1, type_person person2);
+
 long get_person_formatted_cpf(type_person person);
 
 long does_person_own_properties(type_person person);

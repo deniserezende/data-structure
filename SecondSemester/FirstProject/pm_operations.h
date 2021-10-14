@@ -11,6 +11,7 @@
 #include "hash_table.h"
 #include "person.h"
 #include "property.h"
+#include "_auxiliary_functions.h"
 
 void get_pm_input(char *filename, type_hashtable people_table, type_hashtable properties_table);
 

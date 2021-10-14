@@ -35,6 +35,12 @@ char* get_block_cep(type_block block){
     return blocky->cep;
 }
 
+long compare_blocks_cep(type_block block1, type_block block2){
+    BLOCK *blocky1 = block1;
+    BLOCK *blocky2 = block2;
+    return(strcmp(blocky1->cep, blocky2->cep));
+}
+
 // void change_block_active(type_block block, int active){
 //     BLOCK *blocky = block;
 //     blocky->active = active;

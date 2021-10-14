@@ -1,3466 +1,657 @@
 fiz o commandline
+input_path = /Users/Denise/Downloads/cidades/
+geo_filename = c1.geo
+qry_filename = c1/3-cantoNW-homensLocatariosDaRegiao.qry
+pm_filename = c1.pm
+output_path = /Users/Denise/Downloads/output
 fiz o get path do pm
-vou começar o while do pm
-hash_value=191
-inseri alguem
-hash_value=162
-inseri alguem
-hash_value=133
-inseri alguem
-hash_value=104
-inseri alguem
-hash_value=185
-inseri alguem
-hash_value=145
-inseri alguem
-hash_value=116
-inseri alguem
-hash_value=95
-inseri alguem
-hash_value=168
-inseri alguem
-hash_value=139
-inseri alguem
-hash_value=144
-inseri alguem
-hash_value=115
-inseri alguem
-hash_value=94
-inseri alguem
-hash_value=157
-inseri alguem
-hash_value=127
-inseri alguem
-hash_value=98
-inseri alguem
-hash_value=179
-inseri alguem
-hash_value=150
-inseri alguem
-hash_value=121
-inseri alguem
-hash_value=81
-inseri alguem
-hash_value=97
-inseri alguem
-hash_value=178
-inseri alguem
-hash_value=138
-inseri alguem
-hash_value=109
-inseri alguem
-hash_value=80
-inseri alguem
-hash_value=161
-inseri alguem
-hash_value=132
-inseri alguem
-hash_value=93
-inseri alguem
-hash_value=72
-inseri alguem
-hash_value=144
-deu colisão
-inseri alguem
-hash_value=150
-deu colisão
-inseri alguem
-hash_value=120
-inseri alguem
-hash_value=91
-inseri alguem
-hash_value=70
-inseri alguem
-hash_value=143
-inseri alguem
-hash_value=114
-inseri alguem
-hash_value=74
-inseri alguem
-hash_value=155
-inseri alguem
-hash_value=126
-inseri alguem
-hash_value=97
-deu colisão
-inseri alguem
-hash_value=102
-inseri alguem
-hash_value=73
-inseri alguem
-hash_value=154
-inseri alguem
-hash_value=125
-inseri alguem
-hash_value=86
-inseri alguem
-hash_value=56
-inseri alguem
-hash_value=137
-inseri alguem
-hash_value=108
-inseri alguem
-hash_value=79
-inseri alguem
-hash_value=58
-inseri alguem
-hash_value=55
-inseri alguem
-hash_value=136
-inseri alguem
-hash_value=107
-inseri alguem
-hash_value=67
-inseri alguem
-hash_value=46
-inseri alguem
-hash_value=119
-inseri alguem
-hash_value=90
-inseri alguem
-hash_value=61
-inseri alguem
-hash_value=132
-deu colisão
-inseri alguem
-hash_value=102
-deu colisão
-inseri alguem
-hash_value=118
-inseri alguem
-hash_value=79
-deu colisão
-inseri alguem
-hash_value=49
-inseri alguem
-hash_value=130
-inseri alguem
-hash_value=101
-inseri alguem
-hash_value=72
-deu colisão
-inseri alguem
-hash_value=43
-inseri alguem
-hash_value=113
-inseri alguem
-hash_value=84
-inseri alguem
-hash_value=55
-deu colisão
-inseri alguem
-hash_value=60
-inseri alguem
-hash_value=31
-inseri alguem
-hash_value=112
-inseri alguem
-hash_value=83
-inseri alguem
-hash_value=54
-inseri alguem
-hash_value=33
-inseri alguem
-hash_value=95
-deu colisão
-inseri alguem
-hash_value=66
-inseri alguem
-hash_value=37
-inseri alguem
-hash_value=118
-deu colisão
-inseri alguem
-hash_value=21
-inseri alguem
-hash_value=94
-deu colisão
-inseri alguem
-hash_value=65
-inseri alguem
-hash_value=36
-inseri alguem
-hash_value=106
-inseri alguem
-hash_value=77
-inseri alguem
-hash_value=48
-inseri alguem
-hash_value=19
-inseri alguem
-hash_value=100
-inseri alguem
-hash_value=61
-deu colisão
-inseri alguem
-hash_value=76
-inseri alguem
-hash_value=47
-inseri alguem
-hash_value=8
-inseri alguem
-hash_value=88
-inseri alguem
-hash_value=59
-inseri alguem
-hash_value=30
-inseri alguem
-hash_value=9
-inseri alguem
-hash_value=82
-inseri alguem
-hash_value=42
-inseri alguem
-hash_value=13
-inseri alguem
-hash_value=45
-inseri alguem
-hash_value=16
-inseri alguem
-hash_value=97
-deu colisão
-inseri alguem
-hash_value=57
-inseri alguem
-hash_value=28
-inseri alguem
-hash_value=1000
-inseri alguem
-hash_value=80
-deu colisão
-inseri alguem
-hash_value=51
-inseri alguem
-hash_value=12
-inseri alguem
-hash_value=992
-inseri alguem
-hash_value=999
-inseri alguem
-hash_value=69
-inseri alguem
-hash_value=39
-inseri alguem
-hash_value=10
-inseri alguem
-hash_value=990
-inseri alguem
-hash_value=62
-inseri alguem
-hash_value=33
-deu colisão
-inseri alguem
-hash_value=994
-inseri alguem
-hash_value=74
-deu colisão
-inseri alguem
-hash_value=45
-deu colisão
-inseri alguem
-hash_value=50
-inseri alguem
-hash_value=21
-deu colisão
-inseri alguem
-hash_value=993
-inseri alguem
-hash_value=73
-deu colisão
-inseri alguem
-hash_value=44
-inseri alguem
-hash_value=5
-inseri alguem
-hash_value=976
-inseri alguem
-hash_value=56
-deu colisão
-inseri alguem
-hash_value=27
-inseri alguem
-hash_value=999
-deu colisão
-inseri alguem
-hash_value=3
-inseri alguem
-hash_value=975
-inseri alguem
-hash_value=55
-deu colisão
-inseri alguem
-hash_value=26
-inseri alguem
-hash_value=987
-inseri alguem
-hash_value=966
-inseri alguem
-hash_value=38
-inseri alguem
-hash_value=9
-deu colisão
-inseri alguem
-hash_value=981
-inseri alguem
-hash_value=51
-deu colisão
-inseri alguem
-hash_value=965
-inseri alguem
-hash_value=37
-deu colisão
-inseri alguem
-hash_value=999
-deu colisão
-inseri alguem
-hash_value=969
-inseri alguem
-hash_value=49
-deu colisão
-inseri alguem
-hash_value=20
-inseri alguem
-hash_value=992
-deu colisão
-inseri alguem
-hash_value=963
-inseri alguem
-hash_value=32
-inseri alguem
-hash_value=3
-deu colisão
-inseri alguem
-hash_value=19
-deu colisão
-inseri alguem
-hash_value=980
-inseri alguem
-hash_value=951
-inseri alguem
-hash_value=31
-deu colisão
-inseri alguem
-hash_value=2
-inseri alguem
-hash_value=974
-inseri alguem
-hash_value=953
-inseri alguem
-hash_value=14
-inseri alguem
-hash_value=986
-inseri alguem
-hash_value=957
-inseri alguem
-hash_value=962
-inseri alguem
-hash_value=941
-inseri alguem
-hash_value=13
-deu colisão
-inseri alguem
-hash_value=985
-inseri alguem
-hash_value=956
-inseri alguem
-hash_value=25
-inseri alguem
-hash_value=997
-inseri alguem
-hash_value=968
-inseri alguem
-hash_value=939
-inseri alguem
-hash_value=19
-deu colisão
-inseri alguem
-hash_value=24
-inseri alguem
-hash_value=996
-inseri alguem
-hash_value=967
-inseri alguem
-hash_value=928
-inseri alguem
-hash_value=7
-inseri alguem
-hash_value=979
-inseri alguem
-hash_value=950
-inseri alguem
-hash_value=929
-inseri alguem
-hash_value=1
-inseri alguem
-hash_value=962
-deu colisão
-inseri alguem
-hash_value=978
-inseri alguem
-hash_value=949
-inseri alguem
-hash_value=928
-deu colisão
-inseri alguem
-hash_value=990
-deu colisão
-inseri alguem
-hash_value=961
-inseri alguem
-hash_value=932
-inseri alguem
-hash_value=12
-deu colisão
-inseri alguem
-hash_value=974
-deu colisão
-inseri alguem
-hash_value=944
-inseri alguem
-hash_value=915
-inseri alguem
-hash_value=921
-inseri alguem
-hash_value=0
-inseri alguem
-hash_value=972
-inseri alguem
-hash_value=943
-inseri alguem
-hash_value=914
-inseri alguem
-hash_value=995
-inseri alguem
-hash_value=955
-inseri alguem
-hash_value=926
-inseri alguem
-hash_value=905
-inseri alguem
-hash_value=978
-deu colisão
-inseri alguem
-hash_value=908
-inseri alguem
-hash_value=970
-inseri alguem
-hash_value=941
-deu colisão
-inseri alguem
-hash_value=912
-inseri alguem
-hash_value=993
-deu colisão
-inseri alguem
-hash_value=964
-inseri alguem
-hash_value=925
-inseri alguem
-hash_value=895
-inseri alguem
-hash_value=976
-deu colisão
-inseri alguem
-hash_value=947
-inseri alguem
-hash_value=952
-inseri alguem
-hash_value=923
-inseri alguem
-hash_value=894
-inseri alguem
-hash_value=975
-deu colisão
-inseri alguem
-hash_value=946
-inseri alguem
-hash_value=906
-inseri alguem
-hash_value=885
-inseri alguem
-hash_value=958
-inseri alguem
-hash_value=929
-deu colisão
-inseri alguem
-hash_value=900
-inseri alguem
-hash_value=905
-deu colisão
-inseri alguem
-hash_value=884
-inseri alguem
-hash_value=957
-deu colisão
-inseri alguem
-hash_value=918
-inseri alguem
-hash_value=888
-inseri alguem
-hash_value=969
-deu colisão
-inseri alguem
-hash_value=940
-inseri alguem
-hash_value=911
-inseri alguem
-hash_value=882
-inseri alguem
-hash_value=952
-deu colisão
-inseri alguem
-hash_value=968
-deu colisão
-inseri alguem
-hash_value=939
-deu colisão
-inseri alguem
-hash_value=899
-inseri alguem
-hash_value=870
-inseri alguem
-hash_value=951
-deu colisão
-inseri alguem
-hash_value=922
-inseri alguem
-hash_value=893
-inseri alguem
-hash_value=872
-inseri alguem
-hash_value=934
-inseri alguem
-hash_value=905
-deu colisão
-inseri alguem
-hash_value=911
-deu colisão
-inseri alguem
-hash_value=881
-inseri alguem
-hash_value=860
-inseri alguem
-hash_value=933
-inseri alguem
-hash_value=904
-inseri alguem
-hash_value=875
-inseri alguem
-hash_value=945
-inseri alguem
-hash_value=916
-inseri alguem
-hash_value=887
-inseri alguem
-hash_value=858
-inseri alguem
-hash_value=863
-inseri alguem
-hash_value=944
-deu colisão
-inseri alguem
-hash_value=915
-deu colisão
-inseri alguem
-hash_value=886
-inseri alguem
-hash_value=847
-inseri alguem
-hash_value=927
-inseri alguem
-hash_value=898
-inseri alguem
-hash_value=869
-inseri alguem
-hash_value=848
-inseri alguem
-hash_value=921
-deu colisão
-inseri alguem
-hash_value=926
-deu colisão
-inseri alguem
-hash_value=897
-inseri alguem
-hash_value=868
-inseri alguem
-hash_value=847
-deu colisão
-inseri alguem
-hash_value=909
-inseri alguem
-hash_value=880
-inseri alguem
-hash_value=851
-inseri alguem
-hash_value=932
-deu colisão
-inseri alguem
-hash_value=893
-deu colisão
-inseri alguem
-hash_value=863
-deu colisão
-inseri alguem
-hash_value=879
-inseri alguem
-hash_value=840
-inseri alguem
-hash_value=920
-inseri alguem
-hash_value=891
-inseri alguem
-hash_value=862
-inseri alguem
-hash_value=833
-inseri alguem
-hash_value=914
-deu colisão
-inseri alguem
-hash_value=874
-inseri alguem
-hash_value=845
-inseri alguem
-hash_value=824
-inseri alguem
-hash_value=821
-inseri alguem
-hash_value=902
-inseri alguem
-hash_value=873
-inseri alguem
-hash_value=844
-inseri alguem
-hash_value=823
-inseri alguem
-hash_value=886
-deu colisão
-inseri alguem
-hash_value=856
-inseri alguem
-hash_value=827
-inseri alguem
-hash_value=908
-deu colisão
-inseri alguem
-hash_value=879
-deu colisão
-inseri alguem
-hash_value=884
-deu colisão
-inseri alguem
-hash_value=855
-inseri alguem
-hash_value=826
-inseri alguem
-hash_value=907
-inseri alguem
-hash_value=867
-inseri alguem
-hash_value=838
-inseri alguem
-hash_value=809
-inseri alguem
-hash_value=890
-inseri alguem
-hash_value=861
-inseri alguem
-hash_value=822
-inseri alguem
-hash_value=853
-inseri alguem
-hash_value=824
-deu colisão
-inseri alguem
-hash_value=803
-inseri alguem
-hash_value=876
-inseri alguem
-hash_value=837
-inseri alguem
-hash_value=807
-inseri alguem
-hash_value=888
-deu colisão
-inseri alguem
-hash_value=859
-inseri alguem
-hash_value=830
-inseri alguem
-hash_value=801
-inseri alguem
-hash_value=806
-inseri alguem
-hash_value=887
-deu colisão
-inseri alguem
-hash_value=858
-deu colisão
-inseri alguem
-hash_value=818
-inseri alguem
-hash_value=789
-inseri alguem
-hash_value=870
-deu colisão
-inseri alguem
-hash_value=841
-inseri alguem
-hash_value=812
-inseri alguem
-hash_value=791
-inseri alguem
-hash_value=853
-deu colisão
-inseri alguem
-hash_value=869
-deu colisão
-inseri alguem
-hash_value=830
-deu colisão
-inseri alguem
-hash_value=800
-inseri alguem
-hash_value=779
-inseri alguem
-hash_value=852
-inseri alguem
-hash_value=823
-deu colisão
-inseri alguem
-hash_value=794
-inseri alguem
-hash_value=864
-inseri alguem
-hash_value=835
-inseri alguem
-hash_value=806
-deu colisão
-inseri alguem
-hash_value=811
-inseri alguem
-hash_value=782
-inseri alguem
-hash_value=863
-deu colisão
-inseri alguem
-hash_value=834
-inseri alguem
-hash_value=805
-inseri alguem
-hash_value=766
-inseri alguem
-hash_value=846
-inseri alguem
-hash_value=817
-inseri alguem
-hash_value=788
-inseri alguem
-hash_value=767
-inseri alguem
-hash_value=764
-inseri alguem
-hash_value=845
-deu colisão
-inseri alguem
-hash_value=816
-inseri alguem
-hash_value=787
-inseri alguem
-hash_value=766
-deu colisão
-inseri alguem
-hash_value=828
-inseri alguem
-hash_value=799
-inseri alguem
-hash_value=770
-inseri alguem
-hash_value=851
-deu colisão
-inseri alguem
-hash_value=812
-deu colisão
-inseri alguem
-hash_value=827
-deu colisão
-inseri alguem
-hash_value=798
-inseri alguem
-hash_value=759
-inseri alguem
-hash_value=839
-inseri alguem
-hash_value=810
-inseri alguem
-hash_value=781
-inseri alguem
-hash_value=752
-inseri alguem
-hash_value=833
-deu colisão
-inseri alguem
-hash_value=793
-inseri alguem
-hash_value=764
-deu colisão
-inseri alguem
-hash_value=780
-inseri alguem
-hash_value=740
-inseri alguem
-hash_value=821
-deu colisão
-inseri alguem
-hash_value=792
-inseri alguem
-hash_value=763
-inseri alguem
-hash_value=742
-inseri alguem
-hash_value=805
-deu colisão
-inseri alguem
-hash_value=775
-inseri alguem
-hash_value=746
-inseri alguem
-hash_value=827
-deu colisão
-inseri alguem
-hash_value=731
-inseri alguem
-hash_value=803
-deu colisão
-inseri alguem
-hash_value=774
-inseri alguem
-hash_value=745
-inseri alguem
-hash_value=826
-deu colisão
-inseri alguem
-hash_value=786
-inseri alguem
-hash_value=757
-inseri alguem
-hash_value=728
-inseri alguem
-hash_value=809
-deu colisão
-inseri alguem
-hash_value=780
-deu colisão
-inseri alguem
-hash_value=785
-inseri alguem
-hash_value=756
-inseri alguem
-hash_value=727
-inseri alguem
-hash_value=798
-deu colisão
-inseri alguem
-hash_value=768
-inseri alguem
-hash_value=739
-inseri alguem
-hash_value=718
-inseri alguem
-hash_value=791
-deu colisão
-inseri alguem
-hash_value=762
-inseri alguem
-hash_value=722
-inseri alguem
-hash_value=738
-inseri alguem
-hash_value=717
-inseri alguem
-hash_value=779
-deu colisão
-inseri alguem
-hash_value=750
-inseri alguem
-hash_value=721
-inseri alguem
-hash_value=802
-inseri alguem
-hash_value=773
-inseri alguem
-hash_value=734
-inseri alguem
-hash_value=704
-inseri alguem
-hash_value=785
-deu colisão
-inseri alguem
-hash_value=707
-inseri alguem
-hash_value=788
-deu colisão
-inseri alguem
-hash_value=749
-inseri alguem
-hash_value=719
-inseri alguem
-hash_value=698
-inseri alguem
-hash_value=771
-inseri alguem
-hash_value=742
-deu colisão
-inseri alguem
-hash_value=713
-inseri alguem
-hash_value=783
-inseri alguem
-hash_value=754
-inseri alguem
-hash_value=770
-deu colisão
-inseri alguem
-hash_value=730
-inseri alguem
-hash_value=701
-inseri alguem
-hash_value=782
-deu colisão
-inseri alguem
-hash_value=753
-inseri alguem
-hash_value=724
-inseri alguem
-hash_value=685
-inseri alguem
-hash_value=765
-inseri alguem
-hash_value=736
-inseri alguem
-hash_value=707
-deu colisão
-inseri alguem
-hash_value=712
-inseri alguem
-hash_value=683
-inseri alguem
-hash_value=764
-deu colisão
-inseri alguem
-hash_value=735
-inseri alguem
-hash_value=706
-inseri alguem
-hash_value=685
-deu colisão
-inseri alguem
-hash_value=747
-inseri alguem
-hash_value=718
-deu colisão
-inseri alguem
-hash_value=689
-inseri alguem
-hash_value=770
-deu colisão
-inseri alguem
-hash_value=673
-inseri alguem
-hash_value=746
-deu colisão
-inseri alguem
-hash_value=717
-deu colisão
-inseri alguem
-hash_value=678
-inseri alguem
-hash_value=758
-inseri alguem
-hash_value=729
-inseri alguem
-hash_value=700
-inseri alguem
-hash_value=671
-inseri alguem
-hash_value=752
-deu colisão
-inseri alguem
-hash_value=712
-deu colisão
-inseri alguem
-hash_value=728
-deu colisão
-inseri alguem
-hash_value=699
-inseri alguem
-hash_value=659
-inseri alguem
-hash_value=740
-deu colisão
-inseri alguem
-hash_value=711
-inseri alguem
-hash_value=682
-inseri alguem
-hash_value=661
-inseri alguem
-hash_value=724
-deu colisão
-inseri alguem
-hash_value=694
-inseri alguem
-hash_value=665
-inseri alguem
-hash_value=671
-deu colisão
-inseri alguem
-hash_value=650
-inseri alguem
-hash_value=722
-deu colisão
-inseri alguem
-hash_value=693
-inseri alguem
-hash_value=664
-inseri alguem
-hash_value=745
-deu colisão
-inseri alguem
-hash_value=705
-inseri alguem
-hash_value=676
-inseri alguem
-hash_value=647
-inseri alguem
-hash_value=728
-deu colisão
-inseri alguem
-hash_value=733
-inseri alguem
-hash_value=704
-deu colisão
-inseri alguem
-hash_value=675
-inseri alguem
-hash_value=646
-inseri alguem
-hash_value=717
-deu colisão
-inseri alguem
-hash_value=687
-inseri alguem
-hash_value=658
-inseri alguem
-hash_value=637
-inseri alguem
-hash_value=710
-inseri alguem
-hash_value=681
-inseri alguem
-hash_value=686
-inseri alguem
-hash_value=657
-inseri alguem
-hash_value=636
-inseri alguem
-hash_value=698
-deu colisão
-inseri alguem
-hash_value=669
-inseri alguem
-hash_value=640
-inseri alguem
-hash_value=721
-deu colisão
-inseri alguem
-hash_value=692
-inseri alguem
-hash_value=653
-inseri alguem
-hash_value=623
-inseri alguem
-hash_value=639
-inseri alguem
-hash_value=710
-deu colisão
-inseri alguem
-hash_value=680
-inseri alguem
-hash_value=651
-inseri alguem
-hash_value=622
-inseri alguem
-hash_value=703
-inseri alguem
-hash_value=674
-inseri alguem
-hash_value=634
-inseri alguem
-hash_value=613
-inseri alguem
-hash_value=686
-deu colisão
-inseri alguem
-hash_value=691
-inseri alguem
-hash_value=662
-inseri alguem
-hash_value=633
-inseri alguem
-hash_value=612
-inseri alguem
-hash_value=685
-deu colisão
-inseri alguem
-hash_value=646
-deu colisão
-inseri alguem
-hash_value=616
-inseri alguem
-hash_value=697
-inseri alguem
-hash_value=668
-inseri alguem
-hash_value=639
-deu colisão
-inseri alguem
-hash_value=661
-deu colisão
-inseri alguem
-hash_value=631
-inseri alguem
-hash_value=602
-inseri alguem
-hash_value=683
-deu colisão
-inseri alguem
-hash_value=654
-inseri alguem
-hash_value=625
-inseri alguem
-hash_value=604
-inseri alguem
-hash_value=666
-inseri alguem
-hash_value=637
-deu colisão
-inseri alguem
-hash_value=608
-inseri alguem
-hash_value=613
-deu colisão
-inseri alguem
-hash_value=592
-inseri alguem
-hash_value=665
-deu colisão
-inseri alguem
-hash_value=636
-deu colisão
-inseri alguem
-hash_value=597
-inseri alguem
-hash_value=677
-inseri alguem
-hash_value=648
-inseri alguem
-hash_value=619
-inseri alguem
-hash_value=590
-inseri alguem
-hash_value=671
-deu colisão
-inseri alguem
-hash_value=676
-deu colisão
-inseri alguem
-hash_value=647
-deu colisão
-inseri alguem
-hash_value=618
-inseri alguem
-hash_value=578
-inseri alguem
-hash_value=659
-deu colisão
-inseri alguem
-hash_value=630
-inseri alguem
-hash_value=601
-inseri alguem
-hash_value=580
-inseri alguem
-hash_value=643
-inseri alguem
-hash_value=613
-deu colisão
-inseri alguem
-hash_value=629
-inseri alguem
-hash_value=590
-deu colisão
-inseri alguem
-hash_value=569
-inseri alguem
-hash_value=641
-inseri alguem
-hash_value=612
-deu colisão
-inseri alguem
-hash_value=583
-inseri alguem
-hash_value=664
-deu colisão
-inseri alguem
-hash_value=624
-inseri alguem
-hash_value=595
-inseri alguem
-hash_value=566
-inseri alguem
-hash_value=571
-inseri alguem
-hash_value=652
-inseri alguem
-hash_value=623
-deu colisão
-inseri alguem
-hash_value=594
-inseri alguem
-hash_value=565
-inseri alguem
-hash_value=636
-deu colisão
-inseri alguem
-hash_value=606
-inseri alguem
-hash_value=577
-inseri alguem
-hash_value=556
-inseri alguem
-hash_value=629
-deu colisão
-inseri alguem
-hash_value=634
-deu colisão
-inseri alguem
-hash_value=605
-inseri alguem
-hash_value=576
-inseri alguem
-hash_value=555
-inseri alguem
-hash_value=617
-inseri alguem
-hash_value=588
-inseri alguem
-hash_value=559
-inseri alguem
-hash_value=640
-deu colisão
-inseri alguem
-hash_value=611
-inseri alguem
-hash_value=572
-inseri alguem
-hash_value=587
-inseri alguem
-hash_value=558
-inseri alguem
-hash_value=629
-deu colisão
-inseri alguem
-hash_value=599
-inseri alguem
-hash_value=570
-inseri alguem
-hash_value=541
-inseri alguem
-hash_value=622
-deu colisão
-inseri alguem
-hash_value=593
-inseri alguem
-hash_value=553
-inseri alguem
-hash_value=532
-inseri alguem
-hash_value=540
-inseri alguem
-hash_value=610
-inseri alguem
-hash_value=581
-inseri alguem
-hash_value=552
-inseri alguem
-hash_value=531
-inseri alguem
-hash_value=604
-deu colisão
-inseri alguem
-hash_value=565
-deu colisão
-inseri alguem
-hash_value=535
-inseri alguem
-hash_value=616
-deu colisão
-inseri alguem
-hash_value=587
-deu colisão
-inseri alguem
-hash_value=592
-deu colisão
-inseri alguem
-hash_value=563
-inseri alguem
-hash_value=534
-inseri alguem
-hash_value=615
-inseri alguem
-hash_value=586
-inseri alguem
-hash_value=546
-inseri alguem
-hash_value=517
-inseri alguem
-hash_value=598
-inseri alguem
-hash_value=569
-deu colisão
-inseri alguem
-hash_value=540
-deu colisão
-inseri alguem
-hash_value=545
-inseri alguem
-hash_value=516
-inseri alguem
-hash_value=597
-deu colisão
-inseri alguem
-hash_value=558
-deu colisão
-inseri alguem
-hash_value=528
-inseri alguem
-hash_value=507
-inseri alguem
-hash_value=580
-deu colisão
-inseri alguem
-hash_value=551
-inseri alguem
-hash_value=522
-inseri alguem
-hash_value=592
-deu colisão
-inseri alguem
-hash_value=514
-inseri alguem
-hash_value=595
-deu colisão
-inseri alguem
-hash_value=566
-deu colisão
-inseri alguem
-hash_value=537
-inseri alguem
-hash_value=497
-inseri alguem
-hash_value=578
-deu colisão
-inseri alguem
-hash_value=549
-inseri alguem
-hash_value=520
-inseri alguem
-hash_value=499
-inseri alguem
-hash_value=562
-inseri alguem
-hash_value=577
-deu colisão
-inseri alguem
-hash_value=548
-inseri alguem
-hash_value=509
-inseri alguem
-hash_value=488
-inseri alguem
-hash_value=560
-inseri alguem
-hash_value=531
-deu colisão
-inseri alguem
-hash_value=502
-inseri alguem
-hash_value=583
-deu colisão
-inseri alguem
-hash_value=543
-inseri alguem
-hash_value=514
-deu colisão
-inseri alguem
-hash_value=530
-inseri alguem
-hash_value=490
-inseri alguem
-hash_value=571
-deu colisão
-inseri alguem
-hash_value=542
-inseri alguem
-hash_value=513
-inseri alguem
-hash_value=484
-inseri alguem
-hash_value=555
-deu colisão
-inseri alguem
-hash_value=525
-inseri alguem
-hash_value=496
-inseri alguem
-hash_value=475
-inseri alguem
-hash_value=472
-inseri alguem
-hash_value=553
-deu colisão
-inseri alguem
-hash_value=524
-inseri alguem
-hash_value=495
-inseri alguem
-hash_value=474
-inseri alguem
-hash_value=536
-inseri alguem
-hash_value=507
-deu colisão
-inseri alguem
-hash_value=478
-inseri alguem
-hash_value=559
-deu colisão
-inseri alguem
-hash_value=530
-deu colisão
-inseri alguem
-hash_value=535
-deu colisão
-inseri alguem
-hash_value=506
-inseri alguem
-hash_value=477
-inseri alguem
-hash_value=548
-deu colisão
-inseri alguem
-hash_value=518
-inseri alguem
-hash_value=489
-inseri alguem
-hash_value=460
-inseri alguem
-hash_value=541
-deu colisão
-inseri alguem
-hash_value=512
-inseri alguem
-hash_value=472
-deu colisão
-inseri alguem
-hash_value=488
-deu colisão
-inseri alguem
-hash_value=459
-inseri alguem
-hash_value=529
-inseri alguem
-hash_value=500
-inseri alguem
-hash_value=471
-inseri alguem
-hash_value=450
-inseri alguem
-hash_value=523
-inseri alguem
-hash_value=484
-deu colisão
-inseri alguem
-hash_value=454
-inseri alguem
-hash_value=535
-deu colisão
-inseri alguem
-hash_value=449
-inseri alguem
-hash_value=511
-inseri alguem
-hash_value=482
-inseri alguem
-hash_value=453
-inseri alguem
-hash_value=534
-deu colisão
-inseri alguem
-hash_value=505
-inseri alguem
-hash_value=465
-inseri alguem
-hash_value=436
-inseri alguem
-hash_value=517
-deu colisão
-inseri alguem
-hash_value=488
-deu colisão
-inseri alguem
-hash_value=493
-inseri alguem
-hash_value=464
-inseri alguem
-hash_value=435
-inseri alguem
-hash_value=516
-deu colisão
-inseri alguem
-hash_value=477
-deu colisão
-inseri alguem
-hash_value=447
-inseri alguem
-hash_value=426
-inseri alguem
-hash_value=499
-deu colisão
-inseri alguem
-hash_value=470
-inseri alguem
-hash_value=441
-inseri alguem
-hash_value=446
-inseri alguem
-hash_value=425
-inseri alguem
-hash_value=498
-inseri alguem
-hash_value=458
-inseri alguem
-hash_value=429
-inseri alguem
-hash_value=510
-inseri alguem
-hash_value=481
-inseri alguem
-hash_value=452
-inseri alguem
-hash_value=413
-inseri alguem
-hash_value=493
-deu colisão
-inseri alguem
-hash_value=509
-deu colisão
-inseri alguem
-hash_value=470
-deu colisão
-inseri alguem
-hash_value=440
-inseri alguem
-hash_value=411
-inseri alguem
-hash_value=492
-inseri alguem
-hash_value=463
-inseri alguem
-hash_value=434
-inseri alguem
-hash_value=413
-deu colisão
-inseri alguem
-hash_value=475
-deu colisão
-inseri alguem
-hash_value=446
-deu colisão
-inseri alguem
-hash_value=478
-deu colisão
-inseri alguem
-hash_value=449
-deu colisão
-inseri alguem
-hash_value=409
-inseri alguem
-hash_value=490
-deu colisão
-inseri alguem
-hash_value=461
-inseri alguem
-hash_value=432
-inseri alguem
-hash_value=403
-inseri alguem
-hash_value=474
-deu colisão
-inseri alguem
-hash_value=444
-inseri alguem
-hash_value=415
-inseri alguem
-hash_value=421
-inseri alguem
-hash_value=391
-inseri alguem
-hash_value=472
-deu colisão
-inseri alguem
-hash_value=443
-inseri alguem
-hash_value=414
-inseri alguem
-hash_value=393
-inseri alguem
-hash_value=455
-inseri alguem
-hash_value=426
-deu colisão
-inseri alguem
-hash_value=397
-inseri alguem
-hash_value=478
-deu colisão
-inseri alguem
-hash_value=381
-inseri alguem
-hash_value=454
-deu colisão
-inseri alguem
-hash_value=425
-deu colisão
-inseri alguem
-hash_value=396
-inseri alguem
-hash_value=467
-inseri alguem
-hash_value=437
-inseri alguem
-hash_value=408
-inseri alguem
-hash_value=379
-inseri alguem
-hash_value=460
-deu colisão
-inseri alguem
-hash_value=431
-inseri alguem
-hash_value=436
-deu colisão
-inseri alguem
-hash_value=407
-inseri alguem
-hash_value=378
-inseri alguem
-hash_value=448
-inseri alguem
-hash_value=419
-inseri alguem
-hash_value=390
-inseri alguem
-hash_value=369
-inseri alguem
-hash_value=442
-inseri alguem
-hash_value=403
-deu colisão
-inseri alguem
-hash_value=373
-inseri alguem
-hash_value=389
-inseri alguem
-hash_value=368
-inseri alguem
-hash_value=430
-inseri alguem
-hash_value=401
-inseri alguem
-hash_value=372
-inseri alguem
-hash_value=453
-deu colisão
-inseri alguem
-hash_value=424
-inseri alguem
-hash_value=384
-inseri alguem
-hash_value=355
-inseri alguem
-hash_value=436
-deu colisão
-inseri alguem
-hash_value=441
-deu colisão
-inseri alguem
-hash_value=412
-inseri alguem
-hash_value=383
-inseri alguem
-hash_value=354
-inseri alguem
-hash_value=435
-deu colisão
-inseri alguem
-hash_value=396
-deu colisão
-inseri alguem
-hash_value=366
-inseri alguem
-hash_value=345
-inseri alguem
-hash_value=418
-inseri alguem
-hash_value=389
-deu colisão
-inseri alguem
-hash_value=394
-inseri alguem
-hash_value=365
-inseri alguem
-hash_value=344
-inseri alguem
-hash_value=417
-inseri alguem
-hash_value=377
-inseri alguem
-hash_value=348
-inseri alguem
-hash_value=429
-deu colisão
-inseri alguem
-hash_value=400
-inseri alguem
-hash_value=371
-inseri alguem
-hash_value=332
-inseri alguem
-hash_value=347
-inseri alguem
-hash_value=428
-inseri alguem
-hash_value=389
-deu colisão
-inseri alguem
-hash_value=359
-inseri alguem
-hash_value=330
-inseri alguem
-hash_value=411
-deu colisão
-inseri alguem
-hash_value=382
-inseri alguem
-hash_value=353
-inseri alguem
-hash_value=332
-deu colisão
-inseri alguem
-hash_value=394
-deu colisão
-inseri alguem
-hash_value=410
-inseri alguem
-hash_value=370
-inseri alguem
-hash_value=341
-inseri alguem
-hash_value=320
-inseri alguem
-hash_value=393
-deu colisão
-inseri alguem
-hash_value=364
-inseri alguem
-hash_value=325
-inseri alguem
-hash_value=405
-inseri alguem
-hash_value=376
-inseri alguem
-hash_value=347
-deu colisão
-inseri alguem
-hash_value=352
-inseri alguem
-hash_value=323
-inseri alguem
-hash_value=404
-inseri alguem
-hash_value=375
-inseri alguem
-hash_value=346
-inseri alguem
-hash_value=306
-inseri alguem
-hash_value=387
-inseri alguem
-hash_value=358
-inseri alguem
-hash_value=329
-inseri alguem
-hash_value=308
-inseri alguem
-hash_value=321
-inseri alguem
-hash_value=300
-inseri alguem
-hash_value=373
-deu colisão
-inseri alguem
-hash_value=344
-deu colisão
-inseri alguem
-hash_value=315
-inseri alguem
-hash_value=386
-inseri alguem
-hash_value=356
-inseri alguem
-hash_value=327
-inseri alguem
-hash_value=298
-inseri alguem
-hash_value=379
-deu colisão
-inseri alguem
-hash_value=384
-deu colisão
-inseri alguem
-hash_value=355
-deu colisão
-inseri alguem
-hash_value=326
-inseri alguem
-hash_value=297
-inseri alguem
-hash_value=367
-inseri alguem
-hash_value=338
-inseri alguem
-hash_value=309
-inseri alguem
-hash_value=288
-inseri alguem
-hash_value=361
-inseri alguem
-hash_value=322
-inseri alguem
-hash_value=337
-inseri alguem
-hash_value=308
-deu colisão
-inseri alguem
-hash_value=287
-inseri alguem
-hash_value=349
-inseri alguem
-hash_value=320
-deu colisão
-inseri alguem
-hash_value=291
-inseri alguem
-hash_value=372
-deu colisão
-inseri alguem
-hash_value=343
-inseri alguem
-hash_value=303
-inseri alguem
-hash_value=274
-inseri alguem
-hash_value=290
-inseri alguem
-hash_value=360
-inseri alguem
-hash_value=331
-inseri alguem
-hash_value=302
-inseri alguem
-hash_value=273
-inseri alguem
-hash_value=354
-deu colisão
-inseri alguem
-hash_value=315
-deu colisão
-inseri alguem
-hash_value=285
-inseri alguem
-hash_value=264
-inseri alguem
-hash_value=337
-deu colisão
-inseri alguem
-hash_value=342
-inseri alguem
-hash_value=313
-inseri alguem
-hash_value=284
-inseri alguem
-hash_value=263
-inseri alguem
-hash_value=336
-inseri alguem
-hash_value=296
-inseri alguem
-hash_value=267
-inseri alguem
-hash_value=348
-deu colisão
-inseri alguem
-hash_value=319
-inseri alguem
-hash_value=290
-deu colisão
-inseri alguem
-hash_value=295
-inseri alguem
-hash_value=266
-inseri alguem
-hash_value=347
-deu colisão
-inseri alguem
-hash_value=308
-deu colisão
-inseri alguem
-hash_value=278
-inseri alguem
-hash_value=249
-inseri alguem
-hash_value=330
-deu colisão
-inseri alguem
-hash_value=301
-inseri alguem
-hash_value=272
-inseri alguem
-hash_value=251
-inseri alguem
-hash_value=248
-inseri alguem
-hash_value=329
-deu colisão
-inseri alguem
-hash_value=289
-inseri alguem
-hash_value=260
-inseri alguem
-hash_value=239
-inseri alguem
-hash_value=312
-inseri alguem
-hash_value=283
-inseri alguem
-hash_value=244
-inseri alguem
-hash_value=324
-inseri alguem
-hash_value=295
-deu colisão
-inseri alguem
-hash_value=301
-deu colisão
-inseri alguem
-hash_value=271
-inseri alguem
-hash_value=242
-inseri alguem
-hash_value=323
-deu colisão
-inseri alguem
-hash_value=294
-inseri alguem
-hash_value=265
-inseri alguem
-hash_value=225
-inseri alguem
-hash_value=306
-deu colisão
-inseri alguem
-hash_value=277
-inseri alguem
-hash_value=248
-deu colisão
-inseri alguem
-hash_value=253
-inseri alguem
-hash_value=224
-inseri alguem
-hash_value=305
-inseri alguem
-hash_value=276
-inseri alguem
-hash_value=237
-inseri alguem
-hash_value=216
-inseri alguem
-hash_value=288
-deu colisão
-inseri alguem
-hash_value=259
-inseri alguem
-hash_value=230
-inseri alguem
-hash_value=311
-inseri alguem
-hash_value=214
-inseri alguem
-hash_value=287
-deu colisão
-inseri alguem
-hash_value=258
-inseri alguem
-hash_value=218
-inseri alguem
-hash_value=299
-inseri alguem
-hash_value=270
-inseri alguem
-hash_value=241
-inseri alguem
-hash_value=212
-inseri alguem
-hash_value=283
-deu colisão
-inseri alguem
-hash_value=253
-deu colisão
-inseri alguem
-hash_value=285
-deu colisão
-inseri alguem
-hash_value=256
-inseri alguem
-hash_value=227
-inseri alguem
-hash_value=206
-inseri alguem
-hash_value=268
-inseri alguem
-hash_value=239
-deu colisão
-inseri alguem
-hash_value=210
-inseri alguem
-hash_value=291
-deu colisão
-inseri alguem
-hash_value=262
-inseri alguem
-hash_value=222
-inseri alguem
-hash_value=238
-inseri alguem
-hash_value=209
-inseri alguem
-hash_value=279
-inseri alguem
-hash_value=250
-inseri alguem
-hash_value=221
-inseri alguem
-hash_value=192
-inseri alguem
-hash_value=273
-deu colisão
-inseri alguem
-hash_value=234
-inseri alguem
-hash_value=204
-inseri alguem
-hash_value=183
-inseri alguem
-hash_value=181
-inseri alguem
-hash_value=261
-inseri alguem
-hash_value=232
-inseri alguem
-hash_value=203
-inseri alguem
-hash_value=182
-inseri alguem
-hash_value=255
-inseri alguem
-hash_value=215
-inseri alguem
-hash_value=186
-inseri alguem
-hash_value=267
-deu colisão
-inseri alguem
-hash_value=238
-deu colisão
-inseri alguem
-hash_value=243
-inseri alguem
-hash_value=214
-deu colisão
-inseri alguem
-hash_value=185
-deu colisão
-inseri alguem
-hash_value=266
-deu colisão
-inseri alguem
-hash_value=227
-deu colisão
-inseri alguem
-hash_value=197
-inseri alguem
-hash_value=168
-deu colisão
-inseri alguem
-hash_value=249
-deu colisão
-inseri alguem
-hash_value=220
-inseri alguem
-hash_value=191
-deu colisão
-inseri alguem
-hash_value=196
-inseri alguem
-hash_value=167
-inseri alguem
-hash_value=248
-deu colisão
-inseri alguem
-hash_value=208
-inseri alguem
-hash_value=179
-deu colisão
-inseri alguem
-hash_value=158
-inseri alguem
-hash_value=231
-inseri alguem
-hash_value=202
-inseri alguem
-hash_value=163
-inseri alguem
-hash_value=243
-deu colisão
-inseri alguem
-hash_value=157
-deu colisão
-inseri alguem
-hash_value=220
-deu colisão
-inseri alguem
-hash_value=190
-inseri alguem
-hash_value=161
-deu colisão
-inseri alguem
-hash_value=242
-deu colisão
-inseri alguem
-hash_value=213
-inseri alguem
-hash_value=184
-inseri alguem
-hash_value=144
-deu colisão
-inseri alguem
-hash_value=225
-deu colisão
-inseri alguem
-hash_value=196
-deu colisão
-inseri alguem
-hash_value=201
-inseri alguem
-hash_value=172
-inseri alguem
-hash_value=143
-deu colisão
-inseri alguem
-hash_value=224
-deu colisão
-inseri alguem
-hash_value=195
-inseri alguem
-hash_value=156
-inseri alguem
-hash_value=135
-inseri alguem
-hash_value=207
-inseri alguem
-hash_value=178
-deu colisão
-inseri alguem
-hash_value=149
-inseri alguem
-hash_value=154
-deu colisão
-inseri alguem
-hash_value=133
-deu colisão
-inseri alguem
-hash_value=206
-deu colisão
-inseri alguem
-hash_value=177
-inseri alguem
-hash_value=137
-deu colisão
-inseri alguem
-hash_value=218
-deu colisão
-inseri alguem
-hash_value=189
-inseri alguem
-hash_value=160
-inseri alguem
-hash_value=131
-inseri alguem
-hash_value=202
-deu colisão
-inseri alguem
-hash_value=217
-inseri alguem
-hash_value=188
-inseri alguem
-hash_value=149
-deu colisão
-inseri alguem
-hash_value=119
-deu colisão
-inseri alguem
-hash_value=200
-inseri alguem
-hash_value=171
-inseri alguem
-hash_value=142
-inseri alguem
-hash_value=121
-deu colisão
-inseri alguem
-hash_value=183
-deu colisão
-inseri alguem
-hash_value=154
-deu colisão
-inseri alguem
-hash_value=170
-inseri alguem
-hash_value=130
-deu colisão
-inseri alguem
-hash_value=109
-deu colisão
-inseri alguem
-hash_value=182
-deu colisão
-inseri alguem
-hash_value=153
-inseri alguem
-hash_value=124
-inseri alguem
-hash_value=195
-deu colisão
-inseri alguem
-hash_value=165
-inseri alguem
-hash_value=136
-deu colisão
-inseri alguem
-hash_value=107
-deu colisão
-inseri alguem
-hash_value=137
-deu colisão
-inseri alguem
-hash_value=108
-deu colisão
-inseri alguem
-hash_value=179
-deu colisão
-inseri alguem
-hash_value=149
-deu colisão
-inseri alguem
-hash_value=120
-deu colisão
-inseri alguem
-hash_value=99
-inseri alguem
-hash_value=172
-deu colisão
-inseri alguem
-hash_value=143
-deu colisão
-inseri alguem
-hash_value=103
-inseri alguem
-hash_value=184
-deu colisão
-inseri alguem
-hash_value=98
-deu colisão
-inseri alguem
-hash_value=160
-deu colisão
-inseri alguem
-hash_value=131
-deu colisão
-inseri alguem
-hash_value=102
-deu colisão
-inseri alguem
-hash_value=183
-deu colisão
-inseri alguem
-hash_value=154
-deu colisão
-inseri alguem
-hash_value=115
-deu colisão
-inseri alguem
-hash_value=85
-inseri alguem
-hash_value=166
-inseri alguem
-hash_value=137
-deu colisão
-inseri alguem
-hash_value=142
-deu colisão
-inseri alguem
-hash_value=113
-deu colisão
-inseri alguem
-hash_value=84
-deu colisão
-inseri alguem
-hash_value=165
-deu colisão
-inseri alguem
-hash_value=136
-deu colisão
-inseri alguem
-hash_value=96
-inseri alguem
-hash_value=75
-inseri alguem
-hash_value=148
-inseri alguem
-hash_value=119
-deu colisão
-inseri alguem
-hash_value=90
-deu colisão
-inseri alguem
-hash_value=95
-deu colisão
-inseri alguem
-hash_value=74
-deu colisão
-inseri alguem
-hash_value=147
-inseri alguem
-hash_value=108
-deu colisão
-inseri alguem
-hash_value=78
-inseri alguem
-hash_value=159
-inseri alguem
-hash_value=130
-deu colisão
-inseri alguem
-hash_value=101
-deu colisão
-inseri alguem
-hash_value=72
-deu colisão
-inseri alguem
-hash_value=142
-deu colisão
-inseri alguem
-hash_value=158
-deu colisão
-inseri alguem
-hash_value=129
-inseri alguem
-hash_value=89
-inseri alguem
-hash_value=60
-deu colisão
-inseri alguem
-hash_value=141
-inseri alguem
-hash_value=112
-deu colisão
-inseri alguem
-hash_value=83
-deu colisão
-inseri alguem
-hash_value=62
-deu colisão
-inseri alguem
-hash_value=124
-deu colisão
-inseri alguem
-hash_value=95
-deu colisão
-inseri alguem
-hash_value=101
-deu colisão
-inseri alguem
-hash_value=71
-inseri alguem
-hash_value=50
-deu colisão
-inseri alguem
-hash_value=123
-inseri alguem
-hash_value=94
-deu colisão
-inseri alguem
-hash_value=65
-deu colisão
-inseri alguem
-hash_value=135
-deu colisão
-inseri alguem
-hash_value=106
-deu colisão
-inseri alguem
-hash_value=77
-deu colisão
-inseri alguem
-hash_value=48
-deu colisão
-inseri alguem
-hash_value=53
-inseri alguem
-hash_value=134
-inseri alguem
-hash_value=105
-inseri alguem
-hash_value=76
-deu colisão
-inseri alguem
-hash_value=37
-deu colisão
-inseri alguem
-hash_value=117
-inseri alguem
-hash_value=88
-deu colisão
-inseri alguem
-hash_value=59
-deu colisão
-inseri alguem
-hash_value=38
-deu colisão
-inseri alguem
-hash_value=111
-inseri alguem
-hash_value=116
-deu colisão
-inseri alguem
-hash_value=87
-inseri alguem
-hash_value=58
-deu colisão
-inseri alguem
-hash_value=37
-deu colisão
-inseri alguem
-hash_value=99
-deu colisão
-inseri alguem
-hash_value=70
-deu colisão
-inseri alguem
-hash_value=41
-inseri alguem
-hash_value=122
-inseri alguem
-hash_value=83
-deu colisão
-inseri alguem
-hash_value=53
-deu colisão
-inseri alguem
-hash_value=69
-deu colisão
-inseri alguem
-hash_value=30
-deu colisão
-inseri alguem
-hash_value=110
-inseri alguem
-hash_value=81
-deu colisão
-inseri alguem
-hash_value=52
-inseri alguem
-hash_value=23
-inseri alguem
-hash_value=104
-deu colisão
-inseri alguem
-hash_value=64
-inseri alguem
-hash_value=35
-inseri alguem
-hash_value=14
-deu colisão
-inseri alguem
-hash_value=11
-inseri alguem
-hash_value=92
-inseri alguem
-hash_value=63
-inseri alguem
-hash_value=34
-inseri alguem
-hash_value=13
-deu colisão
-inseri alguem
-hash_value=76
-deu colisão
-inseri alguem
-hash_value=46
-deu colisão
-inseri alguem
-hash_value=17
-inseri alguem
-hash_value=98
-deu colisão
-inseri alguem
-hash_value=69
-deu colisão
-inseri alguem
-hash_value=91
-deu colisão
-inseri alguem
-hash_value=61
-deu colisão
-inseri alguem
-hash_value=32
-deu colisão
-inseri alguem
-hash_value=3
-deu colisão
-inseri alguem
-hash_value=84
-deu colisão
-inseri alguem
-hash_value=55
-deu colisão
-inseri alguem
-hash_value=15
-inseri alguem
-hash_value=995
-deu colisão
-inseri alguem
-hash_value=67
-deu colisão
-inseri alguem
-hash_value=38
-deu colisão
-inseri alguem
-hash_value=43
-deu colisão
-inseri alguem
-hash_value=14
-deu colisão
-inseri alguem
-hash_value=994
-deu colisão
-inseri alguem
-hash_value=66
-deu colisão
-inseri alguem
-hash_value=27
-deu colisão
-inseri alguem
-hash_value=998
-inseri alguem
-hash_value=78
-deu colisão
-inseri alguem
-hash_value=49
-deu colisão
-inseri alguem
-hash_value=20
-deu colisão
-inseri alguem
-hash_value=992
-deu colisão
-inseri alguem
-hash_value=997
-deu colisão
-inseri alguem
-hash_value=77
-deu colisão
-inseri alguem
-hash_value=48
-deu colisão
-inseri alguem
-hash_value=8
-deu colisão
-inseri alguem
-hash_value=980
-deu colisão
-inseri alguem
-hash_value=60
-deu colisão
-inseri alguem
-hash_value=31
-deu colisão
-inseri alguem
-hash_value=2
-deu colisão
-inseri alguem
-hash_value=982
-inseri alguem
-hash_value=43
-deu colisão
-inseri alguem
-hash_value=59
-deu colisão
-inseri alguem
-hash_value=20
-deu colisão
-inseri alguem
-hash_value=991
-inseri alguem
-hash_value=970
-deu colisão
-inseri alguem
-hash_value=42
-deu colisão
-inseri alguem
-hash_value=13
-deu colisão
-inseri alguem
-hash_value=985
-deu colisão
-inseri alguem
-hash_value=54
-deu colisão
-inseri alguem
-hash_value=25
-deu colisão
-inseri alguem
-hash_value=997
-deu colisão
-inseri alguem
-hash_value=1
-deu colisão
-inseri alguem
-hash_value=973
-inseri alguem
-hash_value=53
-deu colisão
-inseri alguem
-hash_value=24
-deu colisão
-inseri alguem
-hash_value=996
-deu colisão
-inseri alguem
-hash_value=957
-deu colisão
-inseri alguem
-hash_value=36
-deu colisão
-inseri alguem
-hash_value=7
-deu colisão
-inseri alguem
-hash_value=979
-deu colisão
-inseri alguem
-hash_value=958
-deu colisão
-inseri alguem
-hash_value=955
-deu colisão
-inseri alguem
-hash_value=35
-deu colisão
-inseri alguem
-hash_value=6
-inseri alguem
-hash_value=978
-deu colisão
-inseri alguem
-hash_value=957
-deu colisão
-inseri alguem
-hash_value=18
-inseri alguem
-hash_value=990
-deu colisão
-inseri alguem
-hash_value=961
-deu colisão
-inseri alguem
-hash_value=41
-deu colisão
-inseri alguem
-hash_value=2
-deu colisão
-inseri alguem
-hash_value=17
-deu colisão
-inseri alguem
-hash_value=989
-inseri alguem
-hash_value=950
-deu colisão
-inseri alguem
-hash_value=29
-inseri alguem
-hash_value=0
-deu colisão
-inseri alguem
-hash_value=972
-deu colisão
-inseri alguem
-hash_value=943
-deu colisão
-inseri alguem
-hash_value=23
-deu colisão
-inseri alguem
-hash_value=984
-inseri alguem
-hash_value=955
-deu colisão
-inseri alguem
-hash_value=971
-inseri alguem
-hash_value=931
-inseri alguem
-hash_value=11
-deu colisão
-inseri alguem
-hash_value=983
-inseri alguem
-hash_value=954
-inseri alguem
-hash_value=933
-deu colisão
-inseri alguem
-hash_value=996
-deu colisão
-inseri alguem
-hash_value=966
-deu colisão
-inseri alguem
-hash_value=937
-inseri alguem
-hash_value=17
-deu colisão
-inseri alguem
-hash_value=922
-deu colisão
-inseri alguem
-hash_value=994
-deu colisão
-inseri alguem
-hash_value=965
-deu colisão
-inseri alguem
-hash_value=936
-inseri alguem
-hash_value=16
-deu colisão
-inseri alguem
-hash_value=977
-inseri alguem
-hash_value=948
-inseri alguem
-hash_value=919
-inseri alguem
-hash_value=1000
-deu colisão
-inseri alguem
-hash_value=971
-deu colisão
-inseri alguem
-hash_value=976
-deu colisão
-inseri alguem
-hash_value=947
-deu colisão
-inseri alguem
-hash_value=918
-deu colisão
-inseri alguem
-hash_value=989
-deu colisão
-inseri alguem
-hash_value=959
-inseri alguem
-hash_value=930
-inseri alguem
-hash_value=909
-deu colisão
-inseri alguem
-hash_value=982
-deu colisão
-inseri alguem
-hash_value=953
-deu colisão
-inseri alguem
-hash_value=913
-inseri alguem
-hash_value=945
-deu colisão
-inseri alguem
-hash_value=916
-deu colisão
-inseri alguem
-hash_value=997
-deu colisão
-inseri alguem
-hash_value=968
-deu colisão
-inseri alguem
-hash_value=928
-deu colisão
-inseri alguem
-hash_value=899
-deu colisão
-inseri alguem
-hash_value=980
-deu colisão
-inseri alguem
-hash_value=951
-deu colisão
-inseri alguem
-hash_value=922
-deu colisão
-inseri alguem
-hash_value=901
-inseri alguem
-hash_value=898
-deu colisão
-inseri alguem
-hash_value=979
-deu colisão
-inseri alguem
-hash_value=940
-deu colisão
-inseri alguem
-hash_value=910
-inseri alguem
-hash_value=889
-inseri alguem
-hash_value=962
-deu colisão
-inseri alguem
-hash_value=933
-deu colisão
-inseri alguem
-hash_value=904
-deu colisão
-inseri alguem
-hash_value=974
-deu colisão
-inseri alguem
-hash_value=945
-deu colisão
-inseri alguem
-hash_value=961
-deu colisão
-inseri alguem
-hash_value=921
-deu colisão
-inseri alguem
-hash_value=892
-inseri alguem
-hash_value=973
-deu colisão
-inseri alguem
-hash_value=944
-deu colisão
-inseri alguem
-hash_value=915
-deu colisão
-inseri alguem
-hash_value=876
-deu colisão
-inseri alguem
-hash_value=956
-deu colisão
-inseri alguem
-hash_value=927
-deu colisão
-inseri alguem
-hash_value=898
-deu colisão
-inseri alguem
-hash_value=903
-inseri alguem
-hash_value=874
-deu colisão
-inseri alguem
-hash_value=955
-deu colisão
-inseri alguem
-hash_value=926
-deu colisão
-inseri alguem
-hash_value=897
-deu colisão
-inseri alguem
-hash_value=876
-deu colisão
-inseri alguem
-hash_value=938
-inseri alguem
-hash_value=909
-deu colisão
-inseri alguem
-hash_value=880
-deu colisão
-inseri alguem
-hash_value=961
-deu colisão
-inseri alguem
-hash_value=864
-deu colisão
-inseri alguem
-hash_value=937
-deu colisão
-inseri alguem
-hash_value=908
-deu colisão
-inseri alguem
-hash_value=869
-deu colisão
-inseri alguem
-hash_value=949
-deu colisão
-inseri alguem
-hash_value=920
-deu colisão
-inseri alguem
-hash_value=891
-deu colisão
-inseri alguem
-hash_value=862
-deu colisão
-inseri alguem
-hash_value=943
-deu colisão
-inseri alguem
-hash_value=903
-deu colisão
-inseri alguem
-hash_value=919
-deu colisão
-inseri alguem
-hash_value=890
-deu colisão
-inseri alguem
-hash_value=850
-inseri alguem
-hash_value=931
-deu colisão
-inseri alguem
-hash_value=902
-deu colisão
-inseri alguem
-hash_value=873
-deu colisão
-inseri alguem
-hash_value=852
-deu colisão
-inseri alguem
-hash_value=915
-deu colisão
-inseri alguem
-hash_value=885
-deu colisão
-inseri alguem
-hash_value=856
-deu colisão
-inseri alguem
-hash_value=862
-deu colisão
-inseri alguem
-hash_value=841
-deu colisão
-inseri alguem
-hash_value=913
-deu colisão
-inseri alguem
-hash_value=884
-deu colisão
-inseri alguem
-hash_value=855
-deu colisão
-inseri alguem
-hash_value=936
-deu colisão
-inseri alguem
-hash_value=896
-inseri alguem
-hash_value=867
-deu colisão
-inseri alguem
-hash_value=838
-deu colisão
-inseri alguem
-hash_value=919
-deu colisão
-inseri alguem
-hash_value=924
-inseri alguem
-hash_value=895
-deu colisão
-inseri alguem
-hash_value=866
-inseri alguem
-hash_value=837
-deu colisão
-inseri alguem
-hash_value=908
-deu colisão
-inseri alguem
-hash_value=878
-inseri alguem
-hash_value=849
-inseri alguem
-hash_value=828
-deu colisão
-inseri alguem
-hash_value=901
-deu colisão
-inseri alguem
-hash_value=872
-deu colisão
-inseri alguem
-hash_value=877
-inseri alguem
-hash_value=848
-deu colisão
-inseri alguem
-hash_value=827
-deu colisão
-inseri alguem
-hash_value=889
-deu colisão
-inseri alguem
-hash_value=860
-deu colisão
-inseri alguem
-hash_value=831
-inseri alguem
-hash_value=912
-deu colisão
-inseri alguem
-hash_value=883
-inseri alguem
-hash_value=844
-deu colisão
-inseri alguem
-hash_value=814
-inseri alguem
-hash_value=830
-deu colisão
-inseri alguem
-hash_value=901
-deu colisão
-inseri alguem
-hash_value=871
-inseri alguem
-hash_value=842
-inseri alguem
-hash_value=813
-inseri alguem
-hash_value=894
-deu colisão
-inseri alguem
-hash_value=865
-inseri alguem
-hash_value=825
-inseri alguem
-hash_value=804
-inseri alguem
-hash_value=877
-deu colisão
-inseri alguem
-hash_value=807
-deu colisão
-inseri alguem
-hash_value=880
-deu colisão
-inseri alguem
-hash_value=840
-deu colisão
-inseri alguem
-hash_value=811
-deu colisão
-inseri alguem
-hash_value=892
-deu colisão
-inseri alguem
-hash_value=863
-deu colisão
-inseri alguem
-hash_value=834
-deu colisão
-inseri alguem
-hash_value=795
-inseri alguem
-hash_value=875
-deu colisão
-inseri alguem
-hash_value=846
-deu colisão
-inseri alguem
-hash_value=852
-deu colisão
-inseri alguem
-hash_value=822
-deu colisão
-inseri alguem
-hash_value=793
-deu colisão
-inseri alguem
-hash_value=874
-deu colisão
-inseri alguem
-hash_value=845
-deu colisão
-inseri alguem
-hash_value=816
-deu colisão
-inseri alguem
-hash_value=795
-deu colisão
-inseri alguem
-hash_value=857
-inseri alguem
-hash_value=828
-deu colisão
-inseri alguem
-hash_value=799
-deu colisão
-inseri alguem
-hash_value=804
-deu colisão
-inseri alguem
-hash_value=783
-deu colisão
-inseri alguem
-hash_value=856
-deu colisão
-inseri alguem
-hash_value=827
-deu colisão
-inseri alguem
-hash_value=788
-deu colisão
-inseri alguem
-hash_value=868
-deu colisão
-inseri alguem
-hash_value=839
-deu colisão
-inseri alguem
-hash_value=810
-deu colisão
-inseri alguem
-hash_value=781
-deu colisão
-inseri alguem
-hash_value=862
-deu colisão
-inseri alguem
-hash_value=867
-deu colisão
-inseri alguem
-hash_value=838
-deu colisão
-inseri alguem
-hash_value=809
-deu colisão
-inseri alguem
-hash_value=769
-inseri alguem
-hash_value=850
-deu colisão
-inseri alguem
-hash_value=821
-deu colisão
-inseri alguem
-hash_value=792
-deu colisão
-inseri alguem
-hash_value=771
-deu colisão
-inseri alguem
-hash_value=834
-deu colisão
-inseri alguem
-hash_value=804
-deu colisão
-inseri alguem
-hash_value=820
-inseri alguem
-hash_value=781
-deu colisão
-inseri alguem
-hash_value=760
-inseri alguem
-hash_value=832
-inseri alguem
-hash_value=803
-deu colisão
-inseri alguem
-hash_value=774
-deu colisão
-inseri alguem
-hash_value=855
-deu colisão
-inseri alguem
-hash_value=815
-inseri alguem
-hash_value=786
-deu colisão
-inseri alguem
-hash_value=757
-deu colisão
-inseri alguem
-hash_value=762
-deu colisão
-inseri alguem
-hash_value=843
-inseri alguem
-hash_value=814
-deu colisão
-inseri alguem
-hash_value=785
-deu colisão
-inseri alguem
-hash_value=756
-deu colisão
-inseri alguem
-hash_value=827
-deu colisão
-inseri alguem
-hash_value=797
-inseri alguem
-hash_value=768
-deu colisão
-inseri alguem
-hash_value=747
-deu colisão
-inseri alguem
-hash_value=820
-deu colisão
-inseri alguem
-hash_value=825
-deu colisão
-inseri alguem
-hash_value=796
-inseri alguem
-hash_value=767
-deu colisão
-inseri alguem
-hash_value=746
-deu colisão
-inseri alguem
-hash_value=808
-inseri alguem
-hash_value=779
-deu colisão
-inseri alguem
-hash_value=750
-deu colisão
-inseri alguem
-hash_value=831
-deu colisão
-inseri alguem
-hash_value=802
-deu colisão
-inseri alguem
-hash_value=763
-deu colisão
-inseri alguem
-hash_value=778
-inseri alguem
-hash_value=749
-deu colisão
-inseri alguem
-hash_value=820
-deu colisão
-inseri alguem
-hash_value=790
-inseri alguem
-hash_value=761
-inseri alguem
-hash_value=732
-inseri alguem
-hash_value=813
-deu colisão
-inseri alguem
-hash_value=784
-inseri alguem
-hash_value=744
-inseri alguem
-hash_value=723
-inseri alguem
-hash_value=731
-deu colisão
-inseri alguem
-hash_value=801
-deu colisão
-inseri alguem
-hash_value=772
-inseri alguem
-hash_value=743
-inseri alguem
-hash_value=722
-deu colisão
-inseri alguem
-hash_value=795
-deu colisão
-inseri alguem
-hash_value=756
-deu colisão
-inseri alguem
-hash_value=726
-inseri alguem
-hash_value=807
-deu colisão
-inseri alguem
-hash_value=778
-deu colisão
-inseri alguem
-hash_value=783
-deu colisão
-inseri alguem
-hash_value=754
-deu colisão
-inseri alguem
-hash_value=725
-inseri alguem
-hash_value=806
-deu colisão
-inseri alguem
-hash_value=777
-inseri alguem
-hash_value=737
-inseri alguem
-hash_value=708
-inseri alguem
-hash_value=789
-deu colisão
-inseri alguem
-hash_value=760
-deu colisão
-inseri alguem
-hash_value=731
-deu colisão
-inseri alguem
-hash_value=752
-deu colisão
-inseri alguem
-hash_value=723
-deu colisão
-inseri alguem
-hash_value=702
-inseri alguem
-hash_value=775
-deu colisão
-inseri alguem
-hash_value=746
-deu colisão
-inseri alguem
-hash_value=707
-deu colisão
-inseri alguem
-hash_value=787
-deu colisão
-inseri alguem
-hash_value=758
-deu colisão
-inseri alguem
-hash_value=729
-deu colisão
-inseri alguem
-hash_value=700
-deu colisão
-inseri alguem
-hash_value=705
-deu colisão
-inseri alguem
-hash_value=786
-deu colisão
-inseri alguem
-hash_value=757
-deu colisão
-inseri alguem
-hash_value=728
-deu colisão
-inseri alguem
-hash_value=688
-inseri alguem
-hash_value=769
-deu colisão
-inseri alguem
-hash_value=740
-deu colisão
-inseri alguem
-hash_value=711
-deu colisão
-inseri alguem
-hash_value=690
-inseri alguem
-hash_value=753
-deu colisão
-inseri alguem
-hash_value=768
-deu colisão
-inseri alguem
-hash_value=739
-deu colisão
-inseri alguem
-hash_value=700
-deu colisão
-inseri alguem
-hash_value=679
-inseri alguem
-hash_value=751
-inseri alguem
-hash_value=722
-deu colisão
-inseri alguem
-hash_value=693
-deu colisão
-inseri alguem
-hash_value=774
-deu colisão
-inseri alguem
-hash_value=734
-deu colisão
-inseri alguem
-hash_val
+fiz o pm
+fiz o geo
+first_svg_fullpath done
+/Users/Denise/Downloads/output/c1.svg
+start_new_svg_file done
+insert_comment_in_svg done
+entrei no insert
+começando o traverse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 4
+(tree->lmin) == NULL ? 0
+(tree->height? 4
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 2
+(tree->lmin) == NULL ? 0
+(tree->height? 2
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 1
+(tree->lmin) == NULL ? 0
+(tree->height? 1
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 1
+(tree->lmin) == NULL ? 0
+(tree->height? 1
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 3
+(tree->lmin) == NULL ? 0
+(tree->height? 3
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 2
+(tree->lmin) == NULL ? 0
+(tree->height? 2
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 1
+(tree->lmin) == NULL ? 0
+(tree->height? 1
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 1
+(tree->lmin) == NULL ? 0
+(tree->height? 1
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 2
+(tree->lmin) == NULL ? 0
+(tree->height? 2
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 0
+entrei no true
+vou inserir
+done = 1
+continue_traverse_avltaux
+current_item
+current not null
+(tree->height? 1
+(tree->lmin) == NULL ? 0
+(tree->height? 1
+lmin_item
+lmax_item
+lmax_item
+rmax_item
+continue_traverse_avltaux indo mandar pro trvaerse
+inseri blocks
+fiz o svg 1
+
+height:4
+cep=b01.4
+cep=b02.4
+cep=b03.4
+cep=b04.4
+cep=b05.4
+cep=b06.4
+cep=b07.4
+cep=b08.4
+cep=b09.4
+cep=b010.4
+
+LEFT:	
+max:	cep=b01.3
+
+min:	cep=b01.1
+
+RIGHT:	
+max:	cep=b01.10
+
+min:	cep=b01.5
+
+height:2
+cep=b01.2
+cep=b02.2
+cep=b03.2
+cep=b04.2
+cep=b05.2
+cep=b06.2
+cep=b07.2
+cep=b08.2
+cep=b09.2
+cep=b010.2
+
+LEFT:	
+max:	cep=b01.1
+
+min:	cep=b01.1
+
+RIGHT:	
+max:	cep=b01.3
+
+min:	cep=b01.3
+
+height:1
+cep=b01.1
+cep=b02.1
+cep=b03.1
+cep=b04.1
+cep=b05.1
+cep=b06.1
+cep=b07.1
+cep=b08.1
+cep=b09.1
+cep=b010.1
+
+LEFT:	
+max:	cep=b01.1
+
+min:	cep=b01.1
+
+RIGHT:	
+max:	cep=b01.1
+
+min:	cep=b01.1
+
+height:1
+cep=b01.3
+cep=b02.3
+cep=b03.3
+cep=b04.3
+cep=b05.3
+cep=b06.3
+cep=b07.3
+cep=b08.3
+cep=b09.3
+cep=b010.3
+
+LEFT:	
+max:	cep=b01.3
+
+min:	cep=b01.3
+
+RIGHT:	
+max:	cep=b01.3
+
+min:	cep=b01.3
+
+height:3
+cep=b01.8
+cep=b02.8
+cep=b03.8
+cep=b04.8
+cep=b05.8
+cep=b06.8
+cep=b07.8
+cep=b08.8
+cep=b09.8
+cep=b010.8
+
+LEFT:	
+max:	cep=b01.7
+
+min:	cep=b01.5
+
+RIGHT:	
+max:	cep=b01.10
+
+min:	cep=b01.9
+
+height:2
+cep=b01.6
+cep=b02.6
+cep=b03.6
+cep=b04.6
+cep=b05.6
+cep=b06.6
+cep=b07.6
+cep=b08.6
+cep=b09.6
+cep=b010.6
+
+LEFT:	
+max:	cep=b01.5
+
+min:	cep=b01.5
+
+RIGHT:	
+max:	cep=b01.7
+
+min:	cep=b01.7
+
+height:1
+cep=b01.5
+cep=b02.5
+cep=b03.5
+cep=b04.5
+cep=b05.5
+cep=b06.5
+cep=b07.5
+cep=b08.5
+cep=b09.5
+cep=b010.5
+
+LEFT:	
+max:	cep=b01.5
+
+min:	cep=b01.5
+
+RIGHT:	
+max:	cep=b01.5
+
+min:	cep=b01.5
+
+height:1
+cep=b01.7
+cep=b02.7
+cep=b03.7
+cep=b04.7
+cep=b05.7
+cep=b06.7
+cep=b07.7
+cep=b08.7
+cep=b09.7
+cep=b010.7
+
+LEFT:	
+max:	cep=b01.7
+
+min:	cep=b01.7
+
+RIGHT:	
+max:	cep=b01.7
+
+min:	cep=b01.7
+
+height:2
+cep=b01.9
+cep=b02.9
+cep=b03.9
+cep=b04.9
+cep=b05.9
+cep=b06.9
+cep=b07.9
+cep=b08.9
+cep=b09.9
+cep=b010.9
+
+LEFT:	
+max:	cep=b01.9
+
+min:	cep=b01.9
+
+RIGHT:	
+max:	cep=b01.10
+
+min:	cep=b01.10
+
+height:1
+cep=b01.10
+cep=b02.10
+cep=b03.10
+cep=b04.10
+cep=b05.10
+cep=b06.10
+cep=b07.10
+cep=b08.10
+cep=b09.10
+cep=b010.10
+
+LEFT:	
+max:	cep=b01.10
+
+min:	cep=b01.10
+
+RIGHT:	
+max:	cep=b01.10
+
+min:	cep=b01.10
+antes get_qry_input_and_generate_output
+entrei no hom
+estou no hom
+estou no set_x1_x2_y1_y2
+no condition_rect_in_rect_ 
+0.000000
+230.000000
+retornando 0
+done = 1
+continue_traverse_avltaux

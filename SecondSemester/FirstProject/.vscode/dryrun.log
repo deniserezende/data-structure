@@ -1,0 +1,7 @@
+make all --dry-run --keep-going --print-directory
+make: Entering directory `/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/FirstProject'
+ 
+make: *** No rule to make target `all'.
+ 
+make: Leaving directory `/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/FirstProject'
+ 

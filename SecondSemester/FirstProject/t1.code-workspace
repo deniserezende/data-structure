@@ -22,7 +22,16 @@
 			"hash_table.h": "c",
 			"rectangle.h": "c",
 			"qry_del_m_dm_mud.h": "c",
-			"qry_auxiliary_functions.h": "c"
-		}
+			"qry_auxiliary_functions.h": "c",
+			"_auxiliary_functions.h": "c",
+			"ios": "c"
+		},
+		"makefile.launchConfigurations": [
+			{
+				"cwd": "/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/FirstProject",
+				"binaryPath": "/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/FirstProject/t1",
+				"binaryArgs": []
+			}
+		]
 	}
 }

@@ -23,6 +23,11 @@ char *get_txt_and_svg_filename(char *geo_filename, char *qry_filename);
 char *get_txt_fullpath(char *geo_filename, char *qry_filename, char *output_path);
 char *get_second_svg_fullpath(char *geo_filename, char *qry_filename, char *output_path);
 
+void print_item(type_rect rect){
+    type_rectdata data = get_rect_data(rect);
+    printf("cep=%s\n", get_property_cep(data));
+}
+
 
 int main(int argc, char *argv[]) {
     char *input_path = NULL;
@@ -47,6 +52,12 @@ int main(int argc, char *argv[]) {
     // --------------------------------------------------- COMMAND LINE -----------------------------------------------
     commandline(argc, argv, &input_path, &geo_filename, &qry_filename, &pm_filename, &output_path);
     printf("fiz o commandline\n");
+    printf("input_path = %s\n", input_path);
+    printf("geo_filename = %s\n", geo_filename);
+    printf("qry_filename = %s\n", qry_filename);
+    printf("pm_filename = %s\n", pm_filename);
+    printf("output_path = %s\n", output_path);
+
 
     // --------------------------------------------------- PM FILE ---------------------------------------------------
     pm_fullpath = get_pm_fullpath(pm_filename, input_path);
@@ -58,6 +69,9 @@ int main(int argc, char *argv[]) {
     geo_fullpath = get_geo_fullpath(geo_filename, input_path);
     cityblocks_avltree = get_geo_input(geo_fullpath, cityblocks_avltree, cityblocks_hashtable);
     printf("fiz o geo\n");
+    if(empty_mMl_avl_tree(cityblocks_avltree)){
+        printf("OH NO EMPTY\n");
+    }
 
 
     // --------------------------------------------------- OUTPUT FILE SVG 1 ---------------------------------------------------
@@ -65,7 +79,7 @@ int main(int argc, char *argv[]) {
     first_svg_fullpath = get_first_svg_fullpath(geo_filename, output_path);
     printf("first_svg_fullpath done\n");
     printf("%s\n", first_svg_fullpath);
-    char* my_name = malloc(sizeof(char) * 17);
+    char* my_name = (char*)malloc(sizeof(char) * 17);
     sprintf(my_name, "Denise Rezende%c", '\0');
 
     // Creating svg output file
@@ -86,6 +100,13 @@ int main(int argc, char *argv[]) {
     printf("fiz o svg 1\n");
 
 
+    void(*get_print_item)(type_rect);
+    get_print_item = print_item;
+
+
+    preorder_debug_fuction_mMlavltree(cityblocks_avltree, (void*)get_print_item);
+
+
     // --------------------------------------- QRY FILE AND OTHER OUTPUT FILES -------------------------------------------
     qry_fullpath = get_qry_fullpath(qry_filename, input_path);
 
@@ -97,10 +118,13 @@ int main(int argc, char *argv[]) {
         // Starting both output files
         type_svg svgfile2 = start_new_svg_file(second_svg_fullpath);
         type_txt txtfile = start_new_txt_file(txt_fullpath);
-        insert_string_in_txt(txtfile, "Denise Rezende");
-        insert_comment_in_svg(svgfile2, "Denise Rezende");
+        insert_string_in_txt(txtfile, my_name);
+        insert_comment_in_svg(svgfile2, my_name);
         
+        printf("antes get_qry_input_and_generate_output\n");
         // Calling function to deal with qryfile
+        //A avl sendo mandada está certa??????????????? PAREI AQUI
+        printf("cityblocks_hashtable=NULL:%d\n", cityblocks_hashtable==NULL);
         get_qry_input_and_generate_output(qry_fullpath, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
         
         // Ending output files
@@ -119,7 +143,7 @@ int main(int argc, char *argv[]) {
 
 
 char *get_first_svg_fullpath(char *geo_filename, char *output_path){
-    char *suffix = malloc(sizeof(char) * 5);
+    char *suffix = (char*)malloc(sizeof(char) * 5);
     char *svg_without_suffix = get_filename_without_suffix(geo_filename);
     char *svg_filename, *svg_fullpath;
     sprintf(suffix, "%s", ".svg");
@@ -158,7 +182,7 @@ char *get_qry_fullpath(char *qry_filename, char *input_path){
 char *get_txt_and_svg_filename(char *geo_filename, char *qry_filename){
     char *geo_without_suffix = get_filename_without_suffix(basename(geo_filename));
     char *qry_without_suffix = get_filename_without_suffix(basename(qry_filename));
-    char *filename_without_suffix = malloc(sizeof(char) * (strlen(geo_without_suffix) + strlen(qry_without_suffix) + 2)); //+2?
+    char *filename_without_suffix = (char*)malloc(sizeof(char) * (strlen(geo_without_suffix) + strlen(qry_without_suffix) + 2)); //+2?
     sprintf(filename_without_suffix, "%s%s%s", geo_without_suffix, "-", qry_without_suffix);
     free(geo_without_suffix);
     free(qry_without_suffix);
@@ -166,7 +190,7 @@ char *get_txt_and_svg_filename(char *geo_filename, char *qry_filename){
 }
 
 char *get_txt_fullpath(char *geo_filename, char *qry_filename, char *output_path){
-    char *suffix = malloc(sizeof(char) * 5);
+    char *suffix = (char*)malloc(sizeof(char) * 5);
     sprintf(suffix, "%s", ".txt");
     char* filename_without_suffix = get_txt_and_svg_filename(geo_filename, qry_filename);    
     char* txt_filename = concat_name_suffix(filename_without_suffix, suffix);
@@ -178,7 +202,7 @@ char *get_txt_fullpath(char *geo_filename, char *qry_filename, char *output_path
 }
 
 char *get_second_svg_fullpath(char *geo_filename, char *qry_filename, char *output_path){
-    char *suffix = malloc(sizeof(char) * 5);
+    char *suffix = (char*)malloc(sizeof(char) * 5);
     sprintf(suffix, "%s", ".svg");
     char* filename_without_suffix = get_txt_and_svg_filename(geo_filename, qry_filename);    
     char* svg_filename = concat_name_suffix(filename_without_suffix, suffix);

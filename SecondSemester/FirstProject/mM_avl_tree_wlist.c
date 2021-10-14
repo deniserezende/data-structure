@@ -25,10 +25,10 @@ type_mMlavltree create_mMl_avl_tree(){
 }
 
 type_mMlavltree create_new_node_avl_aux(type_mMlavlitems item){
-    NODE *temp = malloc(sizeof(NODE));
+    NODE *temp = (NODE*)malloc(sizeof(NODE));
     type_list list = create_list();
     insert_item_at_the_end_of_list(list, item);
-    temp->list = list;
+    temp->list = (type_mMlavlitems *)list;
     temp->height = 1;
     temp->left = NULL;
     temp->right = NULL;
@@ -40,7 +40,7 @@ type_mMlavltree create_new_node_avl_aux(type_mMlavlitems item){
 }
 
 int empty_mMl_avl_tree(type_mMlavltree tree){
-    NODE *avl_tree = tree;
+    NODE *avl_tree =(NODE*) tree;
     return(avl_tree == NULL);
 }
 
@@ -50,7 +50,7 @@ int maximum_two_int_avl_aux(int a, int b){
 }
 
 int node_height_avl_aux(type_mMlavltree tree){
-    NODE *avl_tree = tree;
+    NODE *avl_tree =(NODE*) tree;
     if(avl_tree == NULL) return 0;
     return(avl_tree->height);
 }
@@ -82,22 +82,20 @@ type_mMlavltree max_value_in_avl_aux(NODE* node){
 /* Returns the difference between the left and right height of the tree root given.
     Note that the calculation is: left height - right height.*/
 int get_balance_in_avl_aux(type_mMlavltree tree){
-    NODE *avl_tree = tree;
+    NODE *avl_tree =(NODE*) tree;
     if(avl_tree == NULL) return 0;
     return(node_height_avl_aux(avl_tree->left) - node_height_avl_aux(avl_tree->right));
 }
  
 // Updates and returns node height
-int update_node_height_avl_aux(NODE* node){
+void update_node_height_avl_aux(NODE* node){
     node->height = maximum_two_int_avl_aux(node_height_avl_aux(node->left), node_height_avl_aux(node->right))+1;
-    return node->height;
+    return;
 }
 
-// aqui não to entendendo:
 NODE *right_rotate_subtree_in_avl_tree_aux(NODE *root){
     NODE *root_left = root->left;
     NODE *temp = root_left->right;
-    printf("is temp null: %d\n", temp == NULL);
  
     // Rotation: 
     root->left = temp;
@@ -154,9 +152,8 @@ NODE *left_rotate_subtree_in_avl_tree_aux(NODE *root){
 }
  
 
-//ARRUMAR
 type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare){
-    NODE *avl_tree = tree;
+    NODE *avl_tree =(NODE*) tree;
     
     // Getting tree balance to check if a previous operation left it unbalanced 
     int balance = get_balance_in_avl_aux(avl_tree);
@@ -173,14 +170,16 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
         
         // Left Left Case
         if (value_of_comparison_left < 0){
+            printf("// Left Left Case\n");
             return right_rotate_subtree_in_avl_tree_aux(avl_tree);
         } 
         // Left Right Case
         if (value_of_comparison_left > 0){
+            printf("// Left Right Case\n");
             avl_tree->left =  left_rotate_subtree_in_avl_tree_aux(avl_tree->left);
             set_current_to_first_item_in_list(((avl_tree->left)->left)->list);
             type_litems current_item = get_current_item_in_list(((avl_tree->left)->left)->list);
-            balance_avl_tree_aux(avl_tree, current_item, compare);
+            return(balance_avl_tree_aux(avl_tree, current_item, compare));
         }
     } 
     if(avl_tree->right != NULL && balance < -1){
@@ -190,15 +189,17 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
     
         // Right Right Case
         if (value_of_comparison_right > 0){
+            printf("// Right Right Case\n");
             return left_rotate_subtree_in_avl_tree_aux(avl_tree);
         }
     
         // Right Left Case
         if (value_of_comparison_right < 0){
+            printf("// Right Left Case\n");
             avl_tree->right = right_rotate_subtree_in_avl_tree_aux(avl_tree->right);
             set_current_to_first_item_in_list(((avl_tree->right)->right)->list);
             type_litems current_item = get_current_item_in_list(((avl_tree->right)->right)->list);
-            balance_avl_tree_aux(avl_tree, current_item, compare);
+            return(balance_avl_tree_aux(avl_tree, current_item, compare));
         }
     }
  
@@ -208,10 +209,10 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
 //ARRUMAR
 // pq atualizo só do elemento corrente
 type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare){
-    NODE *avl_tree = tree;
-
+    NODE *avl_tree =(NODE*) tree;
     // INSERTING ITEM
     if(avl_tree == NULL){
+        printf("inseri\n");
         return(create_new_node_avl_aux(item));
     }
 
@@ -223,14 +224,33 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
     //SOS
     if(value_of_comparison > 0){
         avl_tree->right = insert_item_in_mMl_avl_tree(avl_tree->right, item, compare);
-        avl_tree->rmax = (avl_tree->right)->rmax; 
-        avl_tree->rmin = (avl_tree->right)->lmin;
+        if(avl_tree->right != NULL){
+            avl_tree->rmax = (avl_tree->right)->rmax; 
+            avl_tree->rmin = (avl_tree->right)->lmin;
+        }
+        else {
+            avl_tree->rmin = avl_tree;
+            avl_tree->rmax = avl_tree;
+        }
+        
     }
     // in case item is smaller than current_item
-    else if(value_of_comparison < 0){
-        avl_tree->left = insert_item_in_mMl_avl_tree(avl_tree->left, item, compare);
-        avl_tree->lmin = (avl_tree->left)->lmin;
-        avl_tree->lmax = (avl_tree->left)->rmax;
+    else{
+        if(value_of_comparison < 0){
+            avl_tree->left = insert_item_in_mMl_avl_tree(avl_tree->left, item, compare);
+            if(avl_tree->left != NULL){
+                avl_tree->lmin = (avl_tree->left)->lmin;
+                avl_tree->lmax = (avl_tree->left)->rmax;
+            }
+            else {
+                avl_tree->lmin = avl_tree;
+                avl_tree->lmax = avl_tree;
+            }
+        }
+        else{
+            insert_item_at_the_end_of_list(avl_tree->list, item);
+            // return avl_tree;
+        }
     }
     // AQUIDE não to lidando com inserção de elementos repetidos => tecnicamente nao pode ter mesma chave
 
@@ -240,11 +260,24 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
     
     // BALANCING TREE
     return(balance_avl_tree_aux(avl_tree, item, compare));
+    //return avl_tree;
 }
 
-type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare){
-    NODE *avl_tree = tree;
+type_mMlavltree delete_list_for_mMlavltree_aux(type_mMlavltree tree, type_mMlavltree pointer_to_list, type_mMlavlptrf_twoitems compare, type_mMlavlptrf_twoitems verify_item){
+    NODE *pointer_to_list_ = (NODE*)pointer_to_list;
+    if(empty_list(pointer_to_list_)){
+        printf("erro ta vazia\n");
+    }
+    set_current_to_first_item_in_list(pointer_to_list_->list);
+    while(is_current_last_item_in_list(pointer_to_list_->list)){
+        delete_current_item_in_list(pointer_to_list_->list);
+    }
+    type_litems last_item = get_current_item_in_list(pointer_to_list_->list);
+    return(delete_item_in_mMl_avl_tree(tree, last_item, compare, verify_item));
+}
 
+type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare, type_mMlavlptrf_twoitems verify_item){
+    NODE *avl_tree = (NODE*)tree;
     // DELETING ITEM
     if (avl_tree == NULL) return avl_tree;
 
@@ -254,7 +287,7 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
 
     // Looking for the item to be deleted
     if(value_of_comparison < 0){
-        avl_tree->left = delete_item_in_mMl_avl_tree(avl_tree->left, item, compare);
+        avl_tree->left = delete_item_in_mMl_avl_tree(avl_tree->left, item, compare, verify_item);
         if(avl_tree->left == NULL){
             avl_tree->lmin = avl_tree;
             avl_tree->lmax = avl_tree;
@@ -265,7 +298,7 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
         }
     }
     else if(value_of_comparison > 0){
-        avl_tree->right = delete_item_in_mMl_avl_tree(avl_tree->right, item, compare);
+        avl_tree->right = delete_item_in_mMl_avl_tree(avl_tree->right, item, compare, verify_item);
         if(avl_tree->right == NULL){
             avl_tree->rmin = avl_tree;
             avl_tree->rmax = avl_tree;
@@ -278,13 +311,13 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
     // Found the list that contains the item to be deleted.
     else{
         // deleting item from list
-        delete_item_in_list(avl_tree->list, item, compare);
+        delete_item_in_list(avl_tree->list, item, verify_item);
         // If list is not empty => dont update anything (everything is right)
         if(!empty_list(avl_tree->list)){
             return avl_tree;
         }
-        // else delete list and delete node
 
+        // else delete list and delete node
         destroi_list(avl_tree->list);
 
         // If node has one or no child
@@ -301,7 +334,8 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
                     avl_tree->list = temp->list; // Copying the data
 
                     // Delete the inorder successor
-                    avl_tree->left = delete_item_in_mMl_avl_tree(avl_tree->left, temp->list, compare);
+                    //avl_tree->left = delete_item_in_mMl_avl_tree(avl_tree->left, temp->list, compare);
+                    avl_tree->left = delete_list_for_mMlavltree_aux(avl_tree->left, temp, compare, verify_item);
                 }
 
                 else{ // avl_tree->right != NULL
@@ -310,7 +344,8 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
                     avl_tree->list = temp->list; // Copying the data
 
                     // Delete the inorder successor
-                    avl_tree->right = delete_item_in_mMl_avl_tree(avl_tree->right, temp->list, compare);
+                    //avl_tree->right = delete_item_in_mMl_avl_tree(avl_tree->right, temp->list, compare);
+                    avl_tree->right = delete_list_for_mMlavltree_aux(avl_tree->right, temp, compare, verify_item);
                 }
             }
         }
@@ -322,7 +357,8 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
             avl_tree->list = temp->list; // Copying the data
 
             // Delete the inorder successor
-            avl_tree->right = delete_item_in_mMl_avl_tree(avl_tree->right, temp->list, compare);
+            //avl_tree->right = delete_item_in_mMl_avl_tree(avl_tree->right, temp->list, compare);
+            avl_tree->right = delete_list_for_mMlavltree_aux(avl_tree->right, temp, compare, verify_item);
         }
     }
  
@@ -350,61 +386,49 @@ void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_si
 // If condition is met, and deletion is set to 1 deletion has to take place
 // otherwise loop
 void traverse_mMlavltree_with_conditional_action(type_mMlavltree tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
-    if(empty_mMl_avl_tree(tree)) return;
+    //if(empty_mMl_avl_tree(tree)) return;
     traverse_mMlavltree_with_conditional_action_avlaux(tree, traverse_side, condition, action);
 }
 
 void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree avltree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
-    NODE *tree = avltree;
-    NODE *previous = tree;
-    int side;
-    
+    NODE *tree = (NODE*) avltree;
+    int done;
     // Base case:
     if(tree == NULL) return;
 
-    if(tree != NULL){
+    //if(tree != NULL){
         set_current_to_first_item_in_list(tree->list);
-        type_litems min_item = get_current_item_in_list(tree->list);
-        int done;
+        // type_litems min_item = get_current_item_in_list(tree->list);
         do{
             done = is_current_last_item_in_list(tree->list);
             type_litems item = get_current_item_in_list(tree->list);
             if((long)condition(item)){
                 action(item);
             }
-            printf("done = %d\n", done);
+            move_current_forward_in_list(tree->list);
         }while(!done);
 
-        continue_traverse_avltaux(tree, traverse_side, condition, action);
-    }
+        if(tree != NULL) continue_traverse_avltaux(tree, traverse_side, condition, action);
+//        avltree = tree;
+        return;
+    //}
 }
 
 void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
-    printf("continue_traverse_avltaux\n");
     set_current_to_first_item_in_list(tree->list);
     type_litems current_item = get_current_item_in_list(tree->list);
-    printf("current_item\n");
-    //verificar se current == null???
-    
-    printf("(tree->lmin) == NULL ? %d\n", (tree->lmin) == NULL);
-    printf("(tree->lmin)->list == NULL ? %d\n", (tree->lmin)->list == NULL);
+
     set_current_to_first_item_in_list((tree->lmin)->list);
     type_litems lmin_item = get_current_item_in_list((tree->lmin)->list);
-    printf("lmin_item\n");
 
     set_current_to_first_item_in_list((tree->lmax)->list);
     type_litems lmax_item = get_current_item_in_list((tree->lmax)->list);
-    printf("lmax_item\n");
 
     set_current_to_first_item_in_list((tree->rmin)->list);
     type_litems rmin_item = get_current_item_in_list((tree->rmin)->list);
-    printf("lmax_item\n");
 
     set_current_to_first_item_in_list((tree->rmax)->list);
     type_litems rmax_item = get_current_item_in_list((tree->rmax)->list);
-    printf("rmax_item\n");
-
-    printf("continue_traverse_avltaux indo mandar pro trvaerse\n");
 
     long side = (long)traverse_side(current_item, lmin_item, lmax_item, rmin_item, rmax_item);
 
@@ -415,14 +439,14 @@ void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_si
             if(tree->left != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->left, traverse_side, condition, action);
         }
         else if(side == 11){ //both
-                if(tree->right != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->right, traverse_side, condition, action);
                 if(tree->left != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->left, traverse_side, condition, action);
+                if(tree->right != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->right, traverse_side, condition, action);
             }   
 }
 
 // A debug function AQUIDE
 void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_oneitem print_item){
-    NODE *root = tree;
+    NODE *root =(NODE*) tree;
     if(root != NULL){
         // PRINTING HEIGHT
         printf("\nheight:%d\n", root->height);
@@ -433,6 +457,7 @@ void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_one
             done = is_current_last_item_in_list(root->list);
             type_litems current_item = get_current_item_in_list(root->list);
             print_item(current_item);
+            move_current_forward_in_list(root->list);
         }while(!done);
 
         // PRINTING SUBTREE MAX
@@ -465,3 +490,30 @@ void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_one
     }
 }
  
+
+void continue_traverse_with_lists_avltaux(NODE *tree, type_mMlavlptrf_threelists action){
+    if(tree->left != NULL) traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(tree->left, action);
+    if(tree->right != NULL) traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(tree->right, action);
+}
+
+void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree avltree, type_mMlavlptrf_threelists action){
+NODE *tree = (NODE*) avltree;
+    int done;
+    // Base case:
+    if(tree == NULL) return;
+
+    if(tree->left != NULL && tree->right != NULL){
+        action(tree->list, (tree->left)->list, (tree->right)->list);
+    }
+    else{
+        if(tree->left) action(tree->list, (tree->left)->list, NULL);
+        else if(tree->right) action(tree->list, NULL, (tree->right)->list);
+        else action(tree->list, NULL, NULL);
+    }
+
+    continue_traverse_with_lists_avltaux(tree, action);
+    return;
+}
+
+
+

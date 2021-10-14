@@ -149,7 +149,7 @@ NODE *left_rotate_subtree_in_avl_tree_aux(NODE *root){
     update_node_height_avl_aux(root_right);
 
     return root_right; //new root
-}
+} 
  
 
 type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare){

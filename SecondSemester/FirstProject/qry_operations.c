@@ -24,7 +24,7 @@ void get_qry_input_and_generate_output(char *qryfilename, type_txt txtfile, type
     double property_area, monthly_rent;
     double x, y, w, h;
 
-    type_hashtable property_leases = create_hash_table();
+    type_hashtable property_leases = create_hash_table(); 
     
     while(!feof(qryfile)){ 
         fscanf(qryfile, "\n%[^\n]\ns", line);

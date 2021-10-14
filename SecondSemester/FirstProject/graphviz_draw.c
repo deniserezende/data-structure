@@ -80,7 +80,7 @@ void add_child_in_tree_design(char* child, FILE *output_file){
 
     //sprintf(string,"child[shape=ellipse, label=%s] , ", child);
     sprintf(string,"%s};\n", child);
-    fprintf(output_file, "%s", string);
+    fprintf(output_file, "%s", string); 
 }
 
 void close_child(FILE *output_file){

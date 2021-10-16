@@ -202,7 +202,6 @@ type_hashitem lookup_item_in_hash_table(type_hashtable hash_table, long key, typ
 
         // checking if the item in the horizontal list has the same key as the one we are looking for
         if(key == item_key){
-            printf("entrei no mesmo key\n");
             // If this is the list containing the item we want to find
             int done_;
             type_hashitem item_;
@@ -211,7 +210,6 @@ type_hashitem lookup_item_in_hash_table(type_hashtable hash_table, long key, typ
                 done_ = is_current_last_item_in_list(horizontal_list);
                 item_ = get_current_item_in_list(horizontal_list);
                 if((long)this_item(item_)){
-                    printf("acheii\n");
                     return(item_);
                 }
 

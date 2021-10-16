@@ -170,12 +170,12 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
         
         // Left Left Case
         if (value_of_comparison_left < 0){
-            printf("// Left Left Case\n");
+            //printf("// Left Left Case\n");
             return right_rotate_subtree_in_avl_tree_aux(avl_tree);
         } 
         // Left Right Case
         if (value_of_comparison_left > 0){
-            printf("// Left Right Case\n");
+            //printf("// Left Right Case\n");
             avl_tree->left =  left_rotate_subtree_in_avl_tree_aux(avl_tree->left);
             set_current_to_first_item_in_list(((avl_tree->left)->left)->list);
             type_litems current_item = get_current_item_in_list(((avl_tree->left)->left)->list);
@@ -189,13 +189,13 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
     
         // Right Right Case
         if (value_of_comparison_right > 0){
-            printf("// Right Right Case\n");
+            //printf("// Right Right Case\n");
             return left_rotate_subtree_in_avl_tree_aux(avl_tree);
         }
     
         // Right Left Case
         if (value_of_comparison_right < 0){
-            printf("// Right Left Case\n");
+            //printf("// Right Left Case\n");
             avl_tree->right = right_rotate_subtree_in_avl_tree_aux(avl_tree->right);
             set_current_to_first_item_in_list(((avl_tree->right)->right)->list);
             type_litems current_item = get_current_item_in_list(((avl_tree->right)->right)->list);
@@ -212,7 +212,6 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
     NODE *avl_tree =(NODE*) tree;
     // INSERTING ITEM
     if(avl_tree == NULL){
-        printf("inseri\n");
         return(create_new_node_avl_aux(item));
     }
 
@@ -265,9 +264,6 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
 
 type_mMlavltree delete_list_for_mMlavltree_aux(type_mMlavltree tree, type_mMlavltree pointer_to_list, type_mMlavlptrf_twoitems compare, type_mMlavlptrf_twoitems verify_item){
     NODE *pointer_to_list_ = (NODE*)pointer_to_list;
-    if(empty_list(pointer_to_list_)){
-        printf("erro ta vazia\n");
-    }
     set_current_to_first_item_in_list(pointer_to_list_->list);
     while(is_current_last_item_in_list(pointer_to_list_->list)){
         delete_current_item_in_list(pointer_to_list_->list);

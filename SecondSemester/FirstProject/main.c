@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
     get_print_item = print_item;
 
 
-    preorder_debug_fuction_mMlavltree(cityblocks_avltree, (void*)get_print_item);
+    //preorder_debug_fuction_mMlavltree(cityblocks_avltree, (void*)get_print_item);
 
 
     // --------------------------------------- QRY FILE AND OTHER OUTPUT FILES -------------------------------------------
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
         // Calling function to deal with qryfile
         //A avl sendo mandada está certa??????????????? PAREI AQUI
         printf("cityblocks_hashtable=NULL:%d\n", cityblocks_hashtable==NULL);
-        get_qry_input_and_generate_output(qry_fullpath, output_path, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
+        get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
         
         // Ending output files
         end_svg_file(svgfile2);

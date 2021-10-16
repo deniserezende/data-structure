@@ -20,6 +20,6 @@
 #include "graphviz_draw.h"
 #include "path.h"
 
-void get_qry_input_and_generate_output(char *qryfilename, char *output_path, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases);
+void get_qry_input_and_generate_output(char *qryfilename, char *output_path, char *geo_filename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases);
 
 #endif /* qry_operations_h */

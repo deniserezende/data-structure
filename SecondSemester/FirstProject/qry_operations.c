@@ -11,11 +11,23 @@
 #include <time.h>
 #include "qry_operations.h" 
 
-void get_qry_input_and_generate_output(char *qryfilename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases){
+
+char *get_dot_fullpath(char *dot_filename_without_extension, char *output_path){
+    char *dot_fullpath;
+    if(dot_filename_without_extension == NULL) return NULL;
+    char* dot_filename = malloc(sizeof(char) * (strlen(dot_filename_without_extension) + 6));
+    sprintf(dot_filename, "%s.dot%c", dot_filename_without_extension, '\0');
+    dot_fullpath = concat_path_filename(output_path, dot_filename); 
+    free(dot_filename);
+    return dot_fullpath;
+}
+
+void get_qry_input_and_generate_output(char *qryfilename, char *output_path, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases){
     FILE *qryfile = fopen(qryfilename, "r");
     if (qryfile == NULL) {
         return;
     }
+    printf("qryfilename:%s]\n", qryfilename);
     char *line = (char*)malloc(60 * sizeof(char));
     char *helper = (char*)malloc(5 * sizeof(char));
     char cep[40], cpf[40], cardinal_direction, additional_data[40], property_lease_id[40];
@@ -40,7 +52,7 @@ void get_qry_input_and_generate_output(char *qryfilename, type_txt txtfile, type
                 insert_string_in_txt(txtfile, helper);
                 m_(txtfile, blocks_table, properties_table, cep);
             }
-            else if(strncmp(line, "dm?", 2) == 0 || strncmp(line, "fg\0", 3) == 0){
+            else if(strncmp(line, "dm?", 3) == 0 || strncmp(line, "fg\0", 3) == 0){
                     sscanf(line, "%s %s", helper, cpf);
                     insert_string_in_txt(txtfile, helper);
                     dm_(svgfile, txtfile, blocks_table, people_table, cpf);
@@ -101,13 +113,14 @@ void get_qry_input_and_generate_output(char *qryfilename, type_txt txtfile, type
                                     
                                                     }
                                                     else if(strncmp(line, "dmpt", 4) == 0){
+                                                        printf("entrei no dmpt\n");
                                                         sscanf(line, "%s %s", helper, sfx);
                                                         insert_string_in_txt(txtfile, helper);
-                                                        char* dotfilename = malloc(sizeof(char) * (strlen(sfx) + 6));
-                                                        sprintf(dotfilename, "%s.dot%c", sfx, '\0');
-                                                        type_dot dotfile = begin_design(dotfilename);
+                                                        char* dotfullpath = get_dot_fullpath(sfx, output_path);
+                                                        type_dot dotfile = begin_design(dotfullpath);
                                                         dmpt(dotfile, blocks_avl);
-                                        
+                                                        end_design(dotfile);
+                                                        free(dotfullpath);
                                                         }
                                                         else if(strncmp(line, "catac", 5) == 0){
                                                             printf("entrei no catac\n");

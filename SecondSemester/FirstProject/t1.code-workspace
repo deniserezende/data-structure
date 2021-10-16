@@ -24,7 +24,11 @@
 			"qry_del_m_dm_mud.h": "c",
 			"qry_auxiliary_functions.h": "c",
 			"_auxiliary_functions.h": "c",
-			"ios": "c"
+			"ios": "c",
+			"graphviz_draw.h": "c",
+			"string": "c",
+			"iosfwd": "c",
+			"commandline.h": "c"
 		},
 		"makefile.launchConfigurations": [
 			{

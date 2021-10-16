@@ -9,13 +9,14 @@
 #include <stdlib.h>
 #include "graphviz_draw.h"
 
-int draw;
+int GD_draw;
+int GD_size = 400;
 
 type_dot begin_design(const char *filename){
     FILE *file;
     file = fopen(filename,"w");
     fprintf(file,"digraph G {\n");
-    draw = 0;
+    GD_draw = 0;
     return file;
 }
 
@@ -26,8 +27,13 @@ void end_design(type_dot file){
 }
 
 void reset_design(){
-    draw = 0;
+    GD_draw = 0;
 }
+
+void set_size_for_strings(int size){
+    GD_size = size;
+}
+
 
 void appear_node_in_tree_design(type_dot file){
     FILE *dot_file = file;
@@ -54,26 +60,29 @@ void add_parent_in_tree_design(char* parent, type_dot file){
     char *edge = " -> ";
 
     char *ident = "   ";
-    char string[100];
+    char *string = malloc(sizeof(char) * GD_size);
 
     sprintf(string,"%s%s%s {", ident, parent, edge);
     fprintf(dot_file, "%s", string);
+
+    free(string);
 }
 
 void add_root_in_tree_design(char* root, type_dot file){
     FILE *dot_file = file;
-    char string[20];
+    char *string = malloc(sizeof(char) * GD_size);
     sprintf(string,"\t%s //root\n", root);
     fprintf(dot_file, "%s", string);
+    free(string);
 }
 
 void add_child_in_tree_design(char* child, type_dot file){
     FILE *dot_file = file;
-    char string[100];
-
+    char *string = malloc(sizeof(char) * GD_size);
     //sprintf(string,"child[shape=ellipse, label=%s] , ", child);
     sprintf(string,"%s};\n", child);
     fprintf(dot_file, "%s", string); 
+    free(string);
 }
 
 void close_child(type_dot file){
@@ -99,43 +108,52 @@ void insert_blocks_rects_parent_list_of_not_null_child(type_dot file, type_list 
     FILE *dot_file = file;
     if(parent == NULL) return;
     
-    char idtmp[5];
+    char *idtmp = malloc(sizeof(char) * GD_size);
 
-    if(draw == 0){
+    if(GD_draw == 0){
         sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
         add_root_in_tree_design(idtmp, dot_file);
-        draw++;
+        GD_draw++;
     }
     appear_node_in_tree_design(dot_file);
+    sprintf(idtmp, "%c", '\0');
     sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
-    add_parent_in_tree_design(idtmp, dot_file);    
+    add_parent_in_tree_design(idtmp, dot_file);  
+
+    free(idtmp);  
 }
 
 void insert_blocks_rects_parent_list_of_null_child(type_dot file, type_list parent, type_gdptrf_onelist get_info){
     FILE *dot_file = file;
     if(parent == NULL) return;
     
-    char idtmp[5];
+    char *idtmp = malloc(sizeof(char) * GD_size);
 
-    if(draw == 0){
+    if(GD_draw == 0){
         sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
         add_root_in_tree_design(idtmp, dot_file);
-        draw++;
+        GD_draw++;
     }
     hide_node_in_tree_design(dot_file);
     sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
-    add_parent_in_tree_design(idtmp, dot_file);    
+    add_parent_in_tree_design(idtmp, dot_file);   
+
+    free(idtmp);   
 }
 
 
 void insert_blocks_rects_child_list(type_dot file, type_list child, type_gdptrf_onelist get_info){
     FILE *dot_file = file;
-    char idtmp[5];
+    char *idtmp = malloc(sizeof(char) * GD_size);
+
     if(child != NULL){
+        printf("to no if dentro do insert_blocks_rects_child_list\n");
         sprintf(idtmp, "%s%c", (char*)get_info(child), '\0');
         add_child_in_tree_design(idtmp, dot_file);
     }
     else{
         add_empty_child_in_tree_design(dot_file);
     }
+
+    free(idtmp);   
 }

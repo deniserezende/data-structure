@@ -366,9 +366,10 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
  
     // UPDATING HEIGHT (of the current node)
     update_node_height_avl_aux(avl_tree);
-
+    //printf("falta só balance\n");
     // BALANCING THE AVL TREE
     return(balance_avl_tree_aux(avl_tree, item, compare));
+    //return avl_tree;
 }
  
 
@@ -503,33 +504,42 @@ void continue_traverse_with_lists_avltaux(NODE *tree, type_mMlavlptrf_sixlists a
 // the last 3 lists contains info about each note in order
 // info: balance, minimum value in the left subtree, maxl, minr, maxr
 // function get key must return a value that is convertable to (void*)!
+type_mMlavlitems get_first_item_in_list_in_node_aux(type_mMlavltree node){
+    NODE *tree = (NODE*) node;
+    if(tree == NULL) return NULL;
+    type_list list = tree->list;
+    set_current_to_first_item_in_list(list);
+    type_mMlavlitems item = get_current_item_in_list(list);
+    return item;
+}
+
 void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree avltree, type_mMlavlptrf_sixlists action, type_mMlavlptrf_oneitem get_key){
-NODE *tree = (NODE*) avltree;
+    NODE *tree = (NODE*) avltree;
     // Base case:
     if(tree == NULL) return;
 
     type_list list_current = create_list();
     insert_item_at_the_end_of_list(list_current, (void*)((long)get_balance_in_avl_aux(tree)));
-    insert_item_at_the_end_of_list(list_current, get_key(tree->lmin));
-    insert_item_at_the_end_of_list(list_current, get_key(tree->lmax));
-    insert_item_at_the_end_of_list(list_current, get_key(tree->rmin));
-    insert_item_at_the_end_of_list(list_current, get_key(tree->rmax));
+    insert_item_at_the_end_of_list(list_current, (void*)get_key(get_first_item_in_list_in_node_aux(tree->lmin)));
+    insert_item_at_the_end_of_list(list_current, (void*)get_key(get_first_item_in_list_in_node_aux(tree->lmax)));
+    insert_item_at_the_end_of_list(list_current, (void*)get_key(get_first_item_in_list_in_node_aux(tree->rmin)));
+    insert_item_at_the_end_of_list(list_current, (void*)get_key(get_first_item_in_list_in_node_aux(tree->rmax)));
 
     if(tree->left != NULL && tree->right != NULL){
         type_list list_left = create_list();
         type_list list_right = create_list();
 
         insert_item_at_the_end_of_list(list_left, (void*)((long)get_balance_in_avl_aux(tree->left)));
-        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmin));
-        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmax));
-        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmin));
-        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmax));
+        insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->lmin)));
+        insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->lmax)));
+        insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->rmin)));
+        insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->rmax)));
 
         insert_item_at_the_end_of_list(list_right, (void*)((long)get_balance_in_avl_aux(tree->right)));
-        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmin));
-        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmax));
-        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmin));
-        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmax));
+        insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->lmin)));
+        insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->lmax)));
+        insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->rmin)));
+        insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->rmax)));
 
         action(tree->list, (tree->left)->list, (tree->right)->list, list_current, list_left, list_right);
         destroi_list(list_left);
@@ -539,20 +549,20 @@ NODE *tree = (NODE*) avltree;
         if(tree->left){
             type_list list_left = create_list();
             insert_item_at_the_end_of_list(list_left, (void*)((long)get_balance_in_avl_aux(tree->left)));
-            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmin));
-            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmax));
-            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmin));
-            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmax));
+            insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->lmin)));
+            insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->lmax)));
+            insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->rmin)));
+            insert_item_at_the_end_of_list(list_left, (void*)get_key(get_first_item_in_list_in_node_aux((tree->left)->rmax)));
             action(tree->list, (tree->left)->list, NULL, list_current, list_left, NULL);
             destroi_list(list_left);
         }
         else if(tree->right) {
             type_list list_right = create_list();
             insert_item_at_the_end_of_list(list_right, (void*)((long)get_balance_in_avl_aux(tree->right)));
-            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmin));
-            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmax));
-            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmin));
-            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmax));
+            insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->lmin)));
+            insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->lmax)));
+            insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->rmin)));
+            insert_item_at_the_end_of_list(list_right, (void*)get_key(get_first_item_in_list_in_node_aux((tree->right)->rmax)));
             action(tree->list, NULL, (tree->right)->list, list_current, NULL, list_right);
             destroi_list(list_right);
         }

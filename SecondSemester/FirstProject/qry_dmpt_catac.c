@@ -179,10 +179,11 @@ type_mMlavltree delete_blocks_from_blocks_avl(type_mMlavltree blocks_avl, type_l
         rect = get_current_item_in_list(list_of_blocks);
         set_id(get_property_cep(get_rect_data(rect)));
         blocks_avl = delete_item_in_mMl_avl_tree(blocks_avl, rect, (void*)compare_rectangles_by_x_coordinate, (void*)compare_rect_blocks_cep);
+        printf("del done\n");
         block_data = get_rect_data(rect);
         remove_block(block_data);
         destroi_rectangle(rect);
-        delete_current_item_in_list(list_of_blocks);
+        //delete_current_item_in_list(list_of_blocks);
         move_current_forward_in_list(list_of_blocks);
     }while(!done);
     printf("sai do do\n");
@@ -286,10 +287,10 @@ char* get_info_for_dot_catac(type_list list){
         }while(!done);
     }
 
-    sprintf(string_final, "x = %f\namount of blocks = %d\n%s\n%s\nbalance = %ld", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
+    sprintf(string_final, "\"x = %f \n amount of blocks = %d \n %s \n %s \n balance = %ld\"", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
     free(string_of_ceps);
     free(string_of_xs);
-    printf("final string: %s\n", string_final);
+    printf("final string: \n%s\n", string_final);
     return string_final;
 }
 
@@ -299,16 +300,19 @@ void action_dot_dmpt_(type_list parent, type_list childleft, type_list childrigh
     getinfo = get_info_for_dot_catac;  
 
     if(childleft != NULL){
+        printf("if\n");
         QDC_list = info_parent;
         insert_blocks_rects_parent_list_of_not_null_child(QDC_DOTFILE, parent, (void*)getinfo);
+        printf("back next\n");
         QDC_list = info_lchild;
         insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
 
     }
     else{
-    insert_blocks_rects_parent_list_of_null_child(QDC_DOTFILE, parent, (void*)getinfo);
-    insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
-
+        printf("else\n");
+        QDC_list = info_parent;
+        insert_blocks_rects_parent_list_of_null_child(QDC_DOTFILE, parent, (void*)getinfo);
+        insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
     }
     if(childright != NULL){
         QDC_list = info_parent;
@@ -317,6 +321,7 @@ void action_dot_dmpt_(type_list parent, type_list childleft, type_list childrigh
         insert_blocks_rects_child_list(QDC_DOTFILE, childright, (void*)getinfo); 
     }
     else{
+        QDC_list = info_parent;
         insert_blocks_rects_parent_list_of_null_child(QDC_DOTFILE, parent, (void*)getinfo);
         insert_blocks_rects_child_list(QDC_DOTFILE, childright, (void*)getinfo); 
     }
@@ -329,10 +334,19 @@ void action_dot_dmpt_(type_list parent, type_list childleft, type_list childrigh
 // o x mínimo, 
 // o x máximo 
 // e o fator de balanceamento do nó.
+
+long get_rect_x_long(type_rect rect){
+    double x = get_rect_x(rect);
+    printf("double x=%lf\n", x);
+    long longx = (long)x;
+    printf("longx=%ld\n", longx);
+    return(longx);
+}
+
 void dmpt(type_dot DOTFILE, type_mMlavltree blocks_avl){
     QDC_DOTFILE = DOTFILE;
     void(*action_dot_ptr)(type_list, type_list, type_list, type_list, type_list, type_list);
     action_dot_ptr = action_dot_dmpt_;
 
-    traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(blocks_avl, (void*)action_dot_ptr, (void*)get_rect_x);
+    traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(blocks_avl, (void*)action_dot_ptr, (void*)get_rect_x_long);
 }

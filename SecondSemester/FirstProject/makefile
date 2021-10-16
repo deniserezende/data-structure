@@ -14,7 +14,7 @@ commandline.o: commandline.h
 path.o: path.h
 pm_operations.o: hash_table.h person.h property.h _auxiliary_functions.h
 geo_operations.o: hash_table.h mM_avl_tree_wlist.h rectangle.h block.h _auxiliary_functions.h
-qry_operations.o : qry_operations.h SVG.h TXT.h qry_del_m_dm_mud.h qry_dmpt_catac.h qry_property_lease.h qry_mul_hom.h output_svg.h graphviz_draw.h
+qry_operations.o : qry_operations.h SVG.h TXT.h qry_del_m_dm_mud.h qry_dmpt_catac.h qry_property_lease.h qry_mul_hom.h output_svg.h graphviz_draw.h path.h
 hash_table.o: hash_table.h list.h
 mM_avl_tree_wlist.o: mM_avl_tree_wlist.h list.h
 list_dynamic.o: list.h

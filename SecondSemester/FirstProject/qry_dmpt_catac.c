@@ -5,6 +5,8 @@
 
 type_svg QDC_SVGFILE;
 type_txt QDC_TXTFILE;
+type_dot QDC_DOTFILE;
+
 type_hashtable QDC_property_leases, QDC_properties_table, QDC_blocks_table, QDC_people_table;
 type_mMlavltree QDC_blocks_avl;
 double QDC_x1, QDC_y1, QDC_h, QDC_w;
@@ -216,3 +218,121 @@ type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks
     return blocks_avl;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+type_list QDC_list;
+char* get_info_for_dot_catac(type_list list){
+    char* string_final = malloc(sizeof(char) * 200);
+    char* string_of_ceps = malloc(sizeof(char) * 120);
+    char* string_of_xs = malloc(sizeof(char) * 120);
+    set_current_to_first_item_in_list(list);
+    type_rect rect = get_current_item_in_list(list);
+    double list_x = get_rect_x(rect);
+    int number_of_blocks = list_current_size(list);
+    long balance = 0;
+
+    char cep[40];
+    for(int i=0; i < 3; i++){
+        type_rect current_item = get_current_item_in_list(list);
+        type_block data = get_rect_data(current_item);
+        sprintf(cep, "%s%c", get_block_cep(data), '\0');
+        if(i==0) sprintf(string_of_ceps, "%s", cep);
+        else sprintf(string_of_ceps, "%s %s", string_of_ceps, cep);
+
+        move_current_forward_in_list(list);
+        if(is_current_last_item_in_list(list)) break;
+    }
+    sprintf(string_of_xs, "%c", '\0');
+    if(QDC_list != NULL){
+        int done;
+        int i = 0;
+        set_current_to_first_item_in_list(QDC_list);
+        do{
+            done = is_current_last_item_in_list(QDC_list);
+
+            long list_item = (long)get_current_item_in_list(QDC_list);
+            switch (i) {
+            case 0:
+                balance = list_item;
+                break;
+            case 1:
+                sprintf(string_of_xs, "left minimum %ld\n", list_item);
+                break;
+            case 2:
+                sprintf(string_of_xs, "%sleft maximum %ld\n", string_of_xs, list_item);
+                break;
+            case 3:
+                sprintf(string_of_xs, "%sright minimum %ld\n", string_of_xs, list_item);
+                break;
+            case 4:
+                sprintf(string_of_xs, "%sright minimum %ld", string_of_xs, list_item);
+                break;
+            default:
+                break;
+            }
+            i++;
+
+            move_current_forward_in_list(QDC_list);
+
+        }while(!done);
+    }
+
+    sprintf(string_final, "x = %f\namount of blocks = %d\n%s\n%s\nbalance = %ld", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
+    free(string_of_ceps);
+    free(string_of_xs);
+    printf("final string: %s\n", string_final);
+    return string_final;
+}
+
+void action_dot_dmpt_(type_list parent, type_list childleft, type_list childright, type_list info_parent, type_list info_lchild, type_list info_rchild){
+
+    char*(*getinfo)(type_list);
+    getinfo = get_info_for_dot_catac;  
+
+    if(childleft != NULL){
+        QDC_list = info_parent;
+        insert_blocks_rects_parent_list_of_not_null_child(QDC_DOTFILE, parent, (void*)getinfo);
+        QDC_list = info_lchild;
+        insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
+
+    }
+    else{
+    insert_blocks_rects_parent_list_of_null_child(QDC_DOTFILE, parent, (void*)getinfo);
+    insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
+
+    }
+    if(childright != NULL){
+        QDC_list = info_parent;
+        insert_blocks_rects_parent_list_of_not_null_child(QDC_DOTFILE, parent, (void*)getinfo);
+        QDC_list = info_rchild;
+        insert_blocks_rects_child_list(QDC_DOTFILE, childright, (void*)getinfo); 
+    }
+    else{
+        insert_blocks_rects_parent_list_of_null_child(QDC_DOTFILE, parent, (void*)getinfo);
+        insert_blocks_rects_child_list(QDC_DOTFILE, childright, (void*)getinfo); 
+    }
+}
+
+// Imprime o estado atual da árvore no arquivo <arq>-sfx.dot.
+// Cada nó da árvore deve mostrar a coordenada X, 
+// o número de quadras “dentro” do nó, 
+// o cep de algumas (poucas) quadras, 
+// o x mínimo, 
+// o x máximo 
+// e o fator de balanceamento do nó.
+void dmpt(type_dot DOTFILE, type_mMlavltree blocks_avl){
+    QDC_DOTFILE = DOTFILE;
+    void(*action_dot_ptr)(type_list, type_list, type_list, type_list, type_list, type_list);
+    action_dot_ptr = action_dot_dmpt_;
+
+    traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(blocks_avl, (void*)action_dot_ptr, (void*)get_rect_x);
+}

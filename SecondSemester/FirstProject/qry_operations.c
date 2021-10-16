@@ -103,7 +103,9 @@ void get_qry_input_and_generate_output(char *qryfilename, type_txt txtfile, type
                                                     else if(strncmp(line, "dmpt", 4) == 0){
                                                         sscanf(line, "%s %s", helper, sfx);
                                                         insert_string_in_txt(txtfile, helper);
-                                                        type_dot dotfile = begin_design("mudarnome.dot");
+                                                        char* dotfilename = malloc(sizeof(char) * (strlen(sfx) + 6));
+                                                        sprintf(dotfilename, "%s.dot%c", sfx, '\0');
+                                                        type_dot dotfile = begin_design(dotfilename);
                                                         dmpt(dotfile, blocks_avl);
                                         
                                                         }

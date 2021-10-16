@@ -20,7 +20,8 @@ typedef void* type_mMlavlptrf_fiveitems(type_mMlavlitems, type_mMlavlitems, type
 typedef void* type_mMlavlptrf_twoitems(type_mMlavlitems, type_mMlavlitems);
 typedef void* type_mMlavlptrf_oneitem(type_mMlavlitems);
 
-typedef void* type_mMlavlptrf_threelists(type_list, type_list, type_list);
+typedef void* type_mMlavlptrf_threelists_and_seven_ints(type_list, type_list, type_list, int, int, int, int, int, int, int);
+typedef void* type_mMlavlptrf_sixlists(type_list, type_list, type_list, type_list, type_list, type_list);
 
 
 // typedef void *type_avlkey; // a chave em si
@@ -75,8 +76,7 @@ void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_one
 // type_mMlavlitems get_right_child_in_mM_avl_tree(type_mMlavltree tree);
 // type_mMlavlitems get_left_child_in_mM_avl_tree(type_mMlavltree tree);
 
-void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree tree, type_mMlavlptrf_threelists action);
-
+void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree avltree, type_mMlavlptrf_sixlists action, type_mMlavlptrf_oneitem get_key);
 // EVANDRO
 // void destroi_avl_tree(type_mMlavltree tree);
 

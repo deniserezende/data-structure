@@ -491,27 +491,77 @@ void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_one
 }
  
 
-void continue_traverse_with_lists_avltaux(NODE *tree, type_mMlavlptrf_threelists action){
-    if(tree->left != NULL) traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(tree->left, action);
-    if(tree->right != NULL) traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(tree->right, action);
+
+// VERY SPECIFIC FUNCTION SO I CAN USE GRAPHVIZ TO CREATE A DIAGRAM OF THE AVL TREE
+void continue_traverse_with_lists_avltaux(NODE *tree, type_mMlavlptrf_sixlists action, type_mMlavlptrf_oneitem get_key){
+    if(tree->left != NULL) traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(tree->left, action, get_key);
+    if(tree->right != NULL) traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(tree->right, action, get_key);
 }
 
-void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree avltree, type_mMlavlptrf_threelists action){
+// the lists may be used during execution of the function afterwards they are not available 
+// result unpredictable
+// the last 3 lists contains info about each note in order
+// info: balance, minimum value in the left subtree, maxl, minr, maxr
+// function get key must return a value that is convertable to (void*)!
+void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(type_mMlavltree avltree, type_mMlavlptrf_sixlists action, type_mMlavlptrf_oneitem get_key){
 NODE *tree = (NODE*) avltree;
-    int done;
     // Base case:
     if(tree == NULL) return;
 
+    type_list list_current = create_list();
+    insert_item_at_the_end_of_list(list_current, (void*)((long)get_balance_in_avl_aux(tree)));
+    insert_item_at_the_end_of_list(list_current, get_key(tree->lmin));
+    insert_item_at_the_end_of_list(list_current, get_key(tree->lmax));
+    insert_item_at_the_end_of_list(list_current, get_key(tree->rmin));
+    insert_item_at_the_end_of_list(list_current, get_key(tree->rmax));
+
     if(tree->left != NULL && tree->right != NULL){
-        action(tree->list, (tree->left)->list, (tree->right)->list);
+        type_list list_left = create_list();
+        type_list list_right = create_list();
+
+        insert_item_at_the_end_of_list(list_left, (void*)((long)get_balance_in_avl_aux(tree->left)));
+        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmin));
+        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmax));
+        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmin));
+        insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmax));
+
+        insert_item_at_the_end_of_list(list_right, (void*)((long)get_balance_in_avl_aux(tree->right)));
+        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmin));
+        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmax));
+        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmin));
+        insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmax));
+
+        action(tree->list, (tree->left)->list, (tree->right)->list, list_current, list_left, list_right);
+        destroi_list(list_left);
+        destroi_list(list_right);
     }
     else{
-        if(tree->left) action(tree->list, (tree->left)->list, NULL);
-        else if(tree->right) action(tree->list, NULL, (tree->right)->list);
-        else action(tree->list, NULL, NULL);
+        if(tree->left){
+            type_list list_left = create_list();
+            insert_item_at_the_end_of_list(list_left, (void*)((long)get_balance_in_avl_aux(tree->left)));
+            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmin));
+            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->lmax));
+            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmin));
+            insert_item_at_the_end_of_list(list_left, get_key((tree->left)->rmax));
+            action(tree->list, (tree->left)->list, NULL, list_current, list_left, NULL);
+            destroi_list(list_left);
+        }
+        else if(tree->right) {
+            type_list list_right = create_list();
+            insert_item_at_the_end_of_list(list_right, (void*)((long)get_balance_in_avl_aux(tree->right)));
+            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmin));
+            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->lmax));
+            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmin));
+            insert_item_at_the_end_of_list(list_right, get_key((tree->right)->rmax));
+            action(tree->list, NULL, (tree->right)->list, list_current, NULL, list_right);
+            destroi_list(list_right);
+        }
+        else {
+            action(tree->list, NULL, NULL, list_current, NULL, NULL);
+        }
     }
-
-    continue_traverse_with_lists_avltaux(tree, action);
+    destroi_list(list_current);
+    continue_traverse_with_lists_avltaux(tree, action, get_key);
     return;
 }
 

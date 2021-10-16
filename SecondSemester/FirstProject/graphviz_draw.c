@@ -9,97 +9,133 @@
 #include <stdlib.h>
 #include "graphviz_draw.h"
 
-FILE *begin_design(const char *output_filename){
-    FILE *output_file;
-    output_file = fopen(output_filename,"w");
-    fprintf(output_file,"digraph G {\n");
+int draw;
 
-    return output_file;
+type_dot begin_design(const char *filename){
+    FILE *file;
+    file = fopen(filename,"w");
+    fprintf(file,"digraph G {\n");
+    draw = 0;
+    return file;
 }
 
-void end_design(FILE *output_file){
-    fprintf(output_file,"\n}\n");
-    fclose(output_file);
+void end_design(type_dot file){
+    FILE *dot_file = file;
+    fprintf(dot_file,"\n}\n");
+    fclose(dot_file);
 }
 
-// void add_tree_element(char* parent, char* child_left, char* child_right, FILE *output_file){
-//     char *edge = " -> ";
-//     char *NullNode = " [shape=point, style=\"invis\"]";
-//     char *invisEdge = " [style=\"invis\"]";
-//     char *ident = "   ";
-//     char lstring[100], rstring[100];
+void reset_design(){
+    draw = 0;
+}
 
-
-//     if(parent == NULL) return;
-//     if(child_left != NULL){
-//         sprintf(lstring,"%s%s%s%s ;\n",ident, parent, edge, child_left);
-//         fprintf(output_file, "%s", lstring);
-//     }
-//     if(child_right != NULL){
-//         sprintf(rstring,"%s%s%s%s ;\n",ident, parent, edge, child_right);
-//         fprintf(output_file,"%s", rstring);
-//     }
-// }
-
-void appear_node_in_tree_design(FILE *output_file){
+void appear_node_in_tree_design(type_dot file){
+    FILE *dot_file = file;
     char *node = " node[shape=ellipse, style=\"\"]";
     char *edge = " edge[style=\"\"]"; 
     char string[100];
 
     sprintf(string,"%s\n%s\n",node, edge);
-    fprintf(output_file, "%s", string);
+    fprintf(dot_file, "%s", string);
 }
 
-void hide_node_in_tree_design(FILE *output_file){
+void hide_node_in_tree_design(type_dot file){
+    FILE *dot_file = file;
     char *node = " node[shape=point, style=\"invis\"]";
     char *edge = " edge[style=\"invis\"]"; 
     char string[100];
 
     sprintf(string,"%s\n%s\n",node, edge);
-    fprintf(output_file, "%s", string);
+    fprintf(dot_file, "%s", string);
 }
 
-void add_parent_in_tree_design(char* parent, FILE *output_file){
+void add_parent_in_tree_design(char* parent, type_dot file){
+    FILE *dot_file = file;
     char *edge = " -> ";
 
     char *ident = "   ";
     char string[100];
 
     sprintf(string,"%s%s%s {", ident, parent, edge);
-    fprintf(output_file, "%s", string);
+    fprintf(dot_file, "%s", string);
 }
 
-void add_root_in_tree_design(char* root, FILE *output_file){
+void add_root_in_tree_design(char* root, type_dot file){
+    FILE *dot_file = file;
     char string[20];
     sprintf(string,"\t%s //root\n", root);
-    fprintf(output_file, "%s", string);
+    fprintf(dot_file, "%s", string);
 }
 
-void add_child_in_tree_design(char* child, FILE *output_file){
+void add_child_in_tree_design(char* child, type_dot file){
+    FILE *dot_file = file;
     char string[100];
 
     //sprintf(string,"child[shape=ellipse, label=%s] , ", child);
     sprintf(string,"%s};\n", child);
-    fprintf(output_file, "%s", string); 
+    fprintf(dot_file, "%s", string); 
 }
 
-void close_child(FILE *output_file){
+void close_child(type_dot file){
+    FILE *dot_file = file;
     char string[5];
     sprintf(string,"}%c\n", '\0');
-    fprintf(output_file, "%s", string);
+    fprintf(dot_file, "%s", string);
 }
 
 
-void add_empty_child_in_tree_design(FILE *output_file){
+void add_empty_child_in_tree_design(type_dot file){
+    FILE *dot_file = file;
     char string[100];
 
     long rand = random();
 
     sprintf(string,"%ld};\n", rand);
     //sprintf(string," , ");
-    fprintf(output_file, "%s", string);
+    fprintf(dot_file, "%s", string);
 }
-// talvez aqui separar escrever o pai ->
- // dps o filho ???? nao ta uma boa estratégia
+// get_info MUST RETURN A CHAR*
+void insert_blocks_rects_parent_list_of_not_null_child(type_dot file, type_list parent, type_gdptrf_onelist get_info){
+    FILE *dot_file = file;
+    if(parent == NULL) return;
+    
+    char idtmp[5];
 
- 
+    if(draw == 0){
+        sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
+        add_root_in_tree_design(idtmp, dot_file);
+        draw++;
+    }
+    appear_node_in_tree_design(dot_file);
+    sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
+    add_parent_in_tree_design(idtmp, dot_file);    
+}
+
+void insert_blocks_rects_parent_list_of_null_child(type_dot file, type_list parent, type_gdptrf_onelist get_info){
+    FILE *dot_file = file;
+    if(parent == NULL) return;
+    
+    char idtmp[5];
+
+    if(draw == 0){
+        sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
+        add_root_in_tree_design(idtmp, dot_file);
+        draw++;
+    }
+    hide_node_in_tree_design(dot_file);
+    sprintf(idtmp, "%s%c", (char*)get_info(parent), '\0');
+    add_parent_in_tree_design(idtmp, dot_file);    
+}
+
+
+void insert_blocks_rects_child_list(type_dot file, type_list child, type_gdptrf_onelist get_info){
+    FILE *dot_file = file;
+    char idtmp[5];
+    if(child != NULL){
+        sprintf(idtmp, "%s%c", (char*)get_info(child), '\0');
+        add_child_in_tree_design(idtmp, dot_file);
+    }
+    else{
+        add_empty_child_in_tree_design(dot_file);
+    }
+}

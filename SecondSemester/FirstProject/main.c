@@ -46,12 +46,11 @@ int main(int argc, char *argv[]) {
     type_hashtable properties_hashtable = create_hash_table();
     type_hashtable cityblocks_hashtable = create_hash_table();
     type_mMavltree cityblocks_avltree = create_mMl_avl_tree();
-    type_mMavltree property_leases_hashtable = create_mMl_avl_tree();
+    type_mMavltree property_leases_hashtable = create_hash_table();
 
 
     // --------------------------------------------------- COMMAND LINE -----------------------------------------------
     commandline(argc, argv, &input_path, &geo_filename, &qry_filename, &pm_filename, &output_path);
-    printf("fiz o commandline\n");
     printf("input_path = %s\n", input_path);
     printf("geo_filename = %s\n", geo_filename);
     printf("qry_filename = %s\n", qry_filename);
@@ -61,7 +60,6 @@ int main(int argc, char *argv[]) {
 
     // --------------------------------------------------- PM FILE ---------------------------------------------------
     pm_fullpath = get_pm_fullpath(pm_filename, input_path);
-    printf("fiz o get path do pm\n");
     if(pm_fullpath != NULL) get_pm_input(pm_fullpath, people_hashtable, properties_hashtable);
     printf("fiz o pm\n");
 
@@ -69,33 +67,18 @@ int main(int argc, char *argv[]) {
     geo_fullpath = get_geo_fullpath(geo_filename, input_path);
     cityblocks_avltree = get_geo_input(geo_fullpath, cityblocks_avltree, cityblocks_hashtable);
     printf("fiz o geo\n");
-    if(empty_mMl_avl_tree(cityblocks_avltree)){
-        printf("OH NO EMPTY\n");
-    }
 
 
     // --------------------------------------------------- OUTPUT FILE SVG 1 ---------------------------------------------------
     // Getting full path for the first output file
     first_svg_fullpath = get_first_svg_fullpath(geo_filename, output_path);
-    printf("first_svg_fullpath done\n");
-    printf("%s\n", first_svg_fullpath);
     char* my_name = (char*)malloc(sizeof(char) * 17);
     sprintf(my_name, "Denise Rezende%c", '\0');
 
     // Creating svg output file
     type_svg svgfile = start_new_svg_file(first_svg_fullpath);
-    if(svgfile == NULL){
-        printf("NULLNULL\n");
-    }
-    printf("start_new_svg_file done\n");
     insert_comment_in_svg(svgfile, my_name);
-    printf("insert_comment_in_svg done\n");
     insert_blocks_in_svg(svgfile, cityblocks_avltree);
-    printf("inseri blocks\n");
-    // insert_properties_in_svg(svgfile, properties_hashtable, cityblocks_hashtable);
-    // printf("inseri properties\n");
-    // insert_people_in_svg(svgfile, people_hashtable, cityblocks_hashtable);
-    // printf("inseri people\n");
     end_svg_file(svgfile);
     printf("fiz o svg 1\n");
 
@@ -123,8 +106,7 @@ int main(int argc, char *argv[]) {
         
         printf("antes get_qry_input_and_generate_output\n");
         // Calling function to deal with qryfile
-        //A avl sendo mandada está certa??????????????? PAREI AQUI
-        printf("cityblocks_hashtable=NULL:%d\n", cityblocks_hashtable==NULL);
+
         get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
         
         // Ending output files

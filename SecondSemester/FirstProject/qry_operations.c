@@ -30,7 +30,7 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
         return;
     }
     char *line = (char*)malloc(70 * sizeof(char));
-    char *helper = (char*)malloc(5 * sizeof(char));
+    char *helper = (char*)malloc(10 * sizeof(char));
     char *cep = (char*)malloc(40 * sizeof(char));
     char *cpf = (char*)malloc(40 * sizeof(char));
     char *additional_data = (char*)malloc(40 * sizeof(char));

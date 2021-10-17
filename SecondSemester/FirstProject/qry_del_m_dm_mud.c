@@ -7,6 +7,7 @@
 
 type_svg QDMDM_SVGFILE;
 type_txt QDMDM_TXTFILE;
+#define SIZE_DEFAULT_DOUBLE_STRING 10
 
 
 void _QDMDM_report_property_txt_(type_property property){
@@ -27,11 +28,11 @@ void _QDMDM_report_property_lease_txt_(type_property property){
     insert_string_in_txt(QDMDM_TXTFILE, get_property_lease_id(property));
     _QDMDM_report_property_txt_(property);
     
-    char *area = malloc(sizeof(char) * 7);
+    char *area = malloc(sizeof(char) * SIZE_DEFAULT_DOUBLE_STRING);
     sprintf(area, "%lf%c", get_property_area(property), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, area);
 
-    char *monthly_rent = malloc(sizeof(char) * 7);
+    char *monthly_rent = malloc(sizeof(char) * SIZE_DEFAULT_DOUBLE_STRING);
     sprintf(monthly_rent, "%lf%c", get_property_monthly_rent(property), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, monthly_rent);
 
@@ -55,19 +56,19 @@ void _QDMDM_report_block_txt_(type_rect block_rect){
     type_block block_data = get_rect_data(block_rect);
     insert_string_in_txt(QDMDM_TXTFILE, get_block_cep(block_data));
 
-    char *x_string = malloc(sizeof(char) * 7);
+    char *x_string = malloc(sizeof(char) * SIZE_DEFAULT_DOUBLE_STRING);
     sprintf(x_string, "%lf%c", get_rect_x(block_rect), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, x_string);
 
-    char *y_string = malloc(sizeof(char) * 7);
+    char *y_string = malloc(sizeof(char) * SIZE_DEFAULT_DOUBLE_STRING);
     sprintf(y_string, "%lf%c", get_rect_y(block_rect), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, y_string);
 
-    char *w_string = malloc(sizeof(char) * 7);
+    char *w_string = malloc(sizeof(char) * SIZE_DEFAULT_DOUBLE_STRING);
     sprintf(w_string, "%lf%c", get_rect_width(block_rect), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, w_string);
 
-    char *h_string = malloc(sizeof(char) * 7);
+    char *h_string = malloc(sizeof(char) * SIZE_DEFAULT_DOUBLE_STRING);
     sprintf(h_string, "%lf%c", get_rect_height(block_rect), '\0');
     insert_string_in_txt(QDMDM_TXTFILE, h_string);
 }

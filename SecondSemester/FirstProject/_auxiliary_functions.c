@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-char QAF_ID[40];
+char QAF_ID[41];
 double QAF_x1, QAF_x2;
 double QAF_y1, QAF_y2;
 

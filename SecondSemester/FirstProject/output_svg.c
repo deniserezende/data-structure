@@ -152,3 +152,21 @@ void insert_properties_in_svg(type_svg svgfile, type_hashtable properties, type_
     traverse_full_hash_table_with_conditional_action(blocks, (void*)ptr_true, (void*)ptr_insert);
 }
 
+int insert_svg_file_in_other_svg_file(char* origin_svgfilename, type_svg destination_svgfile){
+    FILE *origin = fopen(origin_svgfilename, "r");
+    if(origin == NULL) return 0;
+    FILE *destination = destination_svgfile;
+    if(destination == NULL) return 0;
+    char *line = (char*)malloc(500 * sizeof(char));
+    while(!feof(origin)){ 
+        fscanf(origin, "\n%[^\n]\ns", line);
+        if(strcmp(line,"<svg xmlns=\"http://www.w3.org/2000/svg\"") != 0 && strcmp(line,"xmlns:xlink=\"http://www.w3.org/1999/xlink\" >") != 0){
+            if(strcmp(line, "</svg>") != 0){
+                printf("line=[%s]\n", line);
+                insert_string_in_svg(destination, line);
+            }
+        }
+    }
+    free(line);
+    return 1;
+}

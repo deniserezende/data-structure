@@ -27,4 +27,6 @@ void insert_people_in_svg(type_svg svgfile, type_hashtable people, type_hashtabl
 // Insert residences in svg
 void insert_properties_in_svg(type_svg svgfile, type_hashtable properties, type_hashtable blocks);
 
+int insert_svg_file_in_other_svg_file(char* origin_svgfilename, type_svg destination_svgfile);
+
 #endif /* output_svg_h */

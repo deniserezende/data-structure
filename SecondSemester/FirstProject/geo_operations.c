@@ -20,9 +20,11 @@ FILE *geofile = fopen(filename, "r");
     char *line = malloc(80 * sizeof(char));
     char *helper = malloc(3 *sizeof(char));
     char *helper2 = malloc(3 *sizeof(char));
-    char cep[40];
+    char *cep = malloc(40 *sizeof(char));
+    char *fill_color = malloc(40 *sizeof(char));
+    char *stroke_color = malloc(40 *sizeof(char));
+
     double x, y, width, height;
-    char fill_color[40], stroke_color[40];
     double stroke_width;
 
     type_rect block;
@@ -69,6 +71,9 @@ FILE *geofile = fopen(filename, "r");
     free(helper);
     free(helper2);
     fclose(geofile);
+    free(cep);
+    free(stroke_color);
+    free(fill_color);
     return cityblocks_tree;
 }
 

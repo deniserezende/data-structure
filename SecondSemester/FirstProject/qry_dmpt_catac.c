@@ -140,7 +140,6 @@ void action_catac(type_mMlavlitems block_rect){
     long(*condition_property_lease_ptr)(type_property);
     condition_property_lease_ptr = condition_property_lease_catac_;
     
-
     QDC_x1 = get_rect_x(block_rect);
     QDC_y1 = get_rect_y(block_rect);
     QDC_h = get_rect_height(block_rect); 
@@ -153,7 +152,7 @@ void action_catac(type_mMlavlitems block_rect){
     traverse_full_hash_table_with_conditional_action(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)action_property_lease_ptr);
     //traverse_hash_table_with_conditional_action_optimal(QDC_property_leases, cep, (void*)get_property_cep_key, (void*)verify_property_leases, (void*)action_property_lease_ptr);
 
-
+    set_id(cep);
     type_rect block_rect_del = delete_item_in_hash_table(QDC_blocks_table, get_key_from_block(block_rect), (void*)get_key_from_block, (void*)verify_block_found);
     insert_item_at_the_end_of_list(QDC_blocks_to_delete, block_rect_del);
 

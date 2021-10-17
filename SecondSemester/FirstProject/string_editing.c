@@ -14,7 +14,7 @@
 #include "string_editing.h"
 
 char* remove_all_occurrences_of_char(char* str, char c){
-    char *result = malloc(sizeof(char) * strlen(str) + 1);
+    char *result = malloc(sizeof(char) * strlen(str) + 2);
     sprintf(result, "%s%c", str, '\0');
     char *pr = result, *pw = result;
     while (*pr) {

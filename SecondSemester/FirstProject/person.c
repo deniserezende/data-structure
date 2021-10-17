@@ -54,7 +54,7 @@ char* get_person_birthday(type_person person){
 
 char* get_person_full_name(type_person person){
     PERSON *p = person;
-    char* full_name = malloc(sizeof(char) * (strlen(p->first_name) + strlen(p->last_name)));
+    char* full_name = malloc(sizeof(char) * (strlen(p->first_name) + strlen(p->last_name) + 2));
     sprintf(full_name, "%s%s%c", p->first_name, p->last_name, '\0');
     return(full_name);
 }

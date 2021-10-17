@@ -25,7 +25,7 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
     char *cpf = malloc(40 * sizeof(char));
     char *first_name = malloc(40 * sizeof(char));
     char *last_name = malloc(40 * sizeof(char));
-    char *birthday = malloc(10 * sizeof(char));
+    char *birthday = malloc(11 * sizeof(char));
     char gender;
 
     char *cep = malloc(40 * sizeof(char));

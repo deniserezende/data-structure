@@ -66,6 +66,7 @@ void _QPL_report_person_txt_(type_person person){
 // Imóvel do endereço especificado, de área ar m2 é ofertado para locação por R$ v mensais.
 void oloc(type_hashtable property_leases, char property_lease_id[], char cep[], char cardinal_direction, int house_number, char addicional_data[], double property_area, double monthly_rent){
     type_property new_lease = new_property(cep, cardinal_direction, house_number, addicional_data);
+    add_lease_id_to_property(new_lease, property_lease_id);
     add_property_area(new_lease, property_area);
     add_property_monthly_rent(new_lease, monthly_rent);
     change_property_rent_status(new_lease, 1);

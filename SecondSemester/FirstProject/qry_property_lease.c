@@ -296,6 +296,7 @@ int dloc(type_txt TXTFILE, type_hashtable blocks_table, type_hashtable property_
     _dloc_svg(property_deleted);
 
     remove_property(property_deleted);
-    property_deleted = delete_item_in_hash_table(property_leases, formatted_property_id, (void*)get_property_lease_key, (void*)verify_property_ptr);
+    // AQUIDE why was I doing this twice
+    // property_deleted = delete_item_in_hash_table(property_leases, formatted_property_id, (void*)get_property_lease_key, (void*)verify_property_ptr);
     return 1;
 }

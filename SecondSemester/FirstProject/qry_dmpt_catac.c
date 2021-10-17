@@ -144,10 +144,8 @@ void action_catac(type_mMlavlitems block_rect){
     QDC_w = get_rect_width(block_rect);
 
     set_id(get_block_cep(block));
-    printf("no segundo traverse\n");
     traverse_hash_table_with_conditional_action_optimal(QDC_properties_table, cep, (void*)get_property_cep_key, (void*)verify_property_found, (void*)action_property_ptr);
     
-    printf("no terceiro traverse\n");
     traverse_full_hash_table_with_conditional_action(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)action_property_lease_ptr);
     //traverse_hash_table_with_conditional_action_optimal(QDC_property_leases, cep, (void*)get_property_cep_key, (void*)verify_property_leases, (void*)action_property_lease_ptr);
 
@@ -166,27 +164,27 @@ void action_catac(type_mMlavlitems block_rect){
 }
 
 type_mMlavltree delete_blocks_from_blocks_avl(type_mMlavltree blocks_avl, type_list list_of_blocks){
-    printf("no gonna delete from avl\n");
     int done;
     type_rect rect;
     type_block block_data;
+    if(empty_list(list_of_blocks)){
+        destroi_list(list_of_blocks);
+        return blocks_avl;
+    }
     set_current_to_first_item_in_list(list_of_blocks);
     int i = 0;
     do{
-        printf("to no do %d\n", i);
         i++;
         done = is_current_last_item_in_list(list_of_blocks);
         rect = get_current_item_in_list(list_of_blocks);
         set_id(get_property_cep(get_rect_data(rect)));
         blocks_avl = delete_item_in_mMl_avl_tree(blocks_avl, rect, (void*)compare_rectangles_by_x_coordinate, (void*)compare_rect_blocks_cep);
-        printf("del done\n");
         block_data = get_rect_data(rect);
         remove_block(block_data);
         destroi_rectangle(rect);
         //delete_current_item_in_list(list_of_blocks);
         move_current_forward_in_list(list_of_blocks);
     }while(!done);
-    printf("sai do do\n");
     destroi_list(list_of_blocks);
     return blocks_avl;
 }
@@ -211,7 +209,6 @@ type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks
 
     void(*action_ptr)(type_mMlavlitems);
     action_ptr = action_catac;
-    printf("no primeiro traverse\n");
     set_x1_x2_y1_y2(x, x+w, y, y+h);
     traverse_mMlavltree_with_conditional_action(blocks_avl, (void*)traverse_side_rect_in_rect_, (void*)condition_rect_in_rect_, (void*)action_ptr);    
 
@@ -300,16 +297,13 @@ void action_dot_dmpt_(type_list parent, type_list childleft, type_list childrigh
     getinfo = get_info_for_dot_catac;  
 
     if(childleft != NULL){
-        printf("if\n");
         QDC_list = info_parent;
         insert_blocks_rects_parent_list_of_not_null_child(QDC_DOTFILE, parent, (void*)getinfo);
-        printf("back next\n");
         QDC_list = info_lchild;
         insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
 
     }
     else{
-        printf("else\n");
         QDC_list = info_parent;
         insert_blocks_rects_parent_list_of_null_child(QDC_DOTFILE, parent, (void*)getinfo);
         insert_blocks_rects_child_list(QDC_DOTFILE, childleft, (void*)getinfo); 
@@ -335,11 +329,10 @@ void action_dot_dmpt_(type_list parent, type_list childleft, type_list childrigh
 // o x máximo 
 // e o fator de balanceamento do nó.
 
+// aquide conversão!
 long get_rect_x_long(type_rect rect){
     double x = get_rect_x(rect);
-    printf("double x=%lf\n", x);
     long longx = (long)x;
-    printf("longx=%ld\n", longx);
     return(longx);
 }
 

@@ -24,10 +24,10 @@ char *get_dot_fullpath(char *dot_filename_without_extension, char *output_path, 
     return dot_fullpath;
 }
 
-void get_qry_input_and_generate_output(char *qryfilename, char *output_path, char *geo_filename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases){
+type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *output_path, char *geo_filename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases){
     FILE *qryfile = fopen(qryfilename, "r");
     if (qryfile == NULL) {
-        return;
+        return NULL;
     }
     char *line = (char*)malloc(70 * sizeof(char));
     char *helper = (char*)malloc(10 * sizeof(char));
@@ -65,28 +65,24 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
                     
                 }
                 else if(strncmp(line, "mud", 3) == 0){
-                        printf("entrei no mud\n");
                         sscanf(line, "%s %s %s %c %d %s", helper, cpf, cep, &cardinal_direction, &house_number, additional_data);
                         insert_string_in_txt(txtfile, helper);
                         mud(svg_temp_file, txtfile, blocks_table, people_table, properties_table, cpf, cep, cardinal_direction, house_number, additional_data);
             
                     }
                     else if(strncmp(line, "oloc ", 5) == 0){
-                            printf("entrei no oloc\n");
                             sscanf(line, "%s %s %s %c %d %s %lf %lf", helper, property_lease_id, cep, &cardinal_direction, &house_number, additional_data, &property_area, &monthly_rent); 
                             insert_string_in_txt(txtfile, helper);
                             oloc(properties_leases, property_lease_id, cep, cardinal_direction, house_number, additional_data, property_area, monthly_rent);
                             
                         }
                         else if(strncmp(line, "oloc?", 5) == 0){
-                                printf("entrei no oloc?\n");
                                 sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                 insert_string_in_txt(txtfile, helper);
                                 oloc_(svg_temp_file, txtfile, blocks_avl, properties_leases, x, y, w, h);
 
                                 }
                                 else if(strncmp(line, "loc ", 4) == 0){
-                                    printf("entrei no loc\n");
                                     sscanf(line, "%s %s %s", helper, property_lease_id, cpf);
                                     insert_string_in_txt(txtfile, helper);
                                     loc(svg_temp_file, txtfile, blocks_table, properties_leases, people_table, property_lease_id, cpf);
@@ -105,7 +101,6 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
                             
                                             }
                                             else if(strncmp(line, "hom", 3) == 0){
-                                                printf("entrei no hom\n");
                                                 sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                 insert_string_in_txt(txtfile, helper);
                                                 hom(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, people_table, x, y, w, h);
@@ -119,7 +114,6 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
                                     
                                                     }
                                                     else if(strncmp(line, "dmpt", 4) == 0){
-                                                        printf("entrei no dmpt\n");
                                                         sscanf(line, "%s %s", helper, sfx);
                                                         insert_string_in_txt(txtfile, helper);
                                                         char* dotfullpath = get_dot_fullpath(sfx, output_path, geo_filename);
@@ -129,7 +123,6 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
                                                         free(dotfullpath);
                                                         }
                                                         else if(strncmp(line, "catac", 5) == 0){
-                                                            printf("entrei no catac\n");
                                                             sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                             insert_string_in_txt(txtfile, helper);
                                                             blocks_avl = catac(svg_temp_file, txtfile, blocks_avl, blocks_table, properties_table, properties_leases, people_table, x, y, w, h);
@@ -143,7 +136,6 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
     insert_blocks_in_svg(svgfile, blocks_avl);
     insert_svg_file_in_other_svg_file("deniserezendeqrytempfile.svg", svgfile);
     int removed = remove("deniserezendeqrytempfile.svg");
-    printf("REMOVED = %d\n", removed);
 
     free(line);
     free(helper);
@@ -153,6 +145,7 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
     free(property_lease_id);
     free(sfx);
     fclose(qryfile);
+    return(blocks_avl);
 }
 
 

@@ -13,7 +13,6 @@
 type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, type_hashtable cityblocks_table){
 FILE *geofile = fopen(filename, "r");
     if(geofile == NULL){
-        printf("GEO NULL\n");
         return NULL;
     }
 

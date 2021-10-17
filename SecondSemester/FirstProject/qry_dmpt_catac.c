@@ -331,7 +331,7 @@ char* get_info_for_dot_catac(type_list list){
     sprintf(string_final, "\"x = %f \n amount of blocks = %d \n %s \n %s \n balance = %ld\"", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
     free(string_of_ceps);
     free(string_of_xs);
-    printf("final string: \n%s\n", string_final);
+    //printf("final string: \n%s\n", string_final);
     return string_final;
 }
 

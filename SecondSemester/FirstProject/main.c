@@ -23,10 +23,10 @@ char *get_txt_and_svg_filename(char *geo_filename, char *qry_filename);
 char *get_txt_fullpath(char *geo_filename, char *qry_filename, char *output_path);
 char *get_second_svg_fullpath(char *geo_filename, char *qry_filename, char *output_path);
 
-void print_item(type_rect rect){
-    type_rectdata data = get_rect_data(rect);
-    printf("cep=%s\n", get_property_cep(data));
-}
+// void print_item(type_rect rect){
+//     type_rectdata data = get_rect_data(rect);
+//     printf("cep=%s\n", get_property_cep(data));
+// }
 
 
 int main(int argc, char *argv[]) {
@@ -51,22 +51,22 @@ int main(int argc, char *argv[]) {
 
     // --------------------------------------------------- COMMAND LINE -----------------------------------------------
     commandline(argc, argv, &input_path, &geo_filename, &qry_filename, &pm_filename, &output_path);
-    printf("input_path = %s\n", input_path);
-    printf("geo_filename = %s\n", geo_filename);
-    printf("qry_filename = %s\n", qry_filename);
-    printf("pm_filename = %s\n", pm_filename);
-    printf("output_path = %s\n", output_path);
+    // printf("input_path = %s\n", input_path);
+    // printf("geo_filename = %s\n", geo_filename);
+    // printf("qry_filename = %s\n", qry_filename);
+    // printf("pm_filename = %s\n", pm_filename);
+    // printf("output_path = %s\n", output_path);
 
 
     // --------------------------------------------------- PM FILE ---------------------------------------------------
     pm_fullpath = get_pm_fullpath(pm_filename, input_path);
     if(pm_fullpath != NULL) get_pm_input(pm_fullpath, people_hashtable, properties_hashtable);
-    printf("fiz o pm\n");
+    // printf("fiz o pm\n");
 
     // --------------------------------------------------- GEO FILE ---------------------------------------------------
     geo_fullpath = get_geo_fullpath(geo_filename, input_path);
     cityblocks_avltree = get_geo_input(geo_fullpath, cityblocks_avltree, cityblocks_hashtable);
-    printf("fiz o geo\n");
+    // printf("fiz o geo\n");
 
 
     // --------------------------------------------------- OUTPUT FILE SVG 1 ---------------------------------------------------
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     insert_comment_in_svg(svgfile, my_name);
     insert_blocks_in_svg(svgfile, cityblocks_avltree);
     end_svg_file(svgfile);
-    printf("fiz o svg 1\n");
+    // printf("fiz o svg 1\n");
 
 
     // void(*get_print_item)(type_rect);
@@ -104,10 +104,8 @@ int main(int argc, char *argv[]) {
         insert_string_in_txt(txtfile, my_name);
         insert_comment_in_svg(svgfile2, my_name);
         
-        printf("antes get_qry_input_and_generate_output\n");
         // Calling function to deal with qryfile
-
-        get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
+        cityblocks_avltree = get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
         
         // Ending output files
         end_svg_file(svgfile2);

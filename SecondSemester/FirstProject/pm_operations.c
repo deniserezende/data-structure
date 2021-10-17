@@ -10,9 +10,9 @@
 #include <stdlib.h>
 #include "pm_operations.h"
 
-void print_id(type_hashitem item){
-    printf("cpf: %s\n", get_person_cpf(item));
-}
+// void print_id(type_hashitem item){
+//     printf("cpf: %s\n", get_person_cpf(item));
+// }
 
 void get_pm_input(char *filename, type_hashtable people_table, type_hashtable properties_table){
     FILE *pmfile = fopen(filename, "r");

@@ -61,11 +61,6 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
                 long cpf_formatted = format_cpf(cpf);
                 set_id(cpf);
                 person = lookup_item_in_hash_table(people_table, cpf_formatted, (void*)get_cpf_ptr, (void*)check_person_ptr);
-                if(person == NULL){
-                    printf("cpf=%s\n", cpf);
-                    printf("person not found\n");
-
-                }
                 set_owned_properties_to_person(person, 1);
                 add_persons_owned_property(person, new_property_);
 

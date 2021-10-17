@@ -135,6 +135,25 @@ void action_property_lease_catac_(type_hashitem property_lease){
     remove_property(del_property);
 }
 
+void deallocate_property_lease_catac_(type_hashitem property_lease){
+    int rent_status = get_property_rent_status(property_lease);
+    // If it's not for rent then there is a tenant
+    if(rent_status == 0){
+        type_person tenant = get_property_tenant(property_lease);
+        if(tenant != NULL){
+            _QDC_report_person_txt_(tenant);
+            remove_rented_property_from_person(tenant, 0);
+
+            set_id(get_person_cpf(tenant));
+            type_hashitem del_tenant = delete_item_in_hash_table(QDC_people_table, get_person_formatted_cpf(tenant), (void*)get_person_formatted_cpf, (void*)verify_person_found);
+            remove_person(del_tenant);
+        }
+    }
+    _QDC_report_property_txt_(property_lease);
+    set_id(get_property_cep(property_lease));
+    remove_property(property_lease);
+}
+
 void _catac_svg(type_mMlavlitems block_rect){
     insert_rectangle_with_different_opacity_in_svg(QDC_SVGFILE, get_rect_x(block_rect), get_rect_y(block_rect), get_rect_width(block_rect), get_rect_height(block_rect), "#AB37C8", "#AA0044", 0.5, 2);
 }
@@ -150,6 +169,9 @@ void action_catac(type_mMlavlitems block_rect){
 
     void(*deallocate_property_ptr)(type_property);
     deallocate_property_ptr = deallocate_property_catac_;
+
+    void(*deallocate_property_lease_ptr)(type_property);
+    deallocate_property_lease_ptr = deallocate_property_lease_catac_;
 
     void(*action_property_lease_ptr)(type_property);
     action_property_lease_ptr = action_property_lease_catac_;
@@ -167,6 +189,7 @@ void action_catac(type_mMlavlitems block_rect){
     //traverse_hash_table_with_conditional_action_optimal(QDC_properties_table, cep_key, (void*)get_property_cep_key, (void*)verify_property_found, (void*)action_property_ptr);
     
     sprintf(QDC_ID, "%s%c", cep, '\0');
+    traverse_full_hash_table_with_conditional_deletion(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)deallocate_property_lease_ptr);
     //traverse_full_hash_table_with_conditional_action(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)action_property_lease_ptr);
     //traverse_hash_table_with_conditional_action_optimal(QDC_property_leases, cep, (void*)get_property_cep_key, (void*)verify_property_leases, (void*)action_property_lease_ptr);
 

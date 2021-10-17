@@ -16,6 +16,8 @@ char QPL_ID[40];
 type_svg QPL_SVGFILE;
 type_txt QPL_TXTFILE;
 
+#define QPL_SIZE_DOUBLESTR 10
+
 
 void _QPL_report_property_txt_(type_property property){
     char *cardinal_direction = malloc(sizeof(char)*3);
@@ -35,12 +37,12 @@ void _QPL_report_property_lease_txt_(type_property property){
     insert_string_in_txt(QPL_TXTFILE, get_property_lease_id(property));
     _QPL_report_property_txt_(property);
     
-    char *area = malloc(sizeof(char) * 7);
-    sprintf(area, "%lf%c", get_property_area(property), '\0');
+    char *area = malloc(sizeof(char) * QPL_SIZE_DOUBLESTR);
+    sprintf(area, "%.2lf%c", get_property_area(property), '\0');
     insert_string_in_txt(QPL_TXTFILE, area);
 
     char *monthly_rent = malloc(sizeof(char) * 7);
-    sprintf(monthly_rent, "%lf%c", get_property_monthly_rent(property), '\0');
+    sprintf(monthly_rent, "%.2lf%c", get_property_monthly_rent(property), '\0');
     insert_string_in_txt(QPL_TXTFILE, monthly_rent);
 
     free(area);

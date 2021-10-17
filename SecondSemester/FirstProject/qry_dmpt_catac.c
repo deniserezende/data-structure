@@ -13,6 +13,8 @@ double QDC_x1, QDC_y1, QDC_h, QDC_w;
 char QDC_ID[40];
 type_list QDC_blocks_to_delete;
 
+#define QDC_SIZE_DOUBLESTR 10
+
 void _QDC_report_property_txt_(type_property property){
     char *cardinal_direction = malloc(sizeof(char)*3);
     sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
@@ -31,12 +33,12 @@ void _QDC_report_property_lease_txt_(type_property property){
     insert_string_in_txt(QDC_TXTFILE, get_property_lease_id(property));
     _QDC_report_property_txt_(property);
     
-    char *area = malloc(sizeof(char) * 7);
-    sprintf(area, "%lf%c", get_property_area(property), '\0');
+    char *area = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    sprintf(area, "%.2lf%c", get_property_area(property), '\0');
     insert_string_in_txt(QDC_TXTFILE, area);
 
-    char *monthly_rent = malloc(sizeof(char) * 7);
-    sprintf(monthly_rent, "%lf%c", get_property_monthly_rent(property), '\0');
+    char *monthly_rent = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    sprintf(monthly_rent, "%.2lf%c", get_property_monthly_rent(property), '\0');
     insert_string_in_txt(QDC_TXTFILE, monthly_rent);
 
     free(area);
@@ -59,20 +61,20 @@ void _QDC_report_block_txt_(type_rect block_rect){
     type_block block_data = get_rect_data(block_rect);
     insert_string_in_txt(QDC_TXTFILE, get_block_cep(block_data));
 
-    char *x_string = malloc(sizeof(char) * 7);
-    sprintf(x_string, "%lf%c", get_rect_x(block_rect), '\0');
+    char *x_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    sprintf(x_string, "%.2lf%c", get_rect_x(block_rect), '\0');
     insert_string_in_txt(QDC_TXTFILE, x_string);
 
-    char *y_string = malloc(sizeof(char) * 7);
-    sprintf(y_string, "%lf%c", get_rect_y(block_rect), '\0');
+    char *y_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    sprintf(y_string, "%.2lf%c", get_rect_y(block_rect), '\0');
     insert_string_in_txt(QDC_TXTFILE, y_string);
 
-    char *w_string = malloc(sizeof(char) * 7);
-    sprintf(w_string, "%lf%c", get_rect_width(block_rect), '\0');
+    char *w_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    sprintf(w_string, "%.2lf%c", get_rect_width(block_rect), '\0');
     insert_string_in_txt(QDC_TXTFILE, w_string);
 
-    char *h_string = malloc(sizeof(char) * 7);
-    sprintf(h_string, "%lf%c", get_rect_height(block_rect), '\0');
+    char *h_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    sprintf(h_string, "%.2lf%c", get_rect_height(block_rect), '\0');
     insert_string_in_txt(QDC_TXTFILE, h_string);
 }
 

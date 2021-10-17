@@ -99,7 +99,6 @@ type_property_copy remove_owned_property_from_person(type_person person, int ind
     }
     p->own_properties = 0;
     p->amount_of_owned_properties = 0;
-    free(p->properties_owned);
     return old_property;
 }
 

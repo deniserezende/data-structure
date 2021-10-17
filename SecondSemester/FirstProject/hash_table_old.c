@@ -53,13 +53,9 @@ void print_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem print_it
             printf("\t---");
         }
         else{
-            printf("entrei no else\n");
             vertical_list = hashtable[i];
-            printf("atribui a vertical list\n");
             set_current_to_first_item_in_list(vertical_list);
-            printf("set_current_to_first_item_in_list\n");
             horizontal_list = get_current_item_in_list(vertical_list);
-            printf("atribui a horizontal list\n");
             int done;
             type_hashitem item;
             
@@ -129,7 +125,6 @@ int insert_item_in_hash_table(type_hashtable hash_table, type_hashitem item, lon
     int index = hashing_function(key);
     // Collision
     if(hashtable[index] != NULL){
-        printf("deu colisão\n");
         // To deal with collision, we will create a double linked list
         return collision_in_hash_table_aux(hashtable, index, item, key, get_item_key);
     }

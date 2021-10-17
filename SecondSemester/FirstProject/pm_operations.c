@@ -22,9 +22,15 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
 
     char *line = malloc(80 * sizeof(char));
     char *helper = malloc(3 *sizeof(char));
-    char cpf[40], first_name[40], last_name[40], birthday[10]; // 10 ou 11 AQUIDE
+    char *cpf = malloc(40 * sizeof(char));
+    char *first_name = malloc(40 * sizeof(char));
+    char *last_name = malloc(40 * sizeof(char));
+    char *birthday = malloc(10 * sizeof(char));
     char gender;
-    char cep[40], cardinal_direction, add_address_data[40];
+
+    char *cep = malloc(40 * sizeof(char));
+    char *add_address_data = malloc(40 * sizeof(char));
+    char cardinal_direction;
     int house_number;
 
     type_person person;
@@ -75,5 +81,11 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
 
     free(line);
     free(helper);
+    free(cpf);
+    free(first_name);
+    free(last_name);
+    free(birthday);
+    free(cep);
+    free(add_address_data);
     fclose(pmfile);
 }

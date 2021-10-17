@@ -143,7 +143,7 @@ char* get_info_function(type_list list){
     sprintf(string_final, "x = %ld\namount of blocks = %d\n%s\n%s\nbalance = %ld", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
     free(string_of_ceps);
     free(string_of_xs);
-    printf("final string: %s\n", string_final);
+    //printf("final string: %s\n", string_final);
     return string_final;
 }
 

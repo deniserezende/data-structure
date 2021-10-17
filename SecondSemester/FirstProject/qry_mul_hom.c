@@ -30,11 +30,11 @@ void _QMH_report_property_lease_txt_(type_property property){
     insert_string_in_txt(QMH_TXTFILE, get_property_lease_id(property));
     _QMH_report_property_txt_(property);
     
-    char *area = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    char *area = malloc(sizeof(char) * QMH_SIZE_DOUBLESTR);
     sprintf(area, "%.2lf%c", get_property_area(property), '\0');
     insert_string_in_txt(QMH_TXTFILE, area);
 
-    char *monthly_rent = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
+    char *monthly_rent = malloc(sizeof(char) * QMH_SIZE_DOUBLESTR);
     sprintf(monthly_rent, "%.2lf%c", get_property_monthly_rent(property), '\0');
     insert_string_in_txt(QMH_TXTFILE, monthly_rent);
 

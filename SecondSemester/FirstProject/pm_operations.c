@@ -30,6 +30,7 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
 
     char *cep = malloc(40 * sizeof(char));
     char *add_address_data = malloc(40 * sizeof(char));
+    //char add_address_data[40];
     char cardinal_direction;
     int house_number;
 
@@ -86,6 +87,6 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
     free(last_name);
     free(birthday);
     free(cep);
-    free(add_address_data);
+    //free(add_address_data);
     fclose(pmfile);
 }

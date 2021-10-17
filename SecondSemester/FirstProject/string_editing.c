@@ -70,10 +70,7 @@ long format_cpf(char cpf[]){
     char* cpf_without_hyphen = remove_all_occurrences_of_char(cpf, '-');
     char* cpf_without_special_characters = remove_all_occurrences_of_char(cpf_without_hyphen, '.');
 
-
     long result = atol(cpf_without_special_characters);
-    // long result = convert_base36_to_base10(cpf_without_special_characters);
-    // printf("to com o resultado\n");
     free(cpf_without_hyphen);
     free(cpf_without_special_characters);
     return result;

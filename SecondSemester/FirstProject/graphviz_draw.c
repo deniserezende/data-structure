@@ -147,7 +147,6 @@ void insert_blocks_rects_child_list(type_dot file, type_list child, type_gdptrf_
     char *idtmp = malloc(sizeof(char) * GD_size);
 
     if(child != NULL){
-        printf("to no if dentro do insert_blocks_rects_child_list\n");
         sprintf(idtmp, "%s%c", (char*)get_info(child), '\0');
         add_child_in_tree_design(idtmp, dot_file);
     }

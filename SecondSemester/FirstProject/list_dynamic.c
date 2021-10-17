@@ -97,6 +97,12 @@ int is_current_undefined_in_list(type_list list){
 	return 0;
 }
 
+int is_current_equal_to_NULL(type_list list){
+	STRUCTURE *stru = list;
+	if(stru->current == NULL) return 1;
+	return 0;	
+}
+
 void set_current_to_first_item_in_list(type_list list){
 	STRUCTURE *stru = list;
 	stru->current = (stru->head)->next;

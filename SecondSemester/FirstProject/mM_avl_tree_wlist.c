@@ -170,12 +170,10 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
         
         // Left Left Case
         if (value_of_comparison_left < 0){
-            //printf("// Left Left Case\n");
             return right_rotate_subtree_in_avl_tree_aux(avl_tree);
         } 
         // Left Right Case
         if (value_of_comparison_left > 0){
-            //printf("// Left Right Case\n");
             avl_tree->left =  left_rotate_subtree_in_avl_tree_aux(avl_tree->left);
             set_current_to_first_item_in_list(((avl_tree->left)->left)->list);
             type_litems current_item = get_current_item_in_list(((avl_tree->left)->left)->list);
@@ -189,13 +187,11 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
     
         // Right Right Case
         if (value_of_comparison_right > 0){
-            //printf("// Right Right Case\n");
             return left_rotate_subtree_in_avl_tree_aux(avl_tree);
         }
     
         // Right Left Case
         if (value_of_comparison_right < 0){
-            //printf("// Right Left Case\n");
             avl_tree->right = right_rotate_subtree_in_avl_tree_aux(avl_tree->right);
             set_current_to_first_item_in_list(((avl_tree->right)->right)->list);
             type_litems current_item = get_current_item_in_list(((avl_tree->right)->right)->list);
@@ -362,7 +358,7 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
  
     // UPDATING HEIGHT (of the current node)
     update_node_height_avl_aux(avl_tree);
-    //printf("falta só balance\n");
+
     // BALANCING THE AVL TREE
     return(balance_avl_tree_aux(avl_tree, item, compare));
     //return avl_tree;

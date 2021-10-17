@@ -463,7 +463,7 @@ void traverse_hash_table_with_conditional_action_optimal(type_hashtable hash_tab
         done = is_current_last_item_in_list(vertical_list);
         horizontal_list = get_current_item_in_list(vertical_list);
 
-        traverse_full_list_with_conditional_action(horizontal_list, condition, action);
+        traverse_full_list_with_conditional_action(horizontal_list, (void*)condition, (void*)action);
                 
         // If horizontal list became empty then remove item from vertical list as well
         if(empty_list(horizontal_list)){

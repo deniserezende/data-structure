@@ -44,7 +44,7 @@ $(LINK_TARGET): $(OBJECTS)
 # $@ for the pattern-matched target
 # $< for the pattern-matched dependency
 # gcc -fstack-protector-all -std=c99 -g -o $@ -c $<
-	gcc -std=c17 -Wall -g -o $@ -c $<
+	gcc -std=c99 -Wall -g -o $@ -c $<
 
 # Cleaning build environment
 clean:

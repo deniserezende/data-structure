@@ -97,9 +97,9 @@ void add_empty_child_in_tree_design(type_dot file){
     FILE *dot_file = file;
     char string[100];
 
-    long rand = random();
+    long randnum = rand();
 
-    sprintf(string,"%ld};\n", rand);
+    sprintf(string,"%ld};\n", randnum);
     //sprintf(string," , ");
     fprintf(dot_file, "%s", string);
 }

@@ -31,9 +31,14 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
     }
     char *line = (char*)malloc(60 * sizeof(char));
     char *helper = (char*)malloc(5 * sizeof(char));
-    char cep[40], cpf[40], cardinal_direction, additional_data[40], property_lease_id[40];
+    char *cep = (char*)malloc(40 * sizeof(char));
+    char *cpf = (char*)malloc(40 * sizeof(char));
+    char *additional_data = (char*)malloc(40 * sizeof(char));
+    char *property_lease_id = (char*)malloc(40 * sizeof(char));
+    char *sfx = (char*)malloc(40 * sizeof(char));
+
+    char cardinal_direction;
     int house_number;
-    char sfx[40];
     double property_area, monthly_rent;
     double x, y, w, h;
 
@@ -142,6 +147,11 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
 
     free(line);
     free(helper);
+    free(cep);
+    free(cpf);
+    free(additional_data);
+    free(property_lease_id);
+    free(sfx);
     fclose(qryfile);
 }
 

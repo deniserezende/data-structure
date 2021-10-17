@@ -13,7 +13,7 @@
 #define TABLE_SIZE 1001
 
 unsigned long hashing_function(long key){
-    unsigned long hash_value = key % TABLE_SIZE;
+    unsigned long hash_value = llabs(key) % TABLE_SIZE;
     return hash_value;
 }
 
@@ -157,7 +157,8 @@ unsigned int collision_in_hash_table_aux(type_hashtable hash_table, int index, t
 // item cannot equal null
 int insert_item_in_hash_table(type_hashtable hash_table, type_hashitem item, long key, type_lptrf_oneitem get_item_key, type_lptrf_twoitems compare_item_unformatted_key){
     type_hashitem *hashtable = (type_hashitem*)hash_table;
-    int index = hashing_function(key);
+    unsigned long index = hashing_function(key);
+
     // Collision
     if(hashtable[index] != NULL){
         // To deal with collision, we will create a double linked list
@@ -180,7 +181,7 @@ int insert_item_in_hash_table(type_hashtable hash_table, type_hashitem item, lon
 
 type_hashitem lookup_item_in_hash_table(type_hashtable hash_table, long key, type_lptrf_oneitem get_item_key, type_lptrf_oneitem this_item){
     type_hashitem * hashtable = (type_hashitem*)hash_table;
-    int index = hashing_function(key);
+    unsigned long index = hashing_function(key);
     int done;
     if(hashtable[index] == NULL) return NULL;
 
@@ -386,7 +387,7 @@ type_hashitem lookup_item_in_hash_table(type_hashtable hash_table, long key, typ
 
 type_hashitem delete_item_in_hash_table(type_hashtable hash_table, long key, type_lptrf_oneitem get_item_key, type_lptrf_oneitem delete_this_item){
     type_hashitem *hashtable = (type_hashitem*)hash_table;
-    int index = hashing_function(key);
+    unsigned long index = hashing_function(key);
     int done;
     int successful_operation = 0;
     if(hashtable[index] == NULL) return NULL;
@@ -450,7 +451,7 @@ type_hashitem delete_item_in_hash_table(type_hashtable hash_table, long key, typ
 // this traverse cannot use deletion!!!!!! BUG!
 void traverse_hash_table_with_conditional_action_optimal(type_hashtable hash_table, long key, type_lptrf_oneitem get_item_key, type_hashtptrf_oneitem condition, type_hashtptrf_oneitem action){
     type_hashitem * hashtable = (type_hashitem*)hash_table;
-    int index = hashing_function(key);
+    unsigned long index = hashing_function(key);
     int done;
     if(hashtable[index] == NULL) return;
 
@@ -513,7 +514,7 @@ void traverse_hash_table_with_conditional_action_optimal(type_hashtable hash_tab
 // traverses the hashtable and deletes items that meet condition and has the key sent
 void traverse_hash_table_with_conditional_deletion_optimal(type_hashtable hash_table, long key, type_hashtptrf_oneitem condition, type_hashtptrf_oneitem deallocate){
     type_hashitem * hashtable = (type_hashitem*)hash_table;
-    int index = hashing_function(key);
+    unsigned long index = hashing_function(key);
     int done;
     if(hashtable[index] == NULL) return;
 

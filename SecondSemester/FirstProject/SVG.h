@@ -28,6 +28,11 @@ if the file can't be created because the path is incomplete or incorrect, return
 type_svg start_new_svg_file(char *fullpath);
 
 // Pre-condition: The svg file has to have been 'started'.
+// Post-condition: A string has been inserted.
+// BE VERY CAREFUL with this function, the string needs to be formatted in an expectable svg format
+void insert_string_in_svg(type_svg file, char*string);
+
+// Pre-condition: The svg file has to have been 'started'.
 // Post-condition: A comment has been inserted.
 void insert_comment_in_svg(type_svg file, char *string);
 

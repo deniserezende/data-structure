@@ -40,16 +40,11 @@ type_svg start_new_svg_file(char *fullpath){
 	return svg_cell;
 }
 
-// type_svg revert_svg_file_line_by_line(char *fullpath){
-// 	FILE *file = fopen(fullpath,"r"); // open to read
-// 	if (file == NULL){
-// 		return NULL;
-// 	}
 
-// 	while(!feof(file)){ 
-// 		fscanf(file, "\n%[^\n]\ns", line);
-
-// }
+void insert_string_in_svg(type_svg file, char*string){
+	STRUCTSVG *fsf = file; 
+	fprintf(fsf->fsvg,"\t%s\n", string);	
+}
 
 void insert_comment_in_svg(type_svg file, char *string){
 	STRUCTSVG *fsf = file; 

@@ -243,7 +243,7 @@ void _dm_txt(type_person person){
         insert_string_in_txt(QDMDM_TXTFILE, "Moradia não é alugada");
         _QDMDM_report_property_txt_(owned_property);
     }
-    if(get_person_properties_leases(person)){
+    if(does_person_rents_properties(person)){
         type_property rented_property = get_person_property_lease(person, 0);
         insert_string_in_txt(QDMDM_TXTFILE, "Moradia é alugada");
         _QDMDM_report_property_lease_txt_(rented_property);

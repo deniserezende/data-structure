@@ -83,6 +83,10 @@ void set_current_to_last_item_in_list(type_list list);
 // Post-condition: The item has been removed and current is the element that precedes the one removed if it exists otherwise it is undefined
 void delete_current_item_in_list(type_list list);
 
+// Pre-condition: Current is set to an item in the list
+// Post-condition: The item has been removed and current is the element that precedes the one removed if it exists otherwise it is undefined
+// Note that: This function returns the item so you can free it.
+type_litems delete_allocated_current_item_in_list(type_list list);
 // Pre-condition: Current can't be undefined 
 // Post-condition: None
 // Returns a boolean: True if current is the first item and false otherwise.

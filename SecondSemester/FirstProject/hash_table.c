@@ -447,6 +447,7 @@ type_hashitem delete_item_in_hash_table(type_hashtable hash_table, long key, typ
     return NULL;
 }  
 
+// this traverse cannot use deletion!!!!!! BUG!
 void traverse_hash_table_with_conditional_action_optimal(type_hashtable hash_table, long key, type_lptrf_oneitem get_item_key, type_hashtptrf_oneitem condition, type_hashtptrf_oneitem action){
     type_hashitem * hashtable = (type_hashitem*)hash_table;
     int index = hashing_function(key);
@@ -503,6 +504,56 @@ void traverse_hash_table_with_conditional_action_optimal(type_hashtable hash_tab
 
         move_current_forward_in_list(vertical_list);
 
+    }while(!done);
+
+    return;
+}
+
+
+// traverses the hashtable and deletes items that meet condition and has the key sent
+void traverse_hash_table_with_conditional_deletion_optimal(type_hashtable hash_table, long key, type_hashtptrf_oneitem condition, type_hashtptrf_oneitem deallocate){
+    type_hashitem * hashtable = (type_hashitem*)hash_table;
+    int index = hashing_function(key);
+    int done;
+    if(hashtable[index] == NULL) return;
+
+    type_list vertical_list = hashtable[index];
+    type_list horizontal_list;
+    type_list del_horizontal_list;
+    int stop = 0;
+    // lookup the item
+    set_current_to_first_item_in_list(vertical_list);
+    do{
+        // traversing the vertical list
+        done = is_current_last_item_in_list(vertical_list);
+        horizontal_list = get_current_item_in_list(vertical_list);
+
+        int _done;
+        type_hashitem item;
+        type_hashitem del_item;
+        set_current_to_first_item_in_list(horizontal_list);
+        do{
+            _done = is_current_last_item_in_list(horizontal_list);
+            item = get_current_item_in_list(horizontal_list);
+            if((long)condition(item)){
+                del_item = delete_allocated_current_item_in_list(horizontal_list);
+                deallocate(del_item);
+                if(empty_list(horizontal_list)){
+                    del_horizontal_list = delete_allocated_current_item_in_list(vertical_list);
+                    destroi_list(del_horizontal_list);
+                    if(empty_list(vertical_list)){
+                        destroi_list(vertical_list);
+                        hashtable[index] = NULL;
+                        stop = 1;
+                        break;
+                    }
+                }
+            }
+            move_current_forward_in_list(horizontal_list);
+        }while(!_done);
+        if(stop) break;
+
+        move_current_forward_in_list(vertical_list);
     }while(!done);
 
     return;

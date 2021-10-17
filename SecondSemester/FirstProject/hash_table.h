@@ -38,4 +38,6 @@ void traverse_full_hash_table_with_conditional_action(type_hashtable hash_table,
 
 void traverse_full_hash_table_with_action(type_hashtable hash_table, type_hashtptrf_oneitem action);
 
+void traverse_hash_table_with_conditional_deletion_optimal(type_hashtable hash_table, long key, type_hashtptrf_oneitem condition, type_hashtptrf_oneitem deallocate);
+
 #endif

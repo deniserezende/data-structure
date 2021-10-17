@@ -129,6 +129,25 @@ void delete_current_item_in_list(type_list list){
 	stru->size -= 1;
 }
 
+type_litems delete_allocated_current_item_in_list(type_list list){
+	STRUCTURE *stru = list;	
+	NODE *del = stru->current;
+	type_litems del_item;
+	if(del->next == NULL){
+		stru->tail = del->previous;
+	}
+	else{
+		(del->next)->previous = del->previous;
+	}
+	(del->previous)->next = del->next;
+	// Setting current to the previous item
+	stru->current = del->previous;
+	del_item = del->element;
+	free(del);
+	stru->size -= 1;
+	return del_item;
+}
+
 void delete_item_in_list(type_list list, type_litems item, type_lptrf_twoitems compare){
 
 	STRUCTURE *stru = list;

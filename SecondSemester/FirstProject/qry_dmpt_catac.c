@@ -128,7 +128,8 @@ void _catac_svg(type_mMlavlitems block_rect){
 
 void action_catac(type_mMlavlitems block_rect){
     type_block block = get_rect_data(block_rect);
-    long cep = get_block_formatted_cep(block);
+    long cep_key = get_block_formatted_cep(block);
+    char *cep = get_block_cep(block);
 
     void(*action_property_ptr)(type_property);
     action_property_ptr = action_property_catac_;
@@ -145,9 +146,10 @@ void action_catac(type_mMlavlitems block_rect){
     QDC_h = get_rect_height(block_rect); 
     QDC_w = get_rect_width(block_rect);
 
-    set_id(get_block_cep(block));
-    traverse_hash_table_with_conditional_action_optimal(QDC_properties_table, cep, (void*)get_property_cep_key, (void*)verify_property_found, (void*)action_property_ptr);
+    set_id(cep);
+    traverse_hash_table_with_conditional_action_optimal(QDC_properties_table, cep_key, (void*)get_property_cep_key, (void*)verify_property_found, (void*)action_property_ptr);
     
+    sprintf(QDC_ID, "%s%c", cep, '\0');
     traverse_full_hash_table_with_conditional_action(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)action_property_lease_ptr);
     //traverse_hash_table_with_conditional_action_optimal(QDC_property_leases, cep, (void*)get_property_cep_key, (void*)verify_property_leases, (void*)action_property_lease_ptr);
 

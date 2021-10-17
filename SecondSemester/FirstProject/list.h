@@ -65,6 +65,12 @@ type_litems get_current_item_in_list(type_list list);
 // Returns a boolean: True if current is undefined and false otherwise.
 int is_current_undefined_in_list(type_list list);
 
+// Pre-condition: The list has to have been created
+// Post-condition: None
+// Returns a boolean: True if current is NULL and false otherwise.
+// This function is here for debuging purpose
+int is_current_equal_to_NULL(type_list list);
+
 // Pre-condition: The list is not empty
 // Post-condition: Current is the first item
 void set_current_to_first_item_in_list(type_list list);

@@ -74,7 +74,6 @@ void oloc(type_hashtable property_leases, char property_lease_id[], char cep[], 
     get_key_ptr = get_property_lease_key;
 
     insert_item_in_hash_table(property_leases, new_lease, get_property_lease_key(new_lease), (void*)get_key_ptr, (void*)compare_properties_leases_id);
-    printf("terminei o oloc\n");
 }
 
 
@@ -174,11 +173,9 @@ int loc(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_ha
 
     type_hashitem person = lookup_item_in_hash_table(people_table, formatted_cpf, (void*)get_person_formatted_cpf, (void*)verify_person_found);
     if(person == NULL) return 0;
-    printf("found the person\n");
 
     type_hashitem property_lease = lookup_item_in_hash_table(property_leases, formatted_property_id, (void*)get_property_lease_key, (void*)verify_property_found);
     if(property_lease == NULL) return 0;
-    printf("found the property lease\n");
 
     int successful = add_property_tenant(property_lease, person);
     if(!successful) return 0;
@@ -191,9 +188,7 @@ int loc(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_ha
     void(*action_ptr)(type_property);
     action_ptr = _loc_action;
     
-    printf("começar o traverse dos blocos\n");
     traverse_hash_table_with_conditional_action_optimal(blocks_table, get_property_cep_key(property_lease), (void*)get_key_from_block, (void*)verify_block_found, (void*)action_ptr);
-    printf("finalizar o traverse dos blocos\n");
 
     _loc_txt(person, property_lease);
     _loc_svg(person, property_lease);

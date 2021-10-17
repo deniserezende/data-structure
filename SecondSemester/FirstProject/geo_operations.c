@@ -19,6 +19,7 @@ FILE *geofile = fopen(filename, "r");
 
     char *line = malloc(80 * sizeof(char));
     char *helper = malloc(3 *sizeof(char));
+    char *helper2 = malloc(3 *sizeof(char));
     char cep[40];
     double x, y, width, height;
     char fill_color[40], stroke_color[40];
@@ -42,7 +43,7 @@ FILE *geofile = fopen(filename, "r");
         fscanf(geofile, "\n%[^\n]s\n", line);
         
         if(strncmp(line, "cq", 2) == 0){
-            sscanf(line, "%s %lf %s %s", helper, &stroke_width, fill_color, stroke_color);
+            sscanf(line, "%s %lf%s %s %s", helper, &stroke_width, helper2, fill_color, stroke_color);
         }
         else if(strncmp(line, "q", 1) == 0){
                 sscanf(line, "%s %s %lf %lf %lf %lf", helper, cep, &x, &y, &width, &height);
@@ -66,6 +67,7 @@ FILE *geofile = fopen(filename, "r");
 
     free(line);
     free(helper);
+    free(helper2);
     fclose(geofile);
     return cityblocks_tree;
 }

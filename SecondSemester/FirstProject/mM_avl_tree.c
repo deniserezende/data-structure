@@ -94,7 +94,6 @@ int update_node_height_avl_aux(NODE* node){
 NODE *right_rotate_subtree_in_avl_tree_aux(NODE *root){
     NODE *root_left = root->left;
     NODE *temp = root_left->right;
-    printf("is temp null: %d\n", temp == NULL);
  
     // Rotation: 
     root->left = temp;
@@ -145,7 +144,6 @@ type_mMavltree balance_avl_tree_aux(type_mMavltree tree, type_mMavlitems item, t
     // Getting tree balance to check if a previous operation left it unbalanced 
     int balance = get_balance_in_avl_aux(avl_tree);
     if(balance == 1 || balance == 0 || balance == -1){
-        printf("não precisa balancear\n");
         return avl_tree; // if not, return.
     } 
  
@@ -196,13 +194,11 @@ type_mMavltree insert_item_in_mM_avl_tree(type_mMavltree tree, type_mMavlitems i
 
     // in case item is bigger than avl_tree->item
     if(value_of_comparison > 0){
-        printf("fui para a direita\n");
         avl_tree->right = insert_item_in_mM_avl_tree(avl_tree->right, item, compare);
         avl_tree->max = (avl_tree->right)->max; 
     }
     // in case item is smaller than avl_tree->item
     else if(value_of_comparison < 0){
-        printf("fui para a esquerda\n");
         avl_tree->left = insert_item_in_mM_avl_tree(avl_tree->left, item, compare);
         avl_tree->min = (avl_tree->left)->min;
     }

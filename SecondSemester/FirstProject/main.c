@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
     printf("fiz o svg 1\n");
 
 
-    void(*get_print_item)(type_rect);
-    get_print_item = print_item;
+    // void(*get_print_item)(type_rect);
+    // get_print_item = print_item;
 
 
     //preorder_debug_fuction_mMlavltree(cityblocks_avltree, (void*)get_print_item);

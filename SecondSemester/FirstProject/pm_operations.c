@@ -41,8 +41,8 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
     long(*check_person_ptr)(type_property);
     check_person_ptr = verify_person_found;
 
-    void(*debug)(type_property);
-    debug = print_id;
+    // void(*debug)(type_property);
+    // debug = print_id;
 
 
     while(!feof(pmfile)){

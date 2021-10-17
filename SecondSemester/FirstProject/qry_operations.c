@@ -20,6 +20,7 @@ char *get_dot_fullpath(char *dot_filename_without_extension, char *output_path, 
     sprintf(dot_filename, "%s-%s.dot%c", geo_filename_without_suffix, dot_filename_without_extension, '\0');
     dot_fullpath = concat_path_filename(output_path, dot_filename); 
     free(dot_filename);
+    free(geo_filename_without_suffix);
     return dot_fullpath;
 }
 
@@ -36,7 +37,7 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
     double property_area, monthly_rent;
     double x, y, w, h;
 
-    type_hashtable property_leases = create_hash_table(); 
+    type_svg svg_temp_file = start_new_svg_file("deniserezendeqrytempfile.svg"); // file to store temp data
     
     while(!feof(qryfile)){ 
         fscanf(qryfile, "\n%[^\n]\ns", line);
@@ -45,7 +46,7 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
         if(strncmp(line, "del", 3) == 0){
             sscanf(line, "%s %s", helper, cep);
             insert_string_in_txt(txtfile, helper);
-            blocks_avl = del(svgfile, txtfile, blocks_avl, blocks_table, properties_table, people_table, properties_leases, cep);
+            blocks_avl = del(svg_temp_file, txtfile, blocks_avl, blocks_table, properties_table, people_table, properties_leases, cep);
         }
         else if(strncmp(line, "m?", 2) == 0){
                 sscanf(line, "%s %s", helper, cep);
@@ -55,60 +56,60 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
             else if(strncmp(line, "dm?", 3) == 0 || strncmp(line, "fg\0", 3) == 0){
                     sscanf(line, "%s %s", helper, cpf);
                     insert_string_in_txt(txtfile, helper);
-                    dm_(svgfile, txtfile, blocks_table, people_table, cpf);
+                    dm_(svg_temp_file, txtfile, blocks_table, people_table, cpf);
                     
                 }
                 else if(strncmp(line, "mud", 3) == 0){
                         printf("entrei no mud\n");
                         sscanf(line, "%s %s %s %c %d %s", helper, cpf, cep, &cardinal_direction, &house_number, additional_data);
                         insert_string_in_txt(txtfile, helper);
-                        mud(svgfile, txtfile, blocks_table, people_table, properties_table, cpf, cep, cardinal_direction, house_number, additional_data);
+                        mud(svg_temp_file, txtfile, blocks_table, people_table, properties_table, cpf, cep, cardinal_direction, house_number, additional_data);
             
                     }
                     else if(strncmp(line, "oloc ", 5) == 0){
                             printf("entrei no oloc\n");
                             sscanf(line, "%s %s %s %c %d %s %lf %lf", helper, property_lease_id, cep, &cardinal_direction, &house_number, additional_data, &property_area, &monthly_rent); 
                             insert_string_in_txt(txtfile, helper);
-                            oloc(property_leases, property_lease_id, cep, cardinal_direction, house_number, additional_data, property_area, monthly_rent);
+                            oloc(properties_leases, property_lease_id, cep, cardinal_direction, house_number, additional_data, property_area, monthly_rent);
                             
                         }
                         else if(strncmp(line, "oloc?", 5) == 0){
                                 printf("entrei no oloc?\n");
                                 sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                 insert_string_in_txt(txtfile, helper);
-                                oloc_(svgfile, txtfile, blocks_avl, property_leases, x, y, w, h);
+                                oloc_(svg_temp_file, txtfile, blocks_avl, properties_leases, x, y, w, h);
 
                                 }
                                 else if(strncmp(line, "loc ", 4) == 0){
                                     printf("entrei no loc\n");
                                     sscanf(line, "%s %s %s", helper, property_lease_id, cpf);
                                     insert_string_in_txt(txtfile, helper);
-                                    loc(svgfile, txtfile, blocks_table, property_leases, people_table, property_lease_id, cpf);
+                                    loc(svg_temp_file, txtfile, blocks_table, properties_leases, people_table, property_lease_id, cpf);
                     
                                     }
                                     else if(strncmp(line, "loc?", 4) == 0){
                                         sscanf(line, "%s %s", helper, property_lease_id);
                                         insert_string_in_txt(txtfile, helper);
-                                        loc_(svgfile, txtfile, blocks_table, property_leases, property_lease_id);
+                                        loc_(svg_temp_file, txtfile, blocks_table, properties_leases, property_lease_id);
                         
                                         }
                                         else if(strncmp(line, "dloc", 4) == 0){
                                             sscanf(line, "%s %s", helper, property_lease_id);
                                             insert_string_in_txt(txtfile, helper);
-                                            dloc(txtfile, blocks_table, property_leases, property_lease_id);
+                                            dloc(txtfile, blocks_table, properties_leases, property_lease_id);
                             
                                             }
                                             else if(strncmp(line, "hom", 3) == 0){
                                                 printf("entrei no hom\n");
                                                 sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                 insert_string_in_txt(txtfile, helper);
-                                                hom(svgfile, txtfile, blocks_avl, properties_table, property_leases, people_table, x, y, w, h);
+                                                hom(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, people_table, x, y, w, h);
                                 
                                                 }
                                                 else if(strncmp(line, "mul", 3) == 0){
                                                     sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                     insert_string_in_txt(txtfile, helper);
-                                                    mul(svgfile, txtfile, blocks_avl, properties_table, property_leases, people_table, x, y, w, h);
+                                                    mul(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, people_table, x, y, w, h);
                                                     
                                     
                                                     }
@@ -126,16 +127,18 @@ void get_qry_input_and_generate_output(char *qryfilename, char *output_path, cha
                                                             printf("entrei no catac\n");
                                                             sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                             insert_string_in_txt(txtfile, helper);
-                                                            blocks_avl = catac(svgfile, txtfile, blocks_avl, blocks_table, properties_table, property_leases, people_table, x, y, w, h);
-
-                                            
+                                                            blocks_avl = catac(svg_temp_file, txtfile, blocks_avl, blocks_table, properties_table, properties_leases, people_table, x, y, w, h);
                                                         }
   
         // "Resets" the string
         strcpy(line, "\0");
     }
 
+    end_svg_file(svg_temp_file);
     insert_blocks_in_svg(svgfile, blocks_avl);
+    insert_svg_file_in_other_svg_file("deniserezendeqrytempfile.svg", svgfile);
+    int removed = remove("deniserezendeqrytempfile.svg");
+    printf("REMOVED = %d\n", removed);
 
     free(line);
     free(helper);

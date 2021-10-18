@@ -101,9 +101,11 @@ void _loc_txt(type_person person, type_property property){
 
 void _loc_svg(type_person person, type_property property){
     int number = get_property_house_number(property);
-    char color[8];
-    sprintf(color, "black%c", '\0');
-    insert_line_in_svg(QPL_SVGFILE, QPL_x1 + number, QPL_y1 + number, QPL_x1 + number, QPL_VIEWBOX[1] - QPL_height/2, color, 1);
+    char color_line[8];
+    sprintf(color_line, "green%c", '\0');
+    char color_text[8];
+    sprintf(color_text, "black%c", '\0');
+    insert_line_in_svg(QPL_SVGFILE, QPL_x1 + number, QPL_y1 + number, QPL_x1 + number, QPL_VIEWBOX[1] - QPL_height/2, color_line, 1);
 
     char* person_cpf = get_person_cpf(person);
     char* person_fullname = get_person_full_name(person);
@@ -113,7 +115,7 @@ void _loc_svg(type_person person, type_property property){
     char *string = malloc(sizeof(char) * (strlen(person_cpf) + strlen(person_fullname) + strlen(property_cep) + strlen(lease_id) + 15));
     
     sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, number, lease_id, '\0');
-    insert_text_in_svg(QPL_SVGFILE, QPL_x1+number, QPL_VIEWBOX[1] - QPL_height/2, color, string, 2);
+    insert_text_in_svg(QPL_SVGFILE, QPL_x1+number, QPL_VIEWBOX[1] - QPL_height/2, color_text, string, 2);
     free(person_fullname);
     free(string);
 }
@@ -240,9 +242,11 @@ void _dloc_txt(type_property property){
 }
 
 void _dloc_svg(type_property property){
-    char color[9];
-    sprintf(color, "purple%c", '\0');
-    insert_line_in_svg(QPL_SVGFILE, QPL_x1, QPL_y1, QPL_x1, QPL_VIEWBOX[1] - QPL_height/2, color, 1);
+    char color_line[9];
+    sprintf(color_line, "purple%c", '\0');
+    char color_text[8];
+    sprintf(color_text, "black%c", '\0');
+    insert_line_in_svg(QPL_SVGFILE, QPL_x1, QPL_y1, QPL_x1, QPL_VIEWBOX[1] - QPL_height/2, color_line, 1);
     
     char* property_cep = get_property_cep(property);
     char* lease_id = get_property_lease_id(property);
@@ -262,7 +266,7 @@ void _dloc_svg(type_property property){
         sprintf(string, "Sem morador %s %d %s%c", property_cep, number, lease_id, '\0');
     }
     
-    insert_text_in_svg(QPL_SVGFILE, QPL_x1+number, QPL_VIEWBOX[1] - QPL_height/2, color, string, 2);
+    insert_text_in_svg(QPL_SVGFILE, QPL_x1+number, QPL_VIEWBOX[1] - QPL_height/2, color_text, string, 2);
     free(string);
 }
 

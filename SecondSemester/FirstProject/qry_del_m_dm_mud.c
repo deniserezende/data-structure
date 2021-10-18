@@ -14,12 +14,14 @@ void _del_insert_svg(type_rect block_rect){
     double y = get_rect_y(block_rect);
     double w = get_rect_width(block_rect);
     double h = get_rect_height(block_rect);
-    char color[8];
-    sprintf(color, "black%c", '\0');
+    char color_line[8];
+    sprintf(color_line, "red%c", '\0');
+    char color_text[8];
+    sprintf(color_text, "black%c", '\0');
 
     // insert_rectangle_in_svg(QDMDM_SVGFILE, x, y, w, h, get_rect_fill_color(block_rect), get_rect_stroke_color(block_rect), 2);
-    insert_line_in_svg(QDMDM_SVGFILE, (double)x+w/2, (double)y+h/2, (double)x+w/2, (double)QDMDM_VIEWBOX[1] - h/2, color, 2);
-    insert_text_in_svg(QDMDM_SVGFILE, (double)x+w/2, (double)QDMDM_VIEWBOX[1] - h/2, color, get_block_cep(block_data), 10);
+    insert_line_in_svg(QDMDM_SVGFILE, (double)x+w/2, (double)y+h/2, (double)x+w/2, (double)QDMDM_VIEWBOX[1] - h/2, color_line, 2);
+    insert_text_in_svg(QDMDM_SVGFILE, (double)x+w/2, (double)QDMDM_VIEWBOX[1] - h/2, color_text, get_block_cep(block_data), 10);
 }
 
 // Remove a quadra cep, os moradores que nela residirem e as ofertas de locação que nela existirem.
@@ -154,10 +156,10 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
     set_id(get_property_cep(property));
     type_block block = lookup_item_in_hash_table(blocks_table, get_property_cep_key(property), (void*)get_key_from_block, (void*)verify_block_found);
     if(block == NULL) return;
-    char color_black[8];
-    sprintf(color_black, "black%c", '\0');
-    char color[8];
-    sprintf(color, "blue%c", '\0');
+    char color_text[8];
+    sprintf(color_text, "black%c", '\0');
+    char color_line[8];
+    sprintf(color_line, "blue%c", '\0');
 
     double x = get_rect_x(block);
     double y = get_rect_y(block);
@@ -165,7 +167,7 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
 
     int house_number = get_property_house_number(property);
 
-    insert_line_in_svg(QDMDM_SVGFILE, x+house_number, y+house_number, x+house_number, QDMDM_VIEWBOX[1] - h/2, color, 2);
+    insert_line_in_svg(QDMDM_SVGFILE, x+house_number, y+house_number, x+house_number, QDMDM_VIEWBOX[1] - h/2, color_line, 2);
     
     //nome e endereço
     char* person_cpf = get_person_cpf(person);
@@ -177,7 +179,7 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
     char *string = malloc(sizeof(char) * (strlen(person_cpf) + strlen(person_fullname) + strlen(property_cep) + strlen(property_add) + 15));
     
     sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, property_number, property_add, '\0');
-    insert_text_in_svg(QDMDM_SVGFILE, x+house_number, QDMDM_VIEWBOX[1] - h/2, color_black, string, 5);
+    insert_text_in_svg(QDMDM_SVGFILE, x+house_number, QDMDM_VIEWBOX[1] - h/2, color_text, string, 5);
     free(person_fullname);
 }
 

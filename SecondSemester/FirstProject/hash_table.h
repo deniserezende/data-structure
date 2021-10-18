@@ -13,6 +13,8 @@ typedef void *type_hashtable;
 typedef void *type_hashitem; // informação que a chave guarda type_avlkeyinfo
 typedef void *type_hashtptrf_oneitem(type_hashitem);
 
+// Pre-condition: None
+// Post-condition: The hash table exists
 type_hashtable create_hash_table();
 
 // Pre-condition: The hash table exists and is not full

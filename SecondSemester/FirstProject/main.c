@@ -8,7 +8,7 @@
 #include "geo_operations.h"
 #include "qry_operations.h"
 #include "hash_table.h"
-#include "mM_avl_tree.h"
+#include "mM_avl_tree_wlist.h"
 #include "output_svg.h"
 #include "SVG.h"
 #include "TXT.h"
@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
     type_hashtable people_hashtable = create_hash_table();
     type_hashtable properties_hashtable = create_hash_table();
     type_hashtable cityblocks_hashtable = create_hash_table();
-    type_mMavltree cityblocks_avltree = create_mMl_avl_tree();
-    type_mMavltree property_leases_hashtable = create_hash_table();
+    type_mMlavltree cityblocks_avltree = create_mMl_avl_tree();
+    type_mMlavltree property_leases_hashtable = create_hash_table();
 
     double* viewbox = malloc(sizeof(double) * 4);
 

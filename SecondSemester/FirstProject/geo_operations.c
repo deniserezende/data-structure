@@ -26,9 +26,9 @@ type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, t
     }
 
     //AQUIDE rever valores
-    GO_minx = 100000;
+    GO_minx = 10000000;
     GO_maxx = 0;
-    GO_miny = 100000;
+    GO_miny = 10000000;
     GO_maxy = 0;
 
     char *line = malloc(80 * sizeof(char));

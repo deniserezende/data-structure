@@ -18,72 +18,6 @@ void print_id(OBJECT* obj1){
     printf("id: %d\n", obj1->id);
 }
 
-// void action_(OBJECT* obj, OBJECT* childleft, OBJECT* childright){
-//     printf("action\n");
-//     add_parent_in_tree_design(obj->idchar, output_file);
-//     add_child_in_tree_design(childleft->idchar, output_file);
-//     add_child_in_tree_design(childright->idchar, output_file);
-// }
-
-
-// por enquanto só to inserindo um elemento vou ter que ver como inserir multiplos
-// void action_(type_list parent, type_list childleft, type_list childright){
-//     printf("action\n");
-//     if(parent == NULL) return;
-//     set_current_to_first_item_in_list(parent);
-//     OBJECT* parent_ = get_current_item_in_list(parent);
-//     char idtmp[5];
-//     if(draw == 0){
-//         sprintf(idtmp, "%d%c", parent_->id, '\0');
-//         add_root_in_tree_design(idtmp, output_file);
-//         draw++;
-//     }
-
-//     if(childleft != NULL){
-//         set_current_to_first_item_in_list(childleft);
-//         OBJECT* childleft_ = get_current_item_in_list(childleft);
-
-//         appear_node_in_tree_design(output_file);
-//         sprintf(idtmp, "%d%c", parent_->id, '\0');
-//         add_parent_in_tree_design(idtmp, output_file);
-//         sprintf(idtmp, "%d%c", childleft_->id, '\0');
-//         add_child_in_tree_design(idtmp, output_file);
-//     }
-//     else{
-//         hide_node_in_tree_design(output_file);
-//         sprintf(idtmp, "%d%c", parent_->id, '\0');
-//         add_parent_in_tree_design(idtmp, output_file);
-//         add_empty_child_in_tree_design(output_file);
-//     }
-
-//     if(childright != NULL){
-//         set_current_to_first_item_in_list(childright);
-//         OBJECT* childright_ = get_current_item_in_list(childright);
-
-//         appear_node_in_tree_design(output_file);
-//         sprintf(idtmp, "%d%c", parent_->id, '\0');
-//         add_parent_in_tree_design(idtmp, output_file);
-//         sprintf(idtmp, "%d%c", childright_->id, '\0');
-//         add_child_in_tree_design(idtmp, output_file);
-//     }
-//     else{
-//         hide_node_in_tree_design(output_file);
-//         sprintf(idtmp, "%d%c", parent_->id, '\0');
-//         add_parent_in_tree_design(idtmp, output_file);
-//         add_empty_child_in_tree_design(output_file);
-//     }
-    
-// }
-
-
-// Cada nó da árvore deve mostrar a coordenada X,
-// o número de quadras “dentro” do nó, 
-// o cep de algumas (poucas) quadras, 
-// o x mínimo, 
-// o x máximo 
-// e o fator de balanceamento do nó. 
-// Opcionalmente: em vez de escrever o fator de balanceamento
-
 type_list global_list;
 char* get_info_function(type_list list){
     char* string_final = malloc(sizeof(char) * 200);
@@ -143,7 +77,6 @@ char* get_info_function(type_list list){
     sprintf(string_final, "x = %ld\namount of blocks = %d\n%s\n%s\nbalance = %ld", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
     free(string_of_ceps);
     free(string_of_xs);
-    //printf("final string: %s\n", string_final);
     return string_final;
 }
 

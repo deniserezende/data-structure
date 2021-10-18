@@ -10,10 +10,6 @@
 #include <stdlib.h>
 #include "pm_operations.h"
 
-// void print_id(type_hashitem item){
-//     printf("cpf: %s\n", get_person_cpf(item));
-// }
-
 void get_pm_input(char *filename, type_hashtable people_table, type_hashtable properties_table){
     FILE *pmfile = fopen(filename, "r");
     if(pmfile == NULL){
@@ -30,7 +26,6 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
 
     char *cep = malloc(40 * sizeof(char));
     char *add_address_data = malloc(40 * sizeof(char));
-    //char add_address_data[40];
     char cardinal_direction;
     int house_number;
 
@@ -47,10 +42,6 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
     // Creating a pointer to the function
     long(*check_person_ptr)(type_property);
     check_person_ptr = verify_person_found;
-
-    // void(*debug)(type_property);
-    // debug = print_id;
-
 
     while(!feof(pmfile)){
         fscanf(pmfile, "\n%[^\n]s\n", line);
@@ -78,7 +69,6 @@ void get_pm_input(char *filename, type_hashtable people_table, type_hashtable pr
         // "Resets" the string
         strcpy(line, "\0");
     }
-    //print_hash_table(people_table, (void*)debug);
 
     free(line);
     free(helper);

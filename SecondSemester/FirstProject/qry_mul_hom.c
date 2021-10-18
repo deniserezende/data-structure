@@ -102,7 +102,6 @@ void action_property_hom_(type_hashitem property){
 
             //SVG
             int house_number = get_property_house_number(property);
-            printf("house_number owned:%d\n", house_number);
             insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+house_number, QMH_y1+house_number, 6, 2, color, color, 1);
         }
     }
@@ -112,7 +111,6 @@ void action_property_lease_hom_(type_hashitem property){
     char color[7];
     sprintf(color, "blue%c", '\0');
     if(!get_property_rent_status(property)){
-        printf("to no action\n");
         type_person tenant = get_property_tenant(property);
         if(tenant != NULL){
             char gender = get_person_gender(tenant);
@@ -122,7 +120,6 @@ void action_property_lease_hom_(type_hashitem property){
 
                 //SVG
                 int house_number = get_property_house_number(property);
-                printf("house_number lease:%d\n", house_number);
                 insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+house_number, QMH_y1+house_number, 6, 2, color, color, 1);
             }   
         }

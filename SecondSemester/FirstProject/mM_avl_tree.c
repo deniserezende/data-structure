@@ -356,7 +356,7 @@ void continue_traverse_avltaux(NODE *tree, type_mMavlptrf_threeitems traverse_si
 
 
 
-// A debug function AQUIDE
+// Debug function
 void preorder_debug_fuction_mMavltree(type_mMavltree tree, type_mMavlptrf_oneitem print_item){
     NODE *root = tree;
     if(root != NULL){
@@ -370,24 +370,3 @@ void preorder_debug_fuction_mMavltree(type_mMavltree tree, type_mMavlptrf_oneite
         preorder_debug_fuction_mMavltree(root->right, print_item);
     }
 }
- 
-// ANTES O DELETION:
-//  if((avl_tree->left == NULL) || (avl_tree->right == NULL)){
-//             NODE *temp;
-//             if(avl_tree->left) temp = avl_tree->left; // if avl_tree->left != NULL
-//             else temp = avl_tree->right;
-//             // NODE *temp = avl_tree->left ? avl_tree->left : avl_tree->right; // AQUIDE pode apagar
-
-//             if(temp == NULL){ // No child
-//                 temp = avl_tree;
-//                 avl_tree = NULL;
-//             }
-//             else{ 
-                
-//                 // One child //aqui de 
-//                 //como estava antes:
-//                 //*avl_tree = *temp; // Copying the contents
-//                 //*avl_tree = *temp; // Copying the contents
-
-
-//             }

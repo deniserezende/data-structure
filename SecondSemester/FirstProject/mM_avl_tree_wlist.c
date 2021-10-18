@@ -263,11 +263,9 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
             // return avl_tree;
         }
     }
-    // AQUIDE não to lidando com inserção de elementos repetidos => tecnicamente nao pode ter mesma chave
 
     // UPDATING HEIGHT (of the current node)
     update_node_height_avl_aux(avl_tree);
-    
     
     // BALANCING TREE
     return(balance_avl_tree_aux(avl_tree, item, compare));
@@ -495,7 +493,7 @@ void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree tree, ty
 //             }   
 // }
 
-// A debug function AQUIDE
+// Debug function
 void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_oneitem print_item){
     NODE *root =(NODE*) tree;
     if(root != NULL){

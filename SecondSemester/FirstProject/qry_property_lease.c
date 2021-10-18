@@ -219,7 +219,7 @@ int loc_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 
     _loc_txt_(property_lease);
     _loc_svg_(property_lease);
-    return 1; //AQUIDE ?
+    return 1;
 }
 
 

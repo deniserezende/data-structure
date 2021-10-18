@@ -225,7 +225,6 @@ char* get_info_for_dot_catac(type_list list){
     sprintf(string_final, "\"x = %f \n amount of blocks = %d \n %s \n %s \n balance = %ld\"", list_x, number_of_blocks, string_of_ceps, string_of_xs, balance);
     free(string_of_ceps);
     free(string_of_xs);
-    //printf("final string: \n%s\n", string_final);
     return string_final;
 }
 
@@ -267,7 +266,6 @@ void action_dot_dmpt_(type_list parent, type_list childleft, type_list childrigh
 // o x máximo 
 // e o fator de balanceamento do nó.
 
-// aquide conversão!
 long get_rect_x_long(type_rect rect){
     double x = get_rect_x(rect);
     long longx = (long)x;

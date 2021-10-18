@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// AQUIDE fazer uma lista com tudo que vai no svg?
-
-
 type_svg QDMDM_SVGFILE;
 type_txt QDMDM_TXTFILE;
 double QDMDM_VIEWBOX[4];
@@ -43,8 +40,7 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
     long formatted_cep = format_cep_from_base36_to_base10(block_cep);
     set_id(block_cep); // from _auxiliary_function.h
 
-    // AQUIDE verificar se apagando assim apaga também da avl, se seta pra null ou se da problema com os ponteiros
-    // ajustei +-, verificar se agora ta apagando certo o block
+    set_id(block_cep);
     type_hashitem block_rect = delete_item_in_hash_table(blocks_table, formatted_cep, (void*)get_key_from_block, (void*)verify_block_found);
     if(block_rect == NULL){
         printf("Bloco Inexistente\n");
@@ -251,10 +247,6 @@ void _mud_txt(type_person person, type_property old_property, type_property new_
     _report_property_txt_(new_property);
 }
 
-
-// AQUIDE é para a propriedade antiga aparecer no svg?
-// se sim ver como vou fazer para ela aparecer... 
-// se eu colocar aqui dps o bloco tampa ?????
 void _mud_svg(type_property old_property, type_property new_property, type_rect old_block, type_rect new_block){
     double old_x = get_rect_x(old_block);
     double old_y = get_rect_y(old_block);

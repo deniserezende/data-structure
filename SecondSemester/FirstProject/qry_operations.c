@@ -46,7 +46,6 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
     
     while(!feof(qryfile)){ 
         fscanf(qryfile, "\n%[^\n]\ns", line);
-        //printf("line=%s\n", line);
 
         if(strncmp(line, "del", 3) == 0){
             sscanf(line, "%s %s", helper, cep);

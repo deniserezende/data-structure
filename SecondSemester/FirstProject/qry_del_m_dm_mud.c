@@ -184,13 +184,13 @@ void _dm_txt(type_person person){
 
     if(does_person_own_properties(person)){
         type_property owned_property = get_person_owned_property(person, 0);
-        insert_string_in_txt(QDMDM_TXTFILE, "Moradia não é alugada");
         _report_property_txt_(owned_property);
+        insert_string_in_txt(QDMDM_TXTFILE, "Moradia não é alugada, é posse do residente.");
     }
     if(does_person_rents_properties(person)){
         type_property rented_property = get_person_property_lease(person, 0);
-        insert_string_in_txt(QDMDM_TXTFILE, "Moradia é alugada");
         _report_property_lease_txt_(rented_property);
+        insert_string_in_txt(QDMDM_TXTFILE, "Moradia é alugada.");
     }
 
 }
@@ -217,7 +217,10 @@ void dm_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 
     type_hashitem person = lookup_item_in_hash_table(people_table, cpf, (void*)get_person_formatted_cpf, (void*)verify_person_ptr);
 
-    if(person == NULL) return;
+    if(person == NULL){
+        insert_string_in_txt(TXTFILE, "Não existe uma pessoa com o CPF informado.");
+        return;
+    } 
 
     _dm_txt(person);
     _dm_terminal(person);

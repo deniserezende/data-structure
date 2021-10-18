@@ -161,25 +161,25 @@ void _report_person_txt_(type_person person){
 }
 
 void _report_block_txt_(type_rect block_rect){
+    insert_string_in_txt(QAF_TXTFILE, "");
     insert_string_in_txt(QAF_TXTFILE, "BLOCO:");
     type_block block_data = get_rect_data(block_rect);
-    insert_string_in_txt(QAF_TXTFILE, get_block_cep(block_data));
+    char *cep = get_block_cep(block_data);
+    char *cep_string = malloc(sizeof(char) * strlen(cep) + 10);
+    sprintf(cep_string, "CEP: %s%c", cep, '\0');
+    insert_string_in_txt(QAF_TXTFILE, cep_string);
 
-    char *x_string = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
-    sprintf(x_string, "%.2lf%c", get_rect_x(block_rect), '\0');
-    insert_string_in_txt(QAF_TXTFILE, x_string);
+    char *x_y_string = malloc(sizeof(char) * (QAF_SIZE_DOUBLESTR + 6 + QAF_SIZE_DOUBLESTR + 6));
+    sprintf(x_y_string, "x: %.2lf \t y:%.2lf%c", get_rect_x(block_rect), get_rect_y(block_rect), '\0');
+    insert_string_in_txt(QAF_TXTFILE, x_y_string);
 
-    char *y_string = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
-    sprintf(y_string, "%.2lf%c", get_rect_y(block_rect), '\0');
-    insert_string_in_txt(QAF_TXTFILE, y_string);
+    char *w_h_string = malloc(sizeof(char) * (QAF_SIZE_DOUBLESTR + 10 + QAF_SIZE_DOUBLESTR + 10));
+    sprintf(w_h_string, "Largura: %.2lf  Altura: %.2lf%c", get_rect_width(block_rect), get_rect_height(block_rect), '\0');
+    insert_string_in_txt(QAF_TXTFILE, w_h_string);
 
-    char *w_string = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
-    sprintf(w_string, "%.2lf%c", get_rect_width(block_rect), '\0');
-    insert_string_in_txt(QAF_TXTFILE, w_string);
-
-    char *h_string = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
-    sprintf(h_string, "%.2lf%c", get_rect_height(block_rect), '\0');
-    insert_string_in_txt(QAF_TXTFILE, h_string);
+    free(cep_string);
+    free(x_y_string);
+    free(w_h_string);
 }
 
 void _report_property_lease_available(){

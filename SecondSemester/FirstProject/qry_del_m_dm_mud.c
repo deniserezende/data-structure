@@ -48,7 +48,6 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
         printf("Bloco Inexistente\n");
         return blocks_avl;
     }
-    //type_mMlavltree block_avl = delete_item_in_mMl_avl_tree(blocks_avl, block_rect, (void*)compare_rectangles_by_x_coordinate);
     blocks_avl = delete_item_in_mMl_avl_tree(blocks_avl, block_rect, (void*)compare_rectangles_by_x_coordinate, (void*)compare_rect_blocks_cep);
 
 
@@ -66,7 +65,6 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
         if(owner != NULL){
             _report_person_txt_(owner);
             remove_owned_property_from_person(owner, 0);
-
         }
         remove_property(property);
 
@@ -97,8 +95,6 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
         set_id(block_cep); // from _auxiliary_function.h
         property_lease = delete_item_in_hash_table(property_leases, formatted_cep, (void*)get_property_cep_key, (void*)verify_property_leases_ptr);
     }
-
-    // DUVIDA aqui remove também as pessoas que estiverem ocupando as locações ne?
 
     return blocks_avl;
 }

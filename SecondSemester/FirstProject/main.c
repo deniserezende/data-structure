@@ -13,7 +13,7 @@
 #include "SVG.h"
 #include "TXT.h"
 
-
+#define DEFAULT_VIEW_BOX_V 50
 
 char *get_first_svg_fullpath(char *geo_filename, char *output_path);
 char *get_geo_fullpath(char *geo_filename, char *input_path);
@@ -53,6 +53,8 @@ int main(int argc, char *argv[]) {
     type_mMavltree cityblocks_avltree = create_mMl_avl_tree();
     type_mMavltree property_leases_hashtable = create_hash_table();
 
+    double* viewbox = malloc(sizeof(double) * 4);
+
 
     // --------------------------------------------------- COMMAND LINE -----------------------------------------------
     commandline(argc, argv, &input_path, &geo_filename, &qry_filename, &pm_filename, &output_path);
@@ -70,7 +72,7 @@ int main(int argc, char *argv[]) {
 
     // --------------------------------------------------- GEO FILE ---------------------------------------------------
     geo_fullpath = get_geo_fullpath(geo_filename, input_path);
-    cityblocks_avltree = get_geo_input(geo_fullpath, cityblocks_avltree, cityblocks_hashtable);
+    cityblocks_avltree = get_geo_input(geo_fullpath, cityblocks_avltree, cityblocks_hashtable, viewbox);
     // printf("fiz o geo\n");
 
 
@@ -81,7 +83,7 @@ int main(int argc, char *argv[]) {
     sprintf(my_name, "Denise Rezende%c", '\0');
 
     // Creating svg output file
-    type_svg svgfile = start_new_svg_file(first_svg_fullpath);
+    type_svg svgfile = start_new_svg_file_with_viewbox(first_svg_fullpath, viewbox[0] - DEFAULT_VIEW_BOX_V, viewbox[1] - DEFAULT_VIEW_BOX_V, viewbox[2]-viewbox[0]+2*DEFAULT_VIEW_BOX_V, viewbox[3]-viewbox[1]+2*DEFAULT_VIEW_BOX_V);
     insert_comment_in_svg(svgfile, my_name);
     insert_blocks_in_svg(svgfile, cityblocks_avltree);
     end_svg_file(svgfile);
@@ -104,7 +106,7 @@ int main(int argc, char *argv[]) {
         second_svg_fullpath = get_second_svg_fullpath(geo_filename, qry_filename, output_path);
         
         // Starting both output files
-        type_svg svgfile2 = start_new_svg_file(second_svg_fullpath);
+        type_svg svgfile2 = start_new_svg_file_with_viewbox(second_svg_fullpath, viewbox[0] - DEFAULT_VIEW_BOX_V, viewbox[1] - DEFAULT_VIEW_BOX_V, viewbox[2]-viewbox[0]+2*DEFAULT_VIEW_BOX_V, viewbox[3]-viewbox[1]+2*DEFAULT_VIEW_BOX_V);
         type_txt txtfile = start_new_txt_file(txt_fullpath);
         insert_string_in_txt(txtfile, my_name);
         insert_comment_in_svg(svgfile2, my_name);

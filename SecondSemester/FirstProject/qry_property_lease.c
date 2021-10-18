@@ -77,6 +77,7 @@ void oloc(type_hashtable property_leases, char property_lease_id[], char cep[], 
     get_key_ptr = get_property_lease_key;
 
     insert_item_in_hash_table(property_leases, new_lease, get_property_lease_key(new_lease), (void*)get_key_ptr, (void*)compare_properties_leases_id);
+    //_QPL_report_property_lease_txt_(new_lease);
 }
 
 

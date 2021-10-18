@@ -27,6 +27,8 @@ if a file with that name already exists in that directory, that file is overwrit
 if the file can't be created because the path is incomplete or incorrect, returns NULL. */ 
 type_svg start_new_svg_file(char *fullpath);
 
+type_svg start_new_svg_file_with_viewbox(char *fullpath, double min_x, double min_y, double width, double height);
+
 // Pre-condition: The svg file has to have been 'started'.
 // Post-condition: A string has been inserted.
 // BE VERY CAREFUL with this function, the string needs to be formatted in an expectable svg format

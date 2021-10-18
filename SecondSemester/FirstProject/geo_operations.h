@@ -14,7 +14,7 @@
 #include "_auxiliary_functions.h"
 
 // Reads and interprets the geofile, adding circles and rectangles to the respective kdtree sent.
-type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, type_hashtable cityblocks_table);
+type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, type_hashtable cityblocks_table, double view_box[4]);
 
 #endif /* geo_operations_h */
  

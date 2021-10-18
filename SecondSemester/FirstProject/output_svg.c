@@ -26,6 +26,10 @@ long returns_true_function(type_mMlavlitems item){
 void insert_blocks_in_svg_aux(type_rect rect){
     double x, y, w, h;
     char *stroke, *fill;
+    type_block block = get_rect_data(rect);
+    char color[8];
+    sprintf(color, "black%c", '\0');
+    char* cep = get_block_cep(block);
     x = get_rect_x(rect);
     y = get_rect_y(rect);
     w = get_rect_width(rect);
@@ -33,6 +37,7 @@ void insert_blocks_in_svg_aux(type_rect rect){
     stroke = get_rect_stroke_color(rect);
     fill = get_rect_fill_color(rect);
     insert_rectangle_in_svg(CRV_svgfile, x, y, w, h, fill, stroke, 1);
+    insert_text_in_svg(CRV_svgfile, x+w/2, y+h/2, color, cep, 10);
 }
 
 long traverse_side_insert_blocks_in_svg_aux(type_rect rect, type_rect rect1, type_rect rect2, type_rect rect3, type_rect rect4){
@@ -160,7 +165,7 @@ int insert_svg_file_in_other_svg_file(char* origin_svgfilename, type_svg destina
     char *line = (char*)malloc(500 * sizeof(char));
     while(!feof(origin)){ 
         fscanf(origin, "\n%[^\n]\ns", line);
-        if(strcmp(line,"<svg xmlns=\"http://www.w3.org/2000/svg\"") != 0 && strcmp(line,"xmlns:xlink=\"http://www.w3.org/1999/xlink\" >") != 0){
+        if(strncmp(line,"<svg ", 4) != 0 && strcmp(line,"xmlns=\"http://www.w3.org/2000/svg\"") != 0 && strcmp(line,"xmlns:xlink=\"http://www.w3.org/1999/xlink\" >") != 0){
             if(strcmp(line, "</svg>") != 0){
                 insert_string_in_svg(destination, line);
             }

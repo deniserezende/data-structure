@@ -28,7 +28,9 @@
 			"graphviz_draw.h": "c",
 			"string": "c",
 			"iosfwd": "c",
-			"commandline.h": "c"
+			"commandline.h": "c",
+			"memory_resource": "c",
+			"memory": "c"
 		},
 		"makefile.launchConfigurations": [
 			{

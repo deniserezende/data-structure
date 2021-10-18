@@ -37,7 +37,7 @@
         "program": "/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/FirstProject/t1",
 
         //./t1 -e ../../../../Downloads/cidades/ -f c1.geo -q c1/3-cantoNW-homensLocatariosDaRegiao.qry -pm c1.pm -o /Users/Denise/Downloads/output
-        "args": ["-e", "/Users/Denise/Downloads/cidades", "-f", "c3.geo", "-q", "c3/5-cantoSE-ofertasNaRegiaoRestrita.qry", "-pm", "c3.pm", "-o", "/Users/Denise/Downloads/output"],
+        "args": ["-e", "/Users/Denise/Downloads/cidades", "-f", "c2.geo", "-q", "c2/catac-meio-cidade-amplo.qry", "-pm", "c2.pm", "-o", "/Users/Denise/Downloads/output"],
         //"args": [],
 
         "stopAtEntry": true,

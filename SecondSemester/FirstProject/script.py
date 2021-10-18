@@ -3,16 +3,16 @@ import subprocess
 import time
 import datetime
 
-BED = input("Path BED (pasta de testes do e-vandro):") 
-# BED = '/mnt/hgfs/PROGRAMACAO/C/EstruturaDados1/PROJETO2/1paths/BED/testcase/t2'
+#BED = input("Path BED (pasta de testes do e-vandro):")
+BED = '/Users/Denise/Downloads/cidades'
 #BED = input("Diretorio BED")
 
-BSD = input("Path de saída:")
-# BSD = '/mnt/hgfs/PROGRAMACAO/C/EstruturaDados1/PROJETO2/1paths/BSD'
+#BSD = input("Path de saída:")
+BSD = '/Users/Denise/Downloads/output'
 #BSD = input("Diretorio B")
 
-src = input("Path da pasta SRC:")
-# src = '/mnt/hgfs/PROGRAMACAO/C/EstruturaDados1/PROJETO2/MateusKomar/src'
+#src = input("Path da pasta SRC:")
+src = '/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/FirstProject'
 #src = '/media/devgod/Instalacoes/Usuários/Komarchewski/Google Drive/UEL/PROGRAMACAO/C/EstruturaDados2/T1/tentativa1/src'
 
 

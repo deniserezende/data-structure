@@ -40,6 +40,23 @@ type_svg start_new_svg_file(char *fullpath){
 	return svg_cell;
 }
 
+type_svg start_new_svg_file_with_viewbox(char *fullpath, double min_x, double min_y, double width, double height){
+	FILE *f = fopen(fullpath,"w"); // open to write
+	if (f == NULL){
+		return NULL;
+	}
+
+	STRUCTSVG *svg_cell = malloc(sizeof(STRUCTSVG));
+	svg_cell->fsvg = f; 
+	svg_cell->stroke = NULL;
+	svg_cell->fill = NULL;
+	svg_cell->stroke_width = 0.0;
+
+	fprintf(svg_cell->fsvg,"<svg viewBox=\"%f %f %f %f\" \nxmlns=\"http://www.w3.org/2000/svg\"\n\txmlns:xlink=\"http://www.w3.org/1999/xlink\" >\n", min_x, min_y, width, height);
+
+	return svg_cell;
+}
+
 
 void insert_string_in_svg(type_svg file, char*string){
 	STRUCTSVG *fsf = file; 

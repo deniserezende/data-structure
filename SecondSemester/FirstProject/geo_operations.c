@@ -10,11 +10,26 @@
 #include <stdlib.h>
 #include "geo_operations.h"
 
-type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, type_hashtable cityblocks_table){
-FILE *geofile = fopen(filename, "r");
+double GO_minx, GO_maxx, GO_miny, GO_maxy;
+
+void save_min_and_max(double x, double y, double x2, double y2){
+    if(x2 >= GO_maxx) GO_maxx = x2;
+    if(x <= GO_minx) GO_minx = x;
+    if(y2 >= GO_maxy) GO_maxy = y2;
+    if(y <= GO_miny) GO_miny = y;
+}
+
+type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, type_hashtable cityblocks_table, double view_box[4]){
+    FILE *geofile = fopen(filename, "r");
     if(geofile == NULL){
         return NULL;
     }
+
+    //AQUIDE rever valores
+    GO_minx = 100000;
+    GO_maxx = 0;
+    GO_miny = 100000;
+    GO_maxy = 0;
 
     char *line = malloc(80 * sizeof(char));
     char *helper = malloc(3 *sizeof(char));
@@ -48,7 +63,8 @@ FILE *geofile = fopen(filename, "r");
         }
         else if(strncmp(line, "q", 1) == 0){
                 sscanf(line, "%s %s %lf %lf %lf %lf", helper, cep, &x, &y, &width, &height);
-                
+                save_min_and_max(x, y, x+width, y+height);
+
                 type_block block_data = new_block(cep);
                 block = new_rectangle(cep, x, y, width, height, stroke_color, fill_color);
                 add_rectangles_stroke_width(block, stroke_width);
@@ -73,6 +89,10 @@ FILE *geofile = fopen(filename, "r");
     free(cep);
     free(stroke_color);
     free(fill_color);
+    view_box[0] = GO_minx;
+    view_box[1] = GO_miny;
+    view_box[2] = GO_maxx;
+    view_box[3] = GO_maxy;
     return cityblocks_tree;
 }
 

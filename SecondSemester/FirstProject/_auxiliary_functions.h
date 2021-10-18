@@ -33,5 +33,7 @@ void _report_property_txt_(type_property property);
 void _report_property_lease_txt_(type_property property);
 void _report_person_txt_(type_person person);
 void _report_block_txt_(type_rect block_rect);
+void _report_property_lease_available();
+void _report_property_lease_not_available();
 
 #endif /* _auxiliary_functions_h */

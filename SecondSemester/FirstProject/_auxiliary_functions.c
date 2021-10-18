@@ -99,57 +99,68 @@ void set_txt_file(type_txt txtfile){
     QAF_TXTFILE = txtfile;
 }
 
-
 void _report_property_txt_(type_property property){
     char *cardinal_direction = malloc(sizeof(char)*3);
     sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
-    insert_string_in_txt(QAF_TXTFILE, "====================");
+    insert_string_in_txt(QAF_TXTFILE, "");
     insert_string_in_txt(QAF_TXTFILE, "CASA:");
-    insert_string_in_txt(QAF_TXTFILE, get_property_cep(property));
-    insert_string_in_txt(QAF_TXTFILE, cardinal_direction);
-    char *number = malloc(sizeof(char) * 7);
-    sprintf(number, "%d%c", get_property_house_number(property), '\0');
-    insert_string_in_txt(QAF_TXTFILE, number);
-    insert_string_in_txt(QAF_TXTFILE, get_property_additional_address_data(property));
+    char *cep = get_property_cep(property);
+    char *add = get_property_additional_address_data(property);
+    int number = get_property_house_number(property);
+
+    char *tmp = malloc(sizeof(char) *(strlen(cep) + strlen(add) + 40));
+    sprintf(tmp, "CEP: %s  Nº: %d  Face: %s  Complemento: %s", cep, number, cardinal_direction, add);
+    insert_string_in_txt(QAF_TXTFILE, tmp);
 
     free(cardinal_direction);
-    free(number);
+    free(tmp);
 }
 
 void _report_property_lease_txt_(type_property property){
-    insert_string_in_txt(QAF_TXTFILE, "====================");
-    insert_string_in_txt(QAF_TXTFILE, "CASA:");
-    insert_string_in_txt(QAF_TXTFILE, get_property_lease_id(property));
     _report_property_txt_(property);
+    char *property_id = get_property_lease_id(property);
+    char *property_id_string = malloc(sizeof(char) * strlen(property_id) + 17);
+    sprintf(property_id_string, "ID da locação: %s%c", property_id, '\0');
+    insert_string_in_txt(QAF_TXTFILE, property_id_string);    
     
-    char *area = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
-    sprintf(area, "%.2lf%c", get_property_area(property), '\0');
+    char *area = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR + 6);
+    sprintf(area, "Área: %.2lf%c", get_property_area(property), '\0');
     insert_string_in_txt(QAF_TXTFILE, area);
 
-    char *monthly_rent = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
-    sprintf(monthly_rent, "%.2lf%c", get_property_monthly_rent(property), '\0');
+    char *monthly_rent = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR + 15);
+    sprintf(monthly_rent, "Preço Mensal: %.2lf%c", get_property_monthly_rent(property), '\0');
     insert_string_in_txt(QAF_TXTFILE, monthly_rent);
 
     free(area);
     free(monthly_rent);
+    free(property_id_string);
 }
 
 void _report_person_txt_(type_person person){
-    char *gender = malloc(sizeof(char)*3);
     char *name = get_person_full_name(person);
-    sprintf(gender, "%c%c", get_person_gender(person), '\0');
-    insert_string_in_txt(QAF_TXTFILE, "----------------");
+    insert_string_in_txt(QAF_TXTFILE, "");
     insert_string_in_txt(QAF_TXTFILE, "PESSOA:");
-    insert_string_in_txt(QAF_TXTFILE, get_person_cpf(person));
-    insert_string_in_txt(QAF_TXTFILE, name);
-    insert_string_in_txt(QAF_TXTFILE, gender);
-    insert_string_in_txt(QAF_TXTFILE, get_person_birthday(person));
+    char *cpf = get_person_cpf(person);
+    char *cpf_string = malloc(sizeof(char) + strlen(cpf) + 10);
+    sprintf(cpf_string, "CPF: %s%c", cpf, '\0');
+    insert_string_in_txt(QAF_TXTFILE, cpf_string);
+
+    char *string_name_with_gender = malloc(sizeof(char) * strlen(name) + 20);
+    sprintf(string_name_with_gender, "Nome: %s  Gênero: %c%c", name, get_person_gender(person), '\0');
+    insert_string_in_txt(QAF_TXTFILE, string_name_with_gender);
+    
+    char *birthday = get_person_birthday(person);
+    char *birthday_string = malloc(sizeof(birthday) + 20);
+    sprintf(birthday_string, "Data de nascimento: %s%c", birthday, '\0');
+    insert_string_in_txt(QAF_TXTFILE, birthday_string);
+    
     free(name);
-    free(gender);
+    free(string_name_with_gender);
+    free(birthday_string);
+    free(cpf_string);
 }
 
 void _report_block_txt_(type_rect block_rect){
-    insert_string_in_txt(QAF_TXTFILE, "**************************");
     insert_string_in_txt(QAF_TXTFILE, "BLOCO:");
     type_block block_data = get_rect_data(block_rect);
     insert_string_in_txt(QAF_TXTFILE, get_block_cep(block_data));
@@ -169,4 +180,19 @@ void _report_block_txt_(type_rect block_rect){
     char *h_string = malloc(sizeof(char) * QAF_SIZE_DOUBLESTR);
     sprintf(h_string, "%.2lf%c", get_rect_height(block_rect), '\0');
     insert_string_in_txt(QAF_TXTFILE, h_string);
+}
+
+void _report_property_lease_available(){
+    char *string = malloc(sizeof(char) * 12);
+    sprintf(string, "Disponível%c", '\0');
+    insert_string_in_txt(QAF_TXTFILE, string);
+    free(string);
+}
+
+
+void _report_property_lease_not_available(){
+    char *string = malloc(sizeof(char) * 85);
+    sprintf(string, "Não há oferta de locação com esse ID: locação inexistente ou encerrada.%c", '\0');
+    insert_string_in_txt(QAF_TXTFILE, string);
+    free(string);
 }

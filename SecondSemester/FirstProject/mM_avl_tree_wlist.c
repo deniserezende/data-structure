@@ -218,8 +218,6 @@ type_mMlavltree balance_avl_tree_aux(type_mMlavltree tree, type_mMlavlitems item
     return avl_tree;
 }
 
-//ARRUMAR
-// pq atualizo só do elemento corrente
 type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlitems item, type_mMlavlptrf_twoitems compare){
     NODE *avl_tree =(NODE*) tree;
     // INSERTING ITEM
@@ -232,7 +230,6 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
     long value_of_comparison = (long)compare(item, current_item);
 
     // in case item is bigger than current_item
-    //SOS
     if(value_of_comparison > 0){
         avl_tree->right = insert_item_in_mMl_avl_tree(avl_tree->right, item, compare);
         if(avl_tree->right != NULL){
@@ -260,7 +257,7 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
         }
         else{
             insert_item_at_the_end_of_list(avl_tree->list, item);
-            // return avl_tree;
+            // return avl_tree; // AQUIDE
         }
     }
 
@@ -269,7 +266,6 @@ type_mMlavltree insert_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
     
     // BALANCING TREE
     return(balance_avl_tree_aux(avl_tree, item, compare));
-    //return avl_tree;
 }
 
 type_mMlavltree delete_list_for_mMlavltree_aux(type_mMlavltree tree, type_mMlavltree pointer_to_list, type_mMlavlptrf_twoitems compare, type_mMlavlptrf_twoitems verify_item){

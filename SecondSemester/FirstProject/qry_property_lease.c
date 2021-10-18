@@ -180,7 +180,10 @@ void _loc_txt_(type_property property){
     if(!get_property_rent_status(property)){
         _report_person_txt_(get_property_tenant(property));
     }
-}
+    else{
+        _report_property_lease_available();
+    }
+} 
 
 void _loc_svg_(type_property property){
     int house_number = get_property_house_number(property);
@@ -208,7 +211,10 @@ int loc_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 
     set_id(property_lease_id);
     type_hashitem property_lease = lookup_item_in_hash_table(property_leases, formatted_property_id, (void*)get_property_lease_key, (void*)verify_property_leases_by_id);
-    if(property_lease == NULL) return 0;
+    if(property_lease == NULL){
+        _report_property_lease_not_available();
+        return 0;
+    }
 
     set_id(get_property_cep(property_lease));
     type_hashitem block_rect = lookup_item_in_hash_table(blocks_table, get_property_cep_key(property_lease), (void*)get_key_from_block, (void*)verify_block_found);

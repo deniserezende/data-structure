@@ -64,9 +64,7 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
         if(owner != NULL){
             _report_person_txt_(owner);
             remove_owned_property_from_person(owner, 0);
-            // set_id(get_person_cpf(owner));
-            // type_hashitem del_owner = delete_item_in_hash_table(people_table, get_person_formatted_cpf(owner), (void*)get_person_formatted_cpf, (void*)verify_person_ptr);
-            // remove_person(del_owner);
+
         }
         remove_property(property);
 
@@ -89,13 +87,9 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
             if(tenant != NULL){
                 _report_person_txt_(tenant);
                 remove_rented_property_from_person(tenant, 0);
-
-                // set_id(get_person_cpf(tenant));
-                // type_hashitem del_tenant = delete_item_in_hash_table(people_table, get_person_formatted_cpf(tenant), (void*)get_person_formatted_cpf, (void*)verify_person_ptr);
-                // remove_person(del_tenant);
             }
         }
-        remove_property(property);
+        remove_property(property_lease);
 
         // Next
         set_id(block_cep); // from _auxiliary_function.h

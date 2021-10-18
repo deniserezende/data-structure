@@ -177,7 +177,7 @@ int loc(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_ha
 
 void _loc_txt_(type_property property){
     _report_property_lease_txt_(property);
-    if(get_property_rent_status(property)){
+    if(!get_property_rent_status(property)){
         _report_person_txt_(get_property_tenant(property));
     }
 }

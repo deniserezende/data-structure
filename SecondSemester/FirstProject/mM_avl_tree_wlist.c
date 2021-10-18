@@ -15,8 +15,8 @@ typedef struct avl_tree_node {
     struct avl_tree_node *left; // left child
     struct avl_tree_node *right; // right child
     struct avl_tree_node *lmax; // max do filho esquerdo 
-    struct avl_tree_node *lmin; // min do filho direito
-    struct avl_tree_node *rmax; // max do filho esquerdo 
+    struct avl_tree_node *lmin; // min do filho esquerdo
+    struct avl_tree_node *rmax; // max do filho direto 
     struct avl_tree_node *rmin; // min do filho direito
 } NODE;
 

@@ -22,6 +22,30 @@ void action_property_mul_(type_hashitem property){
 
             //SVG
             int house_number = get_property_house_number(property);
+            char cardinal_direction = get_property_cardinal_direction(property);
+
+                int shift_amount_x = 0;
+                int shift_amount_y = 0;
+                switch (cardinal_direction) {
+                case 'N':
+                    shift_amount_x = house_number;
+                    shift_amount_y = QMH_h;
+                    break;
+                case 'S':
+                    shift_amount_x = house_number;
+                    shift_amount_y = 0;
+                    break;
+                case 'L':
+                    shift_amount_x = 0;
+                    shift_amount_y = house_number;
+                    break;
+                case 'O':
+                    shift_amount_x = QMH_w;
+                    shift_amount_y = house_number;
+                    break;
+                default:
+                    break;
+                }
             insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+house_number, QMH_y1+house_number, 6, 2, color, color, 1);
         }
     }
@@ -41,6 +65,30 @@ void action_property_lease_mul_(type_hashitem property){
 
                 //SVG
                 int house_number = get_property_house_number(property);
+                char cardinal_direction = get_property_cardinal_direction(property);
+
+                int shift_amount_x = 0;
+                int shift_amount_y = 0;
+                switch (cardinal_direction) {
+                case 'N':
+                    shift_amount_x = house_number;
+                    shift_amount_y = QMH_h;
+                    break;
+                case 'S':
+                    shift_amount_x = house_number;
+                    shift_amount_y = 0;
+                    break;
+                case 'L':
+                    shift_amount_x = 0;
+                    shift_amount_y = house_number;
+                    break;
+                case 'O':
+                    shift_amount_x = QMH_w;
+                    shift_amount_y = house_number;
+                    break;
+                default:
+                    break;
+                }
                 insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+house_number, QMH_y1+house_number, 6, 2, color, color, 1);
 
             }   
@@ -99,10 +147,33 @@ void action_property_hom_(type_hashitem property){
         if(gender == 'M'){
             _report_person_txt_(owner);
             _report_property_txt_(property);
-
             //SVG
             int house_number = get_property_house_number(property);
-            insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+house_number, QMH_y1+house_number, 6, 2, color, color, 1);
+            char cardinal_direction = get_property_cardinal_direction(property);
+
+            int shift_amount_x = 0;
+            int shift_amount_y = 0;
+            switch (cardinal_direction) {
+            case 'N':
+                shift_amount_x = house_number;
+                shift_amount_y = QMH_h;
+                break;
+            case 'S':
+                shift_amount_x = house_number;
+                shift_amount_y = 0;
+                break;
+            case 'L':
+                shift_amount_x = 0;
+                shift_amount_y = house_number;
+                break;
+            case 'O':
+                shift_amount_x = QMH_w;
+                shift_amount_y = house_number;
+                break;
+            default:
+                break;
+            }
+            insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+shift_amount_x, QMH_y1+shift_amount_y, 6, 2, color, color, 1);
         }
     }
 }
@@ -120,7 +191,31 @@ void action_property_lease_hom_(type_hashitem property){
 
                 //SVG
                 int house_number = get_property_house_number(property);
-                insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+house_number, QMH_y1+house_number, 6, 2, color, color, 1);
+                char cardinal_direction = get_property_cardinal_direction(property);
+
+                int shift_amount_x = 0;
+                int shift_amount_y = 0;
+                switch (cardinal_direction) {
+                case 'N':
+                    shift_amount_x = house_number;
+                    shift_amount_y = QMH_h;
+                    break;
+                case 'S':
+                    shift_amount_x = house_number;
+                    shift_amount_y = 0;
+                    break;
+                case 'L':
+                    shift_amount_x = 0;
+                    shift_amount_y = house_number;
+                    break;
+                case 'O':
+                    shift_amount_x = QMH_w;
+                    shift_amount_y = house_number;
+                    break;
+                default:
+                    break;
+                }
+                insert_ellipse_in_svg(QMH_SVGFILE, QMH_x1+shift_amount_x, QMH_y1+shift_amount_y, 6, 2, color, color, 1);
             }   
         }
     }

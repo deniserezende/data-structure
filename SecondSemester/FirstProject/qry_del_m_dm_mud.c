@@ -160,10 +160,35 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
     double x = get_rect_x(block);
     double y = get_rect_y(block);
     double h = get_rect_height(block);
+    double w = get_rect_width(block);
 
     int house_number = get_property_house_number(property);
+    char cardinal_direction = get_property_cardinal_direction(property);
 
-    insert_line_in_svg(QDMDM_SVGFILE, x+house_number, y+house_number, x+house_number, QDMDM_VIEWBOX[1] - h/2, color_line, 2);
+    int shift_amount_x = 0;
+    int shift_amount_y = 0;
+    switch (cardinal_direction) {
+    case 'N':
+        shift_amount_x = house_number;
+        shift_amount_y = h;
+        break;
+    case 'S':
+        shift_amount_x = house_number;
+        shift_amount_y = 0;
+        break;
+    case 'L':
+        shift_amount_x = 0;
+        shift_amount_y = house_number;
+        break;
+    case 'O':
+        shift_amount_x = w;
+        shift_amount_y = house_number;
+        break;
+    default:
+        break;
+    }
+
+    insert_line_in_svg(QDMDM_SVGFILE, x+shift_amount_x, y+shift_amount_y, x+shift_amount_x, QDMDM_VIEWBOX[1] - h/2, color_line, 2);
     
     //nome e endereço
     char* person_cpf = get_person_cpf(person);
@@ -175,7 +200,7 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
     char *string = malloc(sizeof(char) * (strlen(person_cpf) + strlen(person_fullname) + strlen(property_cep) + strlen(property_add) + 15));
     
     sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, property_number, property_add, '\0');
-    insert_text_in_svg(QDMDM_SVGFILE, x+house_number, QDMDM_VIEWBOX[1] - h/2, color_text, string, 5);
+    insert_text_in_svg(QDMDM_SVGFILE, x+shift_amount_x, QDMDM_VIEWBOX[1] - h/2, color_text, string, 5);
     free(person_fullname);
 }
 
@@ -245,8 +270,12 @@ void _mud_txt(type_person person, type_property old_property, type_property new_
 void _mud_svg(type_property old_property, type_property new_property, type_rect old_block, type_rect new_block){
     double old_x = get_rect_x(old_block);
     double old_y = get_rect_y(old_block);
+    double old_w = get_rect_width(old_block);
+    double old_h = get_rect_height(old_block);
     double new_x = get_rect_x(new_block);
     double new_y = get_rect_y(new_block);
+    double new_w = get_rect_width(new_block);
+    double new_h = get_rect_height(new_block);
 
     char color_red[8], color_white[8], color_blue[8], color_black[8];
     sprintf(color_red, "red%c", '\0');
@@ -258,12 +287,59 @@ void _mud_svg(type_property old_property, type_property new_property, type_rect 
     int new_house_number = get_property_house_number(new_property);
     char *old_cep = get_property_cep(old_property);
     char *new_cep = get_property_cep(new_property);
+    char cardinal_direction_old = get_property_cardinal_direction(old_property);
+    char cardinal_direction_new = get_property_cardinal_direction(new_property);
 
-    insert_line_in_svg(QDMDM_SVGFILE, old_x+old_house_number, old_y+old_house_number, new_x+new_house_number, new_y+new_house_number, color_red, 4);
-    insert_circle_in_svg(QDMDM_SVGFILE, old_x+old_house_number, old_y+old_house_number, 4, color_red, color_white, 2);
-    insert_circle_in_svg(QDMDM_SVGFILE, new_x+new_house_number, new_y+new_house_number, 4, color_blue, color_white, 2);
-    insert_text_in_svg(QDMDM_SVGFILE, old_x+old_house_number, old_y+old_house_number, color_black, old_cep, 8);
-    insert_text_in_svg(QDMDM_SVGFILE, new_x+new_house_number, new_y+new_house_number, color_black, new_cep, 8);
+    int shift_amount_x_old = 0;
+    int shift_amount_y_old = 0;
+    switch (cardinal_direction_old) {
+    case 'N':
+        shift_amount_x_old = old_house_number;
+        shift_amount_y_old = old_h;
+        break;
+    case 'S':
+        shift_amount_x_old = old_house_number;
+        shift_amount_y_old = 0;
+        break;
+    case 'L':
+        shift_amount_x_old = 0;
+        shift_amount_y_old = old_house_number;
+        break;
+    case 'O':
+        shift_amount_x_old = old_w;
+        shift_amount_y_old = old_house_number;
+        break;
+    default:
+        break;
+    }
+    int shift_amount_x_new = 0;
+    int shift_amount_y_new = 0;
+    switch (cardinal_direction_new) {
+    case 'N':
+        shift_amount_x_new = new_house_number;
+        shift_amount_y_new = new_h;
+        break;
+    case 'S':
+        shift_amount_x_new = new_house_number;
+        shift_amount_y_new = 0;
+        break;
+    case 'L':
+        shift_amount_x_new = 0;
+        shift_amount_y_new = new_house_number;
+        break;
+    case 'O':
+        shift_amount_x_new = new_w;
+        shift_amount_y_new = new_house_number;
+        break;
+    default:
+        break;
+    }
+
+    insert_line_in_svg(QDMDM_SVGFILE, old_x+shift_amount_x_old, old_y+shift_amount_y_old, new_x+shift_amount_x_new, new_y+shift_amount_y_new, color_red, 4);
+    insert_circle_in_svg(QDMDM_SVGFILE, old_x+shift_amount_x_old, old_y+shift_amount_y_old, 4, color_red, color_white, 2);
+    insert_circle_in_svg(QDMDM_SVGFILE, new_x+shift_amount_x_new, new_y+shift_amount_y_new, 4, color_blue, color_white, 2);
+    insert_text_in_svg(QDMDM_SVGFILE, old_x+shift_amount_x_old, old_y+shift_amount_y_old, color_black, old_cep, 8);
+    insert_text_in_svg(QDMDM_SVGFILE, new_x+shift_amount_x_new, new_y+shift_amount_y_new, color_black, new_cep, 8);
 }
 
 // A pessoa identificada por cpf muda-se para o endereço determinado pelos parâmetros.

@@ -79,23 +79,15 @@ void action_catac(type_mMlavlitems block_rect){
 
     set_id(cep);
     traverse_hash_table_with_conditional_deletion_optimal(QDC_properties_table, cep_key, (void*)verify_property_found, (void*)deallocate_property_ptr);
-    //traverse_hash_table_with_conditional_action_optimal(QDC_properties_table, cep_key, (void*)get_property_cep_key, (void*)verify_property_found, (void*)action_property_ptr);
     
     sprintf(QDC_ID, "%s%c", cep, '\0');
     traverse_full_hash_table_with_conditional_deletion(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)deallocate_property_lease_ptr);
-    //traverse_full_hash_table_with_conditional_action(QDC_property_leases, (void*)condition_property_lease_ptr, (void*)action_property_lease_ptr);
-    //traverse_hash_table_with_conditional_action_optimal(QDC_property_leases, cep, (void*)get_property_cep_key, (void*)verify_property_leases, (void*)action_property_lease_ptr);
 
     set_id(cep);
     type_rect block_rect_del = delete_item_in_hash_table(QDC_blocks_table, get_key_from_block(block_rect), (void*)get_key_from_block, (void*)verify_block_found);
     insert_item_at_the_end_of_list(QDC_blocks_to_delete, block_rect_del);
 
-    //type_mMlavltree block_avl = delete_item_in_mMl_avl_tree(QDC_blocks_avl, block_rect_del, (void*)compare_rectangles_by_x_coordinate);
     _report_block_txt_(block_rect_del);
-    //_catac_svg(block_rect_del);
-    // type_block block_data = get_rect_data(block_rect_del);
-    // remove_block(block_data);
-    // destroi_rectangle(block_rect_del);
 
     return;
 }

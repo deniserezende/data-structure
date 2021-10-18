@@ -39,12 +39,38 @@ void _oloc_txt(type_property property){
 }
 
 void _oloc_svg(type_property property){
-    int number = get_property_house_number(property);
+    int house_number = get_property_house_number(property);
     char color[8];
     sprintf(color, "black%c", '\0');
     char *string = malloc(sizeof(char) * 2);
     sprintf(string, "*%c", '\0');
-    insert_text_in_svg(QPL_SVGFILE, (double)QPL_x1+number, (double)QPL_y1+number, color, string, FONTSIZE);
+
+    char cardinal_direction = get_property_cardinal_direction(property);
+
+    int shift_amount_x = 0;
+    int shift_amount_y = 0;
+    switch (cardinal_direction) {
+    case 'N':
+        shift_amount_x = house_number;
+        shift_amount_y = QPL_height;
+        break;
+    case 'S':
+        shift_amount_x = house_number;
+        shift_amount_y = 0;
+        break;
+    case 'L':
+        shift_amount_x = 0;
+        shift_amount_y = house_number;
+        break;
+    case 'O':
+        shift_amount_x = QPL_width;
+        shift_amount_y = house_number;
+        break;
+    default:
+        break;
+    }
+
+    insert_text_in_svg(QPL_SVGFILE, (double)QPL_x1+shift_amount_x, (double)QPL_y1+shift_amount_y, color, string, FONTSIZE);
     free(string);
 }
 
@@ -55,11 +81,14 @@ void action_property_oloc_(type_hashitem property){
 
 long action_oloc_(type_mMlavlitems item){
     type_block block = get_rect_data(item);
-
+    
+    QPL_height = get_rect_height(item);
+    QPL_width = get_rect_width(item);
     QPL_x1 = get_rect_x(item);
-    QPL_x2 = QPL_x1 + get_rect_width(item);
+    QPL_x2 = QPL_x1 + QPL_width;
     QPL_y1 = get_rect_y(item);
-    QPL_y2 = QPL_y1 + get_rect_height(item);
+    QPL_y2 = QPL_y1 + QPL_height;
+
 
     void(*action_property_ptr)(type_property);
     action_property_ptr = action_property_oloc_;
@@ -100,12 +129,39 @@ void _loc_txt(type_person person, type_property property){
 }
 
 void _loc_svg(type_person person, type_property property){
-    int number = get_property_house_number(property);
+    int house_number = get_property_house_number(property);
     char color_line[8];
     sprintf(color_line, "green%c", '\0');
     char color_text[8];
     sprintf(color_text, "black%c", '\0');
-    insert_line_in_svg(QPL_SVGFILE, QPL_x1 + number, QPL_y1 + number, QPL_x1 + number, QPL_VIEWBOX[1] - QPL_height/2, color_line, 1);
+
+    char cardinal_direction = get_property_cardinal_direction(property);
+
+    int shift_amount_x = 0;
+    int shift_amount_y = 0;
+    switch (cardinal_direction) {
+    case 'N':
+        shift_amount_x = house_number;
+        shift_amount_y = QPL_height;
+        break;
+    case 'S':
+        shift_amount_x = house_number;
+        shift_amount_y = 0;
+        break;
+    case 'L':
+        shift_amount_x = 0;
+        shift_amount_y = house_number;
+        break;
+    case 'O':
+        shift_amount_x = QPL_width;
+        shift_amount_y = house_number;
+        break;
+    default:
+        break;
+    }
+
+
+    insert_line_in_svg(QPL_SVGFILE, QPL_x1 + shift_amount_x, QPL_y1 + shift_amount_y, QPL_x1 + shift_amount_x, QPL_VIEWBOX[1] - QPL_height/2, color_line, 1);
 
     char* person_cpf = get_person_cpf(person);
     char* person_fullname = get_person_full_name(person);
@@ -113,9 +169,8 @@ void _loc_svg(type_person person, type_property property){
     char* lease_id = get_property_lease_id(property);
     
     char *string = malloc(sizeof(char) * (strlen(person_cpf) + strlen(person_fullname) + strlen(property_cep) + strlen(lease_id) + 15));
-    
-    sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, number, lease_id, '\0');
-    insert_text_in_svg(QPL_SVGFILE, QPL_x1+number, QPL_VIEWBOX[1] - QPL_height/2, color_text, string, 2);
+    sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, house_number, lease_id, '\0');
+    insert_text_in_svg(QPL_SVGFILE, QPL_x1+shift_amount_x, QPL_VIEWBOX[1] - QPL_height/2, color_text, string, 2);
     free(person_fullname);
     free(string);
 }
@@ -124,6 +179,7 @@ void _loc_action(type_rect rectangle){
     QPL_x1 = get_rect_x(rectangle);
     QPL_y1 = get_rect_y(rectangle);
     QPL_height = get_rect_height(rectangle);
+    QPL_width = get_rect_width(rectangle);
 }
 
 // Pessoa identificada por cpf aluga o imóvel cuja oferta é identificada por id. 
@@ -191,13 +247,37 @@ void _loc_svg_(type_property property){
     int house_number = get_property_house_number(property);
     char color[8];
     sprintf(color, "black%c", '\0');
+    char cardinal_direction = get_property_cardinal_direction(property);
+
+    int shift_amount_x = 0;
+    int shift_amount_y = 0;
+    switch (cardinal_direction) {
+    case 'N':
+        shift_amount_x = house_number;
+        shift_amount_y = QPL_height;
+        break;
+    case 'S':
+        shift_amount_x = house_number;
+        shift_amount_y = 0;
+        break;
+    case 'L':
+        shift_amount_x = 0;
+        shift_amount_y = house_number;
+        break;
+    case 'O':
+        shift_amount_x = QPL_width;
+        shift_amount_y = house_number;
+        break;
+    default:
+        break;
+    }
     if(get_property_rent_status(property) == 1){
-        insert_text_in_svg(QPL_SVGFILE, QPL_x1+house_number, QPL_y1+house_number, color, "$", FONTSIZE);
+        insert_text_in_svg(QPL_SVGFILE, QPL_x1+shift_amount_x, QPL_y1+shift_amount_y, color, "$", FONTSIZE);
     }
     else{
         type_person tenant = get_property_tenant(property);
-        if(tenant == NULL) insert_text_in_svg(QPL_SVGFILE, QPL_x1+house_number, QPL_y1+house_number, color, "#", FONTSIZE);
-        else insert_text_in_svg(QPL_SVGFILE, QPL_x1+house_number, QPL_y1+house_number, color, "*", FONTSIZE);
+        if(tenant == NULL) insert_text_in_svg(QPL_SVGFILE, QPL_x1+shift_amount_x, QPL_y1+shift_amount_y, color, "#", FONTSIZE);
+        else insert_text_in_svg(QPL_SVGFILE, QPL_x1+shift_amount_x, QPL_y1+shift_amount_y, color, "*", FONTSIZE);
     }
 }
 
@@ -224,6 +304,8 @@ int loc_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 
     QPL_x1 = get_rect_x(block_rect);
     QPL_y1 = get_rect_y(block_rect);
+    QPL_width = get_rect_width(block_rect);
+    QPL_height = get_rect_height(block_rect);
 
     _loc_txt_(property_lease);
     _loc_svg_(property_lease);
@@ -250,7 +332,34 @@ void _dloc_svg(type_property property){
     
     char* property_cep = get_property_cep(property);
     char* lease_id = get_property_lease_id(property);
-    int number = get_property_house_number(property);
+    int house_number = get_property_house_number(property);
+
+    char cardinal_direction = get_property_cardinal_direction(property);
+
+    int shift_amount_x = 0;
+    int shift_amount_y = 0;
+    switch (cardinal_direction) {
+    case 'N':
+        shift_amount_x = house_number;
+        shift_amount_y = QPL_height;
+        break;
+    case 'S':
+        shift_amount_x = house_number;
+        shift_amount_y = 0;
+        break;
+    case 'L':
+        shift_amount_x = 0;
+        shift_amount_y = house_number;
+        break;
+    case 'O':
+        shift_amount_x = QPL_width;
+        shift_amount_y = house_number;
+        break;
+    default:
+        printf("apagar aquide\n");
+        return;
+    }
+
     char *string;
     if(!get_property_rent_status(property)){
         type_person person = get_property_tenant(property);
@@ -258,15 +367,15 @@ void _dloc_svg(type_property property){
         char* person_fullname = get_person_full_name(person);
 
         string = malloc(sizeof(char) * (strlen(person_cpf) + strlen(person_fullname) + strlen(property_cep) + strlen(lease_id) + 15));
-        sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, number, lease_id, '\0');
+        sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, house_number, lease_id, '\0');
         free(person_fullname);
     }
     else{
         string = malloc(sizeof(char) * (strlen(property_cep) + strlen(lease_id) + 25));
-        sprintf(string, "Sem morador %s %d %s%c", property_cep, number, lease_id, '\0');
+        sprintf(string, "Sem morador %s %d %s%c", property_cep, house_number, lease_id, '\0');
     }
     
-    insert_text_in_svg(QPL_SVGFILE, QPL_x1+number, QPL_VIEWBOX[1] - QPL_height/2, color_text, string, 2);
+    insert_text_in_svg(QPL_SVGFILE, QPL_x1+shift_amount_x, QPL_VIEWBOX[1] - QPL_height/2, color_text, string, 2);
     free(string);
 }
 

@@ -30,6 +30,55 @@ type_hashtable create_hash_table(){
     return hash_table;
 }
 
+void destroi_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem deallocate){
+    type_hashitem *hashtable = (type_hashitem*)hash_table;
+    type_list vertical_list;
+    type_list horizontal_list;
+    type_list del_horizontal_list;
+    int stop = 0;
+
+    for(int i = 0; i < TABLE_SIZE; i=i+1){
+        if(hashtable[i] != NULL){
+            vertical_list = hashtable[i];
+            set_current_to_first_item_in_list(vertical_list);
+            int done;
+            do{
+                done = is_current_last_item_in_list(vertical_list);
+                horizontal_list = get_current_item_in_list(vertical_list);
+
+                int _done;
+                type_hashitem item;
+                type_hashitem del_item;
+                set_current_to_first_item_in_list(horizontal_list);
+                do{
+                    _done = is_current_last_item_in_list(horizontal_list);
+                    item = get_current_item_in_list(horizontal_list);
+                    
+                    del_item = delete_allocated_current_item_in_list(horizontal_list);
+                    deallocate(del_item);
+                    if(empty_list(horizontal_list)){
+                        del_horizontal_list = delete_allocated_current_item_in_list(vertical_list);
+                        destroi_list(del_horizontal_list);
+                        if(empty_list(vertical_list)){
+                            destroi_list(vertical_list);
+                            hashtable[i] = NULL;
+                            stop = 1;
+                            break;
+                        }
+                        break;
+                    }
+                    move_current_forward_in_list(horizontal_list);
+                }while(!_done);
+                if(stop) break;
+
+                move_current_forward_in_list(vertical_list);
+
+            }while(!done);
+        }
+    }
+    free(hashtable);
+}
+
 void print_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem print_item){
     type_hashitem *hashtable = (type_hashitem*) hash_table;
     type_list vertical_list;
@@ -638,6 +687,7 @@ void traverse_full_hash_table_with_conditional_deletion(type_hashtable hash_tabl
                                 stop = 1;
                                 break;
                             }
+                            break;
                         }
                     }
                     move_current_forward_in_list(horizontal_list);

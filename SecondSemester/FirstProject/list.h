@@ -46,6 +46,10 @@ int empty_list(type_list list);
 // Post-condition: The list does not exist
 void destroi_list(type_list list);
 
+// Pre-condition: The list has to have been created
+// Post-condition: The list does not exist
+void destroi_list_with_allocated_items(type_list list, type_lptrf_oneitem deallocate);
+
 // Pre-condition: The list exists and is not full
 // Post-condition: The item has been inserted at the end of the list
 void insert_item_at_the_end_of_list(type_list list, type_litems item);
@@ -87,6 +91,7 @@ void delete_current_item_in_list(type_list list);
 // Post-condition: The item has been removed and current is the element that precedes the one removed if it exists otherwise it is undefined
 // Note that: This function returns the item so you can free it.
 type_litems delete_allocated_current_item_in_list(type_list list);
+
 // Pre-condition: Current can't be undefined 
 // Post-condition: None
 // Returns a boolean: True if current is the first item and false otherwise.

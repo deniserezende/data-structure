@@ -23,6 +23,11 @@ char *get_txt_and_svg_filename(char *geo_filename, char *qry_filename);
 char *get_txt_fullpath(char *geo_filename, char *qry_filename, char *output_path);
 char *get_second_svg_fullpath(char *geo_filename, char *qry_filename, char *output_path);
 
+
+void deallocate_people_hashtable(type_person person);
+void deallocate_properties_hashtable(type_property property);
+void deallocate_cityblocks_hashtable(type_rect rect_block);
+void deallocate_cityblocks_avltree(type_rect rect_block);
 // void print_item(type_rect rect){
 //     type_rectdata data = get_rect_data(rect);
 //     printf("cep=%s\n", get_property_cep(data));
@@ -119,6 +124,49 @@ int main(int argc, char *argv[]) {
 
     free(geo_fullpath);
     free(first_svg_fullpath);
+    destroi_hash_table(people_hashtable, (void*)deallocate_people_hashtable);
+    destroi_hash_table(properties_hashtable, (void*)deallocate_properties_hashtable);
+    destroi_hash_table(cityblocks_hashtable, (void*)deallocate_cityblocks_hashtable);
+    destroi_hash_table(property_leases_hashtable, (void*)deallocate_properties_hashtable);
+    destroi_mMl_avl_tree(cityblocks_avltree, (void*)deallocate_cityblocks_avltree);
+}
+
+void deallocate_cityblocks_avltree(type_rect rect_block){
+    type_block block = get_rect_data(rect_block);
+    remove_block(block);
+    destroi_rectangle(rect_block); 
+}
+
+
+void deallocate_cityblocks_hashtable(type_rect rect_block){
+    // Since I will delete all rectangles in destroi_mMl_avl_tree() function
+    // no need to delete them here!
+    // type_block block = get_rect_data(rect_block);
+    // remove_block(block);
+    // destroi_rectangle(rect_block);
+    return;
+}
+
+void deallocate_properties_hashtable(type_property property){
+    remove_property(property);
+}
+
+void deallocate_people_hashtable(type_person person){
+    if(does_person_own_properties(person)){
+        int owned_properties = get_amount_of_owned_properties(person);
+        for(int i=0; i<owned_properties; i++){
+            // No need to get the property because that will be deleted later
+            remove_owned_property_from_person(person, i);
+        }
+    }
+    if(does_person_rents_properties(person)){
+        int rented_properties = get_amount_of_rented_properties(person);
+        for(int j=0; j<rented_properties; j++){
+            // No need to get the property because that will be deleted later
+            remove_rented_property_from_person(person, j);
+        }
+    }
+    remove_person(person);
 }
 
 

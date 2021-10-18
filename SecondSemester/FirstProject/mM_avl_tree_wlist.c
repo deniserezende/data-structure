@@ -21,7 +21,7 @@ typedef struct avl_tree_node {
 } NODE;
 
 type_mMlavltree create_mMl_avl_tree(){
-    return NULL;
+    return NULL; 
 }
 
 type_mMlavltree create_new_node_avl_aux(type_mMlavlitems item){
@@ -39,8 +39,24 @@ type_mMlavltree create_new_node_avl_aux(type_mMlavlitems item){
     return temp;
 }
 
+type_mMlavltree destroi_mMl_avl_tree(type_mMlavltree tree, type_lptrf_oneitem deallocate){
+    NODE *avl_tree = (NODE*) tree;
+    if(avl_tree == NULL) return NULL;
+    else{
+        avl_tree->left = destroi_mMl_avl_tree(avl_tree->left, deallocate);
+        avl_tree->right = destroi_mMl_avl_tree(avl_tree->right, deallocate);
+        // clean up
+        if(avl_tree->list != NULL){
+            destroi_list_with_allocated_items(avl_tree->list, deallocate);
+        }
+        free(avl_tree);
+        return NULL;
+    }
+
+}
+
 int empty_mMl_avl_tree(type_mMlavltree tree){
-    NODE *avl_tree =(NODE*) tree;
+    NODE *avl_tree = (NODE*) tree;
     return(avl_tree == NULL);
 }
 

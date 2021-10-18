@@ -39,13 +39,14 @@ void set_owned_properties_to_person(type_person person, int amount);
 
 void add_persons_owned_property(type_person person, type_property_copy property);
 
-type_property_copy get_main_owned_property(type_person person); // AQUIDE del essa
-
 void set_properties_leases_to_person(type_person person, int amount);
 
 void add_persons_property_lease(type_person person, type_property_copy property);
 
 type_property_copy* get_person_properties_leases(type_person person);
+
+int get_amount_of_owned_properties(type_person person);
+int get_amount_of_rented_properties(type_person person);
 
 // index starts in zero!
 type_property_copy get_person_property_lease(type_person person, int index);

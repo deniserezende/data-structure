@@ -69,6 +69,20 @@ void destroi_list(type_list list){
 	free(stru);
 }
 
+void destroi_list_with_allocated_items(type_list list, type_lptrf_oneitem deallocate){
+	STRUCTURE *stru = list;
+	NODE *aux = stru->tail;
+	NODE *nodes = aux;
+	while(nodes != stru->head){
+		nodes = aux->previous;
+		deallocate(aux->element);
+		free(aux);
+		aux = nodes;
+	}
+	free(nodes);
+	free(stru);
+}
+
 void insert_item_at_the_end_of_list(type_list list, type_litems item){	
 	STRUCTURE *stru = list;
 	NODE *old_node = stru->tail;

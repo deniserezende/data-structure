@@ -75,7 +75,7 @@ void insert_people_in_svg_aux(type_person person){
         return;
     }
 
-    type_property property = get_main_owned_property(person);
+    type_property property = get_person_owned_property(person, 0);
     int property_numb = get_property_number(property);
     long key = get_property_cep_key(property);
     sprintf(cep_global, "%s%c", get_property_cep(property), '\0');

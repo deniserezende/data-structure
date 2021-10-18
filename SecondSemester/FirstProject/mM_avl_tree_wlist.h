@@ -104,4 +104,8 @@ void traverse_mMlavltree_full_tree_with_action_in_parent_list_and_childs_lists(t
 // void percorreLarg(AvlTree t);
 // void killAvlTree(AvlTree t);
 
+
+
+type_mMlavltree destroi_mMl_avl_tree(type_mMlavltree tree, type_lptrf_oneitem deallocate);
+
 #endif // mM_avl_tree_wlist_h

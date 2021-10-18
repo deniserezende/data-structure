@@ -135,7 +135,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
     end_svg_file(svg_temp_file);
     insert_blocks_in_svg(svgfile, blocks_avl);
     insert_svg_file_in_other_svg_file("deniserezendeqrytempfile.svg", svgfile);
-    int removed = remove("deniserezendeqrytempfile.svg");
+    remove("deniserezendeqrytempfile.svg");
 
     free(line);
     free(helper);

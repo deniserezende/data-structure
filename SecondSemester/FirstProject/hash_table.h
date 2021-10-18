@@ -42,4 +42,6 @@ void traverse_hash_table_with_conditional_deletion_optimal(type_hashtable hash_t
 
 void traverse_full_hash_table_with_conditional_deletion(type_hashtable hash_table, type_hashtptrf_oneitem condition, type_hashtptrf_oneitem deallocate);
 
+void destroi_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem deallocate);
+
 #endif

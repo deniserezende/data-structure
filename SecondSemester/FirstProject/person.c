@@ -148,9 +148,14 @@ void add_persons_owned_property(type_person person, type_property_copy property)
     
 }
 
-type_property_copy get_main_owned_property(type_person person){
+int get_amount_of_owned_properties(type_person person){
     PERSON *p = person;
-    return p->properties_owned[0];
+    return p->amount_of_owned_properties;
+}
+
+int get_amount_of_rented_properties(type_person person){
+    PERSON *p = person;
+    return p->amount_of_properties_leases;
 }
 
 void set_properties_leases_to_person(type_person person, int amount){

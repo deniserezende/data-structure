@@ -27,6 +27,11 @@ if a file with that name already exists in that directory, that file is overwrit
 if the file can't be created because the path is incomplete or incorrect, returns NULL. */ 
 type_svg start_new_svg_file(char *fullpath);
 
+// Pre-conditions: None
+/* Post-conditions: Creates a new file in the directory specified with the filename specified and with the view box specified
+(How to specify the directory and filname: path/filename.svg = fullpath) 
+if a file with that name already exists in that directory, that file is overwritten
+if the file can't be created because the path is incomplete or incorrect, returns NULL. */ 
 type_svg start_new_svg_file_with_viewbox(char *fullpath, double min_x, double min_y, double width, double height);
 
 // Pre-condition: The svg file has to have been 'started'.

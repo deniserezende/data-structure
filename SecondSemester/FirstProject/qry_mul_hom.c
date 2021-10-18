@@ -119,7 +119,7 @@ long action_mul(type_mMlavlitems block_rect){
     return 0;
 }
 
-// Semelhante a hom. Seleciona as mulheres. Pìnta a elipse de rosa.
+// Semelhante a hom. Seleciona as mulheres. Pinta a elipse de rosa.
 void mul(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable properties_table, type_hashtable property_leases, double x, double y, double w, double h){
     QMH_SVGFILE = SVGFILE;
     set_txt_file(TXTFILE);
@@ -135,6 +135,7 @@ void mul(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_ha
 }
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void action_property_hom_(type_hashitem property){
@@ -225,7 +226,6 @@ void action_hom(type_mMlavlitems block_rect){
     type_block block = get_rect_data(block_rect);
     long cep = get_block_formatted_cep(block);
     sprintf(QMH_cep, "%s%c", get_block_cep(block), '\0');
-
 
     void(*action_property_ptr)(type_property);
     action_property_ptr = action_property_hom_;

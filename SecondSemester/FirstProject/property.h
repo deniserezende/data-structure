@@ -13,7 +13,6 @@
 typedef void* type_property;
 typedef void* type_person_copy;
 
-
 type_property new_property(char cep[], char cardinal_direction, int house_number, char add_address_data[]);
 
 int get_property_house_number(type_property property);

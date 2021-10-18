@@ -14,15 +14,12 @@ typedef void* type_dot;
 typedef void* type_gdptrf_onelist(type_list);
 
 type_dot begin_design(const char *filename);
-
-
 void end_design(type_dot file);
 
 void appear_node_in_tree_design(type_dot file);
 void hide_node_in_tree_design(type_dot file);
 
 void add_root_in_tree_design(char* root, type_dot file);
-
 void add_tree_element(char* parent, char* child_left, char* child_right, type_dot file);
 
 void add_child_in_tree_design(char* child, type_dot file);

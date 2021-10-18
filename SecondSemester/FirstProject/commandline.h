@@ -1,5 +1,5 @@
 //
-//  commandline.h -> interprets the commandline set for the second project of Data Structure
+//  commandline.h -> interprets the commandline set for the first project of Data Structure II
 //  
 //
 //  Created by Denise F. de Rezende on 04/06/21.

@@ -23,14 +23,14 @@ person.o: person.h string_editing.h
 property.o: property.h string_editing.h
 block.o: block.h string_editing.h
 string_editing.o : string_editing.h
-output_svg.o : SVG.h hash_table.h rectangle.h block.h property.h person.h mM_avl_tree_wlist.h
+output_svg.o : SVG.h hash_table.h mM_avl_tree_wlist.h rectangle.h block.h property.h person.h 
 SVG.o : SVG.h	
 TXT.o : TXT.h
 qry_del_m_dm_mud.o : qry_del_m_dm_mud.h hash_table.h rectangle.h block.h property.h person.h _auxiliary_functions.h SVG.h TXT.h
 qry_dmpt_catac.o  : qry_dmpt_catac.h hash_table.h rectangle.h block.h property.h person.h _auxiliary_functions.h SVG.h TXT.h graphviz_draw.h
 qry_property_lease.o : qry_property_lease.h hash_table.h mM_avl_tree_wlist.h rectangle.h block.h property.h person.h _auxiliary_functions.h TXT.h SVG.h
-_auxiliary_functions.o : _auxiliary_functions.h hash_table.h mM_avl_tree_wlist.h rectangle.h block.h property.h person.h TXT.h
 qry_mul_hom.o : qry_mul_hom.h hash_table.h mM_avl_tree_wlist.h block.h property.h person.h _auxiliary_functions.h SVG.h TXT.h
+_auxiliary_functions.o : _auxiliary_functions.h hash_table.h mM_avl_tree_wlist.h rectangle.h block.h property.h person.h TXT.h
 graphviz_draw.o : graphviz_draw.h list.h
 
 $(LINK_TARGET): $(OBJECTS) 
@@ -56,5 +56,3 @@ clean:
 	touch $(REBUILDABLES)
 	rm $(REBUILDABLES)
 	echo done cleaning
-
-

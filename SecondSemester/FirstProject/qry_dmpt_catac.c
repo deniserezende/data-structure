@@ -12,6 +12,7 @@ type_mMlavltree QDC_blocks_avl;
 double QDC_x1, QDC_y1, QDC_h, QDC_w;
 char QDC_ID[40];
 type_list QDC_blocks_to_delete;
+type_list QDC_list;
 
 void deallocate_property_catac_(type_hashitem property){
     type_person owner = get_property_owner(property);
@@ -56,7 +57,6 @@ void deallocate_property_lease_catac_(type_hashitem property_lease){
 void _catac_svg(type_mMlavlitems block_rect){
     insert_rectangle_with_different_opacity_in_svg(QDC_SVGFILE, get_rect_x(block_rect), get_rect_y(block_rect), get_rect_width(block_rect), get_rect_height(block_rect), "#AB37C8", "#AA0044", 0.5, 2);
 }
-
 
 void action_catac(type_mMlavlitems block_rect){
     type_block block = get_rect_data(block_rect);
@@ -147,17 +147,9 @@ type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks
 }
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-type_list QDC_list;
 char* get_info_for_dot_catac(type_list list){
     char* string_final = malloc(sizeof(char) * 200);
     char* string_of_ceps = malloc(sizeof(char) * 120);

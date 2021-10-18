@@ -26,8 +26,6 @@ typedef struct person{
     int own_properties;
     int amount_of_owned_properties;
     type_property_copy *properties_owned;
-    // char cep[40], cardinal_direction, add_address_data[40];
-    // int house_number;
 }PERSON;
 
 

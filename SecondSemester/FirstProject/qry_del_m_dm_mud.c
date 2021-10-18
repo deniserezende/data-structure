@@ -7,7 +7,6 @@ type_svg QDMDM_SVGFILE;
 type_txt QDMDM_TXTFILE;
 double QDMDM_VIEWBOX[4];
 
-
 void _del_insert_svg(type_rect block_rect){
     type_block block_data = get_rect_data(block_rect);
     double x = get_rect_x(block_rect);
@@ -49,7 +48,6 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
         return blocks_avl;
     }
     blocks_avl = delete_item_in_mMl_avl_tree(blocks_avl, block_rect, (void*)compare_rectangles_by_x_coordinate, (void*)compare_rect_blocks_cep);
-
 
     _del_insert_svg(block_rect);
     _report_block_txt_(block_rect);
@@ -95,11 +93,11 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
         set_id(block_cep); // from _auxiliary_function.h
         property_lease = delete_item_in_hash_table(property_leases, formatted_cep, (void*)get_property_cep_key, (void*)verify_property_leases_ptr);
     }
-
     return blocks_avl;
 }
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 long action_m_(type_property property){
@@ -131,6 +129,7 @@ void m_(type_txt TXTFILE, type_hashtable blocks_table, type_hashtable properties
 }
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void _dm_terminal(type_person person){
@@ -190,7 +189,6 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
 
     insert_line_in_svg(QDMDM_SVGFILE, x+shift_amount_x, y+shift_amount_y, x+shift_amount_x, QDMDM_VIEWBOX[1] - h/2, color_line, 2);
     
-    //nome e endereço
     char* person_cpf = get_person_cpf(person);
     char* person_fullname = get_person_full_name(person);
     char* property_cep = get_property_cep(property);
@@ -217,8 +215,8 @@ void _dm_txt(type_person person){
         _report_property_lease_txt_(rented_property);
         insert_string_in_txt(QDMDM_TXTFILE, "Moradia é alugada.");
     }
-
 }
+
 // Imprime todos os dados do morador identificado pelo cpf.
 // TXT: dados pessoais, seu endereço e se moradia é alugada.
 // SVG: colocar uma linha vertical do endereço do morador até a margem superior do mapa. 
@@ -253,8 +251,7 @@ void dm_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 }
 
 
-
-
+// ------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void _mud_txt(type_person person, type_property old_property, type_property new_property){

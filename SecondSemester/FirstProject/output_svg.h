@@ -1,5 +1,5 @@
 //
-//  output_svg.h -> Used for the second project of Data Structure
+//  output_svg.h -> Used for the first project of Data Structure II
 //  
 //
 //  Created by Denise F. de Rezende on 18/09/21.
@@ -15,8 +15,6 @@
 #include "block.h"
 #include "property.h"
 #include "person.h"
-
-
 
 // Insert blocks in svg
 void insert_blocks_in_svg(type_svg svgfile, type_mMlavltree blocks);

@@ -1,5 +1,5 @@
 //
-//  pm_operations.h -> interprets the pmfile of the second project of Data Structure
+//  pm_operations.h -> interprets the pmfile of the first project of Data Structure II
 //  
 //
 //  Created by Denise F. de Rezende on 12/09/21.

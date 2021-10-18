@@ -34,7 +34,6 @@ void set_size_for_strings(int size){
     GD_size = size;
 }
 
-
 void appear_node_in_tree_design(type_dot file){
     FILE *dot_file = file;
     char *node = " node[shape=ellipse, style=\"\"]";
@@ -92,7 +91,6 @@ void close_child(type_dot file){
     fprintf(dot_file, "%s", string);
 }
 
-
 void add_empty_child_in_tree_design(type_dot file){
     FILE *dot_file = file;
     char string[100];
@@ -103,6 +101,7 @@ void add_empty_child_in_tree_design(type_dot file){
     //sprintf(string," , ");
     fprintf(dot_file, "%s", string);
 }
+
 // get_info MUST RETURN A CHAR*
 void insert_blocks_rects_parent_list_of_not_null_child(type_dot file, type_list parent, type_gdptrf_onelist get_info){
     FILE *dot_file = file;
@@ -140,7 +139,6 @@ void insert_blocks_rects_parent_list_of_null_child(type_dot file, type_list pare
 
     free(idtmp);   
 }
-
 
 void insert_blocks_rects_child_list(type_dot file, type_list child, type_gdptrf_onelist get_info){
     FILE *dot_file = file;

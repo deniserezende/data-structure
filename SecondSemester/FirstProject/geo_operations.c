@@ -25,10 +25,10 @@ type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, t
         return NULL;
     }
 
-    //AQUIDE rever valores
+    // Random big values!
     GO_minx = 10000000;
-    GO_maxx = 0;
     GO_miny = 10000000;
+    GO_maxx = 0;
     GO_maxy = 0;
 
     char *line = malloc(80 * sizeof(char));
@@ -89,6 +89,7 @@ type_mMlavltree get_geo_input(char *filename, type_mMlavltree cityblocks_tree, t
     free(cep);
     free(stroke_color);
     free(fill_color);
+    // setting view_box so that the user can access values from main
     view_box[0] = GO_minx;
     view_box[1] = GO_miny;
     view_box[2] = GO_maxx;

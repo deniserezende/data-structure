@@ -11,7 +11,6 @@
 #include "output_svg.h"
 
 
-
 // GLOBAL VARIABLES
 type_svg CRV_svgfile;
 type_hashtable CRV_blocks;
@@ -60,8 +59,6 @@ void insert_blocks_in_svg(type_svg svgfile, type_mMlavltree blocks){
     traverse_mMlavltree_with_conditional_action(blocks, (void*)ptr_traverse, (void*)ptr_true, (void*)ptr_insert);
     //traverse_full_hash_table_with_conditional_action(blocks, (void*)ptr_true, (void*)ptr_insert);
 }
-
-
 
 long check_cep_aux(type_rect block){ 
     char* cep_found = get_block_cep(block);
@@ -117,7 +114,6 @@ void insert_people_in_svg(type_svg svgfile, type_hashtable people, type_hashtabl
 
     traverse_full_hash_table_with_conditional_action(blocks, (void*)ptr_true, (void*)ptr_insert);
 }
-
 
 void insert_properties_in_svg_aux(type_property property){
     int property_numb = get_property_number(property);

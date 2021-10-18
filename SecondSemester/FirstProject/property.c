@@ -155,19 +155,7 @@ char* get_property_additional_address_data(type_property property){
     return prop->add_address_data;
 }
 
-
-
-
 void remove_property(type_property property){
     PROPERTY *p = property;
     free(p);
 }
-
-
-// typedef struct base36_dictionary{
-//     char const A=10, B=11, C=12, D=13, E=14, F=15, G=16, H=17, I=18, J=19, K=20;
-//     char const L=21, M=22, N=23, O=24, P=25, Q=26, R=27, S=28, T=29, U=30, V=31, W=32, X=33, Y=34, Z=35; 
-//     char vector_base36[1][36] = {'0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35'}
-//     //int vector_base36[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35}
-
-// }DICTIONARY;

@@ -14,7 +14,6 @@ typedef struct block{
     char cep[40];
     long formatted_cep;
     long active;
-    //double x, y, w, h; // retangulo ponho aqui ou em outro lugar?
 }BLOCK;
 
 type_block new_block(char cep[]){
@@ -40,42 +39,6 @@ long compare_blocks_cep(type_block block1, type_block block2){
     BLOCK *blocky2 = block2;
     return(strcmp(blocky1->cep, blocky2->cep));
 }
-
-// void change_block_active(type_block block, int active){
-//     BLOCK *blocky = block;
-//     blocky->active = active;
-// }
-
-// long is_block_active(type_block block){
-//     BLOCK *blocky = block;
-//     return blocky->active;
-// }
-
-
-// int is_block_active(type_block block){
-//     BLOCK *b = block;
-//     return(b->active);
-// }
-
-// void change_if_block_is_active(type_block block, int active){
-//     BLOCK *b = block;
-//     b->active = active;
-// }
-
-// int get_amount_of_people_inside_block(type_block block){
-//     BLOCK *b = block;
-//     return(b->amount_of_people_inside);
-// }
-
-// void change_amount_of_people_inside_block(type_block block, int new_amount){
-//     BLOCK *b = block;
-//     b->amount_of_people_inside = new_amount;
-// }
-
-// void increase_amount_of_people_inside_block(type_block block, int amount){
-//     BLOCK *b = block;
-//     b->amount_of_people_inside = b->amount_of_people_inside + amount;
-// }
 
 void remove_block(type_block block){
     BLOCK *b = block;

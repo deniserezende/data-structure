@@ -31,6 +31,8 @@ long does_person_own_properties(type_person person);
 
 long does_person_rents_properties(type_person person);
 
+// if you removed the last property from person than you have to set owned properties to person again
+// you can check this using the function long does_person_own_properties(type_person person);
 type_property_copy remove_owned_property_from_person(type_person person, int index);
 
 type_property_copy remove_rented_property_from_person(type_person person, int index);

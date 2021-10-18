@@ -130,6 +130,11 @@ void insert_dasharray_rect_in_svg(type_svg file, double x, double y, double widt
 	fprintf(fsf->fsvg,"\t<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" stroke=\"%s\"  fill=\"%s\"  stroke-width=\"%f\" stroke-dasharray=\"%f\" />\n", x, y, width, height, stroke, fill, stroke_width, stroke_dash);
 }
 
+void insert_dasharray_rect_with_different_opacity_in_svg(type_svg file, double x, double y, double width, double height, char *fill, char *stroke, double stroke_width, double stroke_dash, double opacity){
+	STRUCTSVG *fsf = file; 
+	fprintf(fsf->fsvg,"\t<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" stroke=\"%s\"  fill=\"%s\"  stroke-width=\"%f\" fill-opacity=\"%f\" stroke-dasharray=\"%f\" />\n", x, y, width, height, stroke, fill, stroke_width, opacity, stroke_dash);
+}
+
 void insert_circle_in_svg(type_svg file, double x, double y, double radius, char *fill, char *stroke, double stroke_width){
 	STRUCTSVG *fsf = file; 
 	fprintf(fsf->fsvg,"\t<circle cx=\"%f\" cy=\"%f\" r=\"%f\" stroke=\"%s\"  fill=\"%s\"  stroke-width=\"%f\"/>\n", x, y, radius, stroke, fill, stroke_width);

@@ -1,77 +1,14 @@
 #include "qry_del_m_dm_mud.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // AQUIDE fazer uma lista com tudo que vai no svg?
 
 
 type_svg QDMDM_SVGFILE;
 type_txt QDMDM_TXTFILE;
-#define QDMDM_SIZE_DOUBLESTR 10
-
-
-void _QDMDM_report_property_txt_(type_property property){
-    char *cardinal_direction = malloc(sizeof(char)*3);
-    sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, get_property_cep(property));
-    insert_string_in_txt(QDMDM_TXTFILE, cardinal_direction);
-    char *number = malloc(sizeof(char) * 7);
-    sprintf(number, "%d%c", get_property_house_number(property), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, number);
-    insert_string_in_txt(QDMDM_TXTFILE, get_property_additional_address_data(property));
-
-    free(cardinal_direction);
-    free(number);
-}
-
-void _QDMDM_report_property_lease_txt_(type_property property){
-    insert_string_in_txt(QDMDM_TXTFILE, get_property_lease_id(property));
-    _QDMDM_report_property_txt_(property);
-    
-    char *area = malloc(sizeof(char) * QDMDM_SIZE_DOUBLESTR);
-    sprintf(area, "%.2lf%c", get_property_area(property), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, area);
-
-    char *monthly_rent = malloc(sizeof(char) * QDMDM_SIZE_DOUBLESTR);
-    sprintf(monthly_rent, "%.2lf%c", get_property_monthly_rent(property), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, monthly_rent);
-
-    free(area);
-    free(monthly_rent);
-}
-
-void _QDMDM_report_person_txt_(type_person person){
-    char *gender = malloc(sizeof(char)*3);
-    char *name = get_person_full_name(person);
-    sprintf(gender, "%c%c", get_person_gender(person), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, get_person_cpf(person));
-    insert_string_in_txt(QDMDM_TXTFILE, name);
-    insert_string_in_txt(QDMDM_TXTFILE, gender);
-    insert_string_in_txt(QDMDM_TXTFILE, get_person_birthday(person));
-    free(name);
-    free(gender);
-}
-
-void _QDMDM_report_block_txt_(type_rect block_rect){
-    type_block block_data = get_rect_data(block_rect);
-    insert_string_in_txt(QDMDM_TXTFILE, get_block_cep(block_data));
-
-    char *x_string = malloc(sizeof(char) * QDMDM_SIZE_DOUBLESTR);
-    sprintf(x_string, "%.2lf%c", get_rect_x(block_rect), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, x_string);
-
-    char *y_string = malloc(sizeof(char) * QDMDM_SIZE_DOUBLESTR);
-    sprintf(y_string, "%.2lf%c", get_rect_y(block_rect), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, y_string);
-
-    char *w_string = malloc(sizeof(char) * QDMDM_SIZE_DOUBLESTR);
-    sprintf(w_string, "%.2lf%c", get_rect_width(block_rect), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, w_string);
-
-    char *h_string = malloc(sizeof(char) * QDMDM_SIZE_DOUBLESTR);
-    sprintf(h_string, "%.2lf%c", get_rect_height(block_rect), '\0');
-    insert_string_in_txt(QDMDM_TXTFILE, h_string);
-}
+double QDMDM_VIEWBOX[4];
 
 
 void _del_insert_svg(type_rect block_rect){
@@ -83,20 +20,24 @@ void _del_insert_svg(type_rect block_rect){
     char color[8];
     sprintf(color, "black%c", '\0');
 
-    insert_rectangle_in_svg(QDMDM_SVGFILE, x, y, w, h, get_rect_fill_color(block_rect), get_rect_stroke_color(block_rect), 2);
-    // AQUIDE depois ver bonitinho que height colocar ao invés de h*2
-    insert_line_in_svg(QDMDM_SVGFILE, (double)(x+w)/2, (double)(y+h)/2, (double)(x+w)/2, (double)h*2, color, 2);
-    insert_text_in_svg(QDMDM_SVGFILE, (double)(x+w)/2, (double)h*2, color, get_block_cep(block_data), 20);
+    // insert_rectangle_in_svg(QDMDM_SVGFILE, x, y, w, h, get_rect_fill_color(block_rect), get_rect_stroke_color(block_rect), 2);
+    insert_line_in_svg(QDMDM_SVGFILE, (double)x+w/2, (double)y+h/2, (double)x+w/2, (double)QDMDM_VIEWBOX[1] - h/2, color, 2);
+    insert_text_in_svg(QDMDM_SVGFILE, (double)x+w/2, (double)QDMDM_VIEWBOX[1] - h/2, color, get_block_cep(block_data), 10);
 }
 
 // Remove a quadra cep, os moradores que nela residirem e as ofertas de locação que nela existirem.
 // No arquivo .svg: quadra deve ser colocada uma linha vertical com início no centro do elemento 
 // removido até o topo do mapa. Também colocar (no topo) ao lado da linha vertical o cep.
 // No arquivo .txt: reportar todos os dados relacionados aos elementos removidos.
-type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable property_leases, char block_cep[]){
+type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable property_leases, char block_cep[], double viewbox[4]){
     
     QDMDM_SVGFILE = SVGFILE;
-    QDMDM_TXTFILE = TXTFILE;
+    set_txt_file(TXTFILE);
+
+    QDMDM_VIEWBOX[0] = viewbox[0];
+    QDMDM_VIEWBOX[1] = viewbox[1];
+    QDMDM_VIEWBOX[2] = viewbox[2];
+    QDMDM_VIEWBOX[3] = viewbox[3];
 
     // Getting cep key to find element in hashtable
     long formatted_cep = format_cep_from_base36_to_base10(block_cep);
@@ -114,7 +55,7 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
 
 
     _del_insert_svg(block_rect);
-    _QDMDM_report_block_txt_(block_rect);
+    _report_block_txt_(block_rect);
     type_block block_data = get_rect_data(block_rect);
     remove_block(block_data);
     destroi_rectangle(block_rect);
@@ -122,10 +63,10 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
     // DELETING PROPERTIES AND THEIR OWNERS
     type_hashitem property = delete_item_in_hash_table(properties_table, formatted_cep, (void*)get_property_cep_key, (void*)verify_property_found);
     while(property != NULL){
-        _QDMDM_report_property_txt_(property);
+        _report_property_txt_(property);
         type_person owner = get_property_owner(property);
         if(owner != NULL){
-            _QDMDM_report_person_txt_(owner);
+            _report_person_txt_(owner);
             remove_owned_property_from_person(owner, 0);
             // set_id(get_person_cpf(owner));
             // type_hashitem del_owner = delete_item_in_hash_table(people_table, get_person_formatted_cpf(owner), (void*)get_person_formatted_cpf, (void*)verify_person_ptr);
@@ -144,13 +85,13 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
 
     type_hashitem property_lease = delete_item_in_hash_table(property_leases, formatted_cep, (void*)get_property_cep_key, (void*)verify_property_leases_ptr);
     while(property_lease != NULL){
-        _QDMDM_report_property_lease_txt_(property_lease);
+        _report_property_lease_txt_(property_lease);
         int rent_status = get_property_rent_status(property_lease);
         // If it's not for rent then there is a tenant
         if(rent_status == 0){
             type_person tenant = get_property_tenant(property_lease);
             if(tenant != NULL){
-                _QDMDM_report_person_txt_(tenant);
+                _report_person_txt_(tenant);
                 remove_rented_property_from_person(tenant, 0);
 
                 // set_id(get_person_cpf(tenant));
@@ -175,8 +116,8 @@ type_mMlavltree del(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_a
 
 long action_m_(type_property property){
     type_person owner = get_property_owner(property);
-    _QDMDM_report_person_txt_(owner);
-    _QDMDM_report_property_txt_(property);
+    _report_person_txt_(owner);
+    _report_property_txt_(property);
     return 0;
 }
 
@@ -184,7 +125,7 @@ long action_m_(type_property property){
 // TXT: listar todos os dados dos moradores(nome, endereço,...). 
 // Reporta mensagem de erro se quadra não existir.
 void m_(type_txt TXTFILE, type_hashtable blocks_table, type_hashtable properties_table, char block_cep[]){
-    QDMDM_TXTFILE = TXTFILE;
+    set_txt_file(TXTFILE);
     
     long formatted_cep = format_cep_from_base36_to_base10(block_cep);
     set_id(block_cep);
@@ -220,9 +161,11 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
     else if(get_person_properties_leases(person)) property = get_person_property_lease(person, 0);
     else return;
 
+    set_id(get_property_cep(property));
     type_block block = lookup_item_in_hash_table(blocks_table, get_property_cep_key(property), (void*)get_key_from_block, (void*)verify_block_found);
     if(block == NULL) return;
-
+    char color_black[8];
+    sprintf(color_black, "black%c", '\0');
     char color[8];
     sprintf(color, "blue%c", '\0');
 
@@ -232,21 +175,34 @@ void _dm_svg(type_person person, type_hashtable blocks_table){
 
     int house_number = get_property_house_number(property);
 
-    insert_line_in_svg(QDMDM_SVGFILE, x+house_number, y+house_number, x+house_number, h*2, color, 2);
+    insert_line_in_svg(QDMDM_SVGFILE, x+house_number, y+house_number, x+house_number, QDMDM_VIEWBOX[1] - h/2, color, 2);
+    
+    //nome e endereço
+    char* person_cpf = get_person_cpf(person);
+    char* person_fullname = get_person_full_name(person);
+    char* property_cep = get_property_cep(property);
+    int property_number = get_property_number(property);
+    char* property_add = get_property_additional_address_data(property);
+    
+    char *string = malloc(sizeof(char) * (strlen(person_cpf) + strlen(person_fullname) + strlen(property_cep) + strlen(property_add) + 15));
+    
+    sprintf(string, "%s %s %s %d %s%c", person_cpf, person_fullname, property_cep, property_number, property_add, '\0');
+    insert_text_in_svg(QDMDM_SVGFILE, x+house_number, QDMDM_VIEWBOX[1] - h/2, color_black, string, 5);
+    free(person_fullname);
 }
 
 void _dm_txt(type_person person){
-    _QDMDM_report_person_txt_(person);
+    _report_person_txt_(person);
 
     if(does_person_own_properties(person)){
         type_property owned_property = get_person_owned_property(person, 0);
         insert_string_in_txt(QDMDM_TXTFILE, "Moradia não é alugada");
-        _QDMDM_report_property_txt_(owned_property);
+        _report_property_txt_(owned_property);
     }
     if(does_person_rents_properties(person)){
         type_property rented_property = get_person_property_lease(person, 0);
         insert_string_in_txt(QDMDM_TXTFILE, "Moradia é alugada");
-        _QDMDM_report_property_lease_txt_(rented_property);
+        _report_property_lease_txt_(rented_property);
     }
 
 }
@@ -254,10 +210,15 @@ void _dm_txt(type_person person){
 // TXT: dados pessoais, seu endereço e se moradia é alugada.
 // SVG: colocar uma linha vertical do endereço do morador até a margem superior do mapa. 
 // Anotar ao lado da linha o cpf, nome e endereço do morador
-void dm_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_hashtable people_table, char person_cpf[]){
+void dm_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_hashtable people_table, char person_cpf[], double viewbox[4]){
     QDMDM_SVGFILE = SVGFILE;
     QDMDM_TXTFILE = TXTFILE;
+    set_txt_file(TXTFILE);
 
+    QDMDM_VIEWBOX[0] = viewbox[0];
+    QDMDM_VIEWBOX[1] = viewbox[1];
+    QDMDM_VIEWBOX[2] = viewbox[2];
+    QDMDM_VIEWBOX[3] = viewbox[3];
 
     long cpf = format_cpf(person_cpf);
     set_id(person_cpf);
@@ -281,13 +242,13 @@ void dm_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_h
 
 
 void _mud_txt(type_person person, type_property old_property, type_property new_property){
-    _QDMDM_report_person_txt_(person);
+    _report_person_txt_(person);
 
     insert_string_in_txt(QDMDM_TXTFILE, "Endereço antigo:");
-    _QDMDM_report_property_txt_(old_property);
+    _report_property_txt_(old_property);
 
     insert_string_in_txt(QDMDM_TXTFILE, "Endereço novo:");
-    _QDMDM_report_property_txt_(new_property);
+    _report_property_txt_(new_property);
 }
 
 
@@ -326,6 +287,8 @@ void _mud_svg(type_property old_property, type_property new_property, type_rect 
 void mud(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_table, type_hashtable people_table, type_hashtable properties_table, char person_cpf[], char property_cep[], char cardinal_direction, int house_number, char addicional_data[]){
     QDMDM_SVGFILE = SVGFILE;
     QDMDM_TXTFILE = TXTFILE;
+    set_txt_file(TXTFILE);
+
     long cpf = format_cpf(person_cpf);
     set_id(person_cpf);
 

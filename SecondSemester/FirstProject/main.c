@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
         insert_comment_in_svg(svgfile2, my_name);
         
         // Calling function to deal with qryfile
-        cityblocks_avltree = get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable);
+        cityblocks_avltree = get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, svgfile2, cityblocks_avltree, cityblocks_hashtable, properties_hashtable, people_hashtable, property_leases_hashtable, viewbox);
         
         // Ending output files
         end_svg_file(svgfile2);

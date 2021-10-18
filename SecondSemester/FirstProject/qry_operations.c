@@ -24,7 +24,7 @@ char *get_dot_fullpath(char *dot_filename_without_extension, char *output_path, 
     return dot_fullpath;
 }
 
-type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *output_path, char *geo_filename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases){
+type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *output_path, char *geo_filename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable people_table, type_hashtable properties_leases, double viewbox[4]){
     FILE *qryfile = fopen(qryfilename, "r");
     if (qryfile == NULL) {
         return NULL;
@@ -51,7 +51,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
         if(strncmp(line, "del", 3) == 0){
             sscanf(line, "%s %s", helper, cep);
             insert_string_in_txt(txtfile, helper);
-            blocks_avl = del(svg_temp_file, txtfile, blocks_avl, blocks_table, properties_table, people_table, properties_leases, cep);
+            blocks_avl = del(svg_temp_file, txtfile, blocks_avl, blocks_table, properties_table, people_table, properties_leases, cep, viewbox);
         }
         else if(strncmp(line, "m?", 2) == 0){
                 sscanf(line, "%s %s", helper, cep);
@@ -61,7 +61,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
             else if(strncmp(line, "dm?", 3) == 0 || strncmp(line, "fg\0", 3) == 0){
                     sscanf(line, "%s %s", helper, cpf);
                     insert_string_in_txt(txtfile, helper);
-                    dm_(svg_temp_file, txtfile, blocks_table, people_table, cpf);
+                    dm_(svg_temp_file, txtfile, blocks_table, people_table, cpf, viewbox);
                     
                 }
                 else if(strncmp(line, "mud", 3) == 0){
@@ -85,7 +85,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                                 else if(strncmp(line, "loc ", 4) == 0){
                                     sscanf(line, "%s %s %s", helper, property_lease_id, cpf);
                                     insert_string_in_txt(txtfile, helper);
-                                    loc(svg_temp_file, txtfile, blocks_table, properties_leases, people_table, property_lease_id, cpf);
+                                    loc(svg_temp_file, txtfile, blocks_table, properties_leases, people_table, property_lease_id, cpf, viewbox);
                     
                                     }
                                     else if(strncmp(line, "loc?", 4) == 0){
@@ -97,19 +97,19 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                                         else if(strncmp(line, "dloc", 4) == 0){
                                             sscanf(line, "%s %s", helper, property_lease_id);
                                             insert_string_in_txt(txtfile, helper);
-                                            dloc(txtfile, blocks_table, properties_leases, property_lease_id);
+                                            dloc(txtfile, blocks_table, properties_leases, property_lease_id, viewbox);
                             
                                             }
                                             else if(strncmp(line, "hom", 3) == 0){
                                                 sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                 insert_string_in_txt(txtfile, helper);
-                                                hom(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, people_table, x, y, w, h);
+                                                hom(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, x, y, w, h);
                                 
                                                 }
                                                 else if(strncmp(line, "mul", 3) == 0){
                                                     sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                                                     insert_string_in_txt(txtfile, helper);
-                                                    mul(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, people_table, x, y, w, h);
+                                                    mul(svg_temp_file, txtfile, blocks_avl, properties_table, properties_leases, x, y, w, h);
                                                     
                                     
                                                     }

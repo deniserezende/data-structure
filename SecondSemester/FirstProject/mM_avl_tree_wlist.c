@@ -383,75 +383,117 @@ type_mMlavltree delete_item_in_mMl_avl_tree(type_mMlavltree tree, type_mMlavlite
 
 
 
-
-// protótipos
-void traverse_mMlavltree_with_conditional_action(type_mMlavltree tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
-void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree avltree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
-void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
-
-
-
-
-// If condition is met, and deletion is set to 1 deletion has to take place
-// otherwise loop
+/*NEW VERSION*/ 
+void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree tree, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
 void traverse_mMlavltree_with_conditional_action(type_mMlavltree tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
-    //if(empty_mMl_avl_tree(tree)) return;
-    traverse_mMlavltree_with_conditional_action_avlaux(tree, traverse_side, condition, action);
-}
+    NODE *avltree = (NODE*) tree;
+    if(avltree == NULL) return;
+    else{
+        set_current_to_first_item_in_list(avltree->list);
+        type_litems current_item = get_current_item_in_list(avltree->list);
 
-void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree avltree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
-    NODE *tree = (NODE*) avltree;
-    int done;
-    // Base case:
-    if(tree == NULL) return;
+        set_current_to_first_item_in_list((avltree->lmin)->list);
+        type_litems lmin_item = get_current_item_in_list((avltree->lmin)->list);
 
-    //if(tree != NULL){
-        set_current_to_first_item_in_list(tree->list);
-        // type_litems min_item = get_current_item_in_list(tree->list);
-        do{
-            done = is_current_last_item_in_list(tree->list);
-            type_litems item = get_current_item_in_list(tree->list);
-            if((long)condition(item)){
-                action(item);
-            }
-            move_current_forward_in_list(tree->list);
-        }while(!done);
+        set_current_to_first_item_in_list((avltree->lmax)->list);
+        type_litems lmax_item = get_current_item_in_list((avltree->lmax)->list);
 
-        if(tree != NULL) continue_traverse_avltaux(tree, traverse_side, condition, action);
-//        avltree = tree;
-        return;
-    //}
-}
+        set_current_to_first_item_in_list((avltree->rmin)->list);
+        type_litems rmin_item = get_current_item_in_list((avltree->rmin)->list);
 
-void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
-    set_current_to_first_item_in_list(tree->list);
-    type_litems current_item = get_current_item_in_list(tree->list);
+        set_current_to_first_item_in_list((avltree->rmax)->list);
+        type_litems rmax_item = get_current_item_in_list((avltree->rmax)->list);
 
-    set_current_to_first_item_in_list((tree->lmin)->list);
-    type_litems lmin_item = get_current_item_in_list((tree->lmin)->list);
+        long side = (long)traverse_side(current_item, lmin_item, lmax_item, rmin_item, rmax_item);
 
-    set_current_to_first_item_in_list((tree->lmax)->list);
-    type_litems lmax_item = get_current_item_in_list((tree->lmax)->list);
-
-    set_current_to_first_item_in_list((tree->rmin)->list);
-    type_litems rmin_item = get_current_item_in_list((tree->rmin)->list);
-
-    set_current_to_first_item_in_list((tree->rmax)->list);
-    type_litems rmax_item = get_current_item_in_list((tree->rmax)->list);
-
-    long side = (long)traverse_side(current_item, lmin_item, lmax_item, rmin_item, rmax_item);
-
-    if(side == 01){ //right
-        if(tree->right != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->right, traverse_side, condition, action);
+        if(side == 10 || side == 11) traverse_mMlavltree_with_conditional_action(avltree->left, traverse_side, condition, action);
+        if(side == 01 || side == 11) traverse_mMlavltree_with_conditional_action(avltree->right, traverse_side, condition, action);
+        
+        traverse_mMlavltree_with_conditional_action_avlaux(avltree, condition, action);
     }
-    else if(side == 10){ //left
-            if(tree->left != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->left, traverse_side, condition, action);
-        }
-        else if(side == 11){ //both
-                if(tree->left != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->left, traverse_side, condition, action);
-                if(tree->right != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->right, traverse_side, condition, action);
-            }   
 }
+
+void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree tree, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
+    NODE *avltree = (NODE*) tree;
+    int done;
+    set_current_to_first_item_in_list(avltree->list);
+    do{
+        done = is_current_last_item_in_list(avltree->list);
+        type_litems item = get_current_item_in_list(avltree->list);
+        if((long)condition(item)){
+            action(item);
+        }
+        move_current_forward_in_list(avltree->list);
+    }while(!done);
+}
+/*NEW END*/ 
+
+
+// // protótipos
+// void traverse_mMlavltree_with_conditional_action(type_mMlavltree tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
+// void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree avltree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
+// void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action);
+
+// // If condition is met, and deletion is set to 1 deletion has to take place
+// // otherwise loop
+// void traverse_mMlavltree_with_conditional_action(type_mMlavltree tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
+//     //if(empty_mMl_avl_tree(tree)) return;
+//     traverse_mMlavltree_with_conditional_action_avlaux(tree, traverse_side, condition, action);
+// }
+
+// void traverse_mMlavltree_with_conditional_action_avlaux(type_mMlavltree avltree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
+//     NODE *tree = (NODE*) avltree;
+//     int done;
+//     // Base case:
+//     if(tree == NULL) return;
+
+//     //if(tree != NULL){
+//         set_current_to_first_item_in_list(tree->list);
+//         // type_litems min_item = get_current_item_in_list(tree->list);
+//         do{
+//             done = is_current_last_item_in_list(tree->list);
+//             type_litems item = get_current_item_in_list(tree->list);
+//             if((long)condition(item)){
+//                 action(item);
+//             }
+//             move_current_forward_in_list(tree->list);
+//         }while(!done);
+
+//         if(tree != NULL) continue_traverse_avltaux(tree, traverse_side, condition, action);
+// //        avltree = tree;
+//         return;
+//     //}
+// }
+
+// void continue_traverse_avltaux(NODE *tree, type_mMlavlptrf_fiveitems traverse_side, type_mMlavlptrf_oneitem condition, type_mMlavlptrf_oneitem action){
+//     set_current_to_first_item_in_list(tree->list);
+//     type_litems current_item = get_current_item_in_list(tree->list);
+
+//     set_current_to_first_item_in_list((tree->lmin)->list);
+//     type_litems lmin_item = get_current_item_in_list((tree->lmin)->list);
+
+//     set_current_to_first_item_in_list((tree->lmax)->list);
+//     type_litems lmax_item = get_current_item_in_list((tree->lmax)->list);
+
+//     set_current_to_first_item_in_list((tree->rmin)->list);
+//     type_litems rmin_item = get_current_item_in_list((tree->rmin)->list);
+
+//     set_current_to_first_item_in_list((tree->rmax)->list);
+//     type_litems rmax_item = get_current_item_in_list((tree->rmax)->list);
+
+//     long side = (long)traverse_side(current_item, lmin_item, lmax_item, rmin_item, rmax_item);
+
+//     if(side == 01){ //right
+//         if(tree->right != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->right, traverse_side, condition, action);
+//     }
+//     else if(side == 10){ //left
+//             if(tree->left != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->left, traverse_side, condition, action);
+//         }
+//         else if(side == 11){ //both
+//                 if(tree->left != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->left, traverse_side, condition, action);
+//                 if(tree->right != NULL) traverse_mMlavltree_with_conditional_action_avlaux(tree->right, traverse_side, condition, action);
+//             }   
+// }
 
 // A debug function AQUIDE
 void preorder_debug_fuction_mMlavltree(type_mMlavltree tree, type_mMlavlptrf_oneitem print_item){

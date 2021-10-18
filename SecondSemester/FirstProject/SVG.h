@@ -71,6 +71,10 @@ void insert_dasharray_rect_based_in_opposite_corners_in_svg(type_svg file, doubl
 void insert_dasharray_rect_in_svg(type_svg file, double x, double y, double width, double height, char *fill, char *stroke, double stroke_width, double stroke_dash);
 
 // Pre-conditon: The svg file has to have been 'started'.
+// Post-condition: A dashy rectangle has been inserted with the fill opacity specified.
+void insert_dasharray_rect_with_different_opacity_in_svg(type_svg file, double x, double y, double width, double height, char *fill, char *stroke, double stroke_width, double stroke_dash, double opacity);
+
+// Pre-conditon: The svg file has to have been 'started'.
 // Post-condition: A circle has been inserted.
 void insert_circle_in_svg(type_svg file, double x, double y, double radius, char *fill, char *stroke, double stroke_width);
 

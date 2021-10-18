@@ -14,6 +14,7 @@
 #include "block.h"
 #include "property.h"
 #include "person.h"
+#include "TXT.h"
 
 void set_id(char id[]);
 void set_x1_x2_y1_y2(double x1, double x2, double y1, double y2);
@@ -25,5 +26,12 @@ long verify_block_found(type_rect block);
 long verify_property_found(type_property property);
 long verify_person_found(type_person person);
 long verify_property_leases(type_property property);
+long verify_property_leases_by_id(type_property property);
+
+void set_txt_file(type_txt txtfile);
+void _report_property_txt_(type_property property);
+void _report_property_lease_txt_(type_property property);
+void _report_person_txt_(type_person person);
+void _report_block_txt_(type_rect block_rect);
 
 #endif /* _auxiliary_functions_h */

@@ -11,7 +11,6 @@
 #include "property.h"
 
 typedef struct property{
-
     char cep[40];
     char cardinal_direction;
     char add_address_data[40];

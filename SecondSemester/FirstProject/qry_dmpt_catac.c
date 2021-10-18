@@ -13,97 +13,16 @@ double QDC_x1, QDC_y1, QDC_h, QDC_w;
 char QDC_ID[40];
 type_list QDC_blocks_to_delete;
 
-#define QDC_SIZE_DOUBLESTR 10
-
-void _QDC_report_property_txt_(type_property property){
-    char *cardinal_direction = malloc(sizeof(char)*3);
-    sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
-    insert_string_in_txt(QDC_TXTFILE, get_property_cep(property));
-    insert_string_in_txt(QDC_TXTFILE, cardinal_direction);
-    char *number = malloc(sizeof(char) * 7);
-    sprintf(number, "%d%c", get_property_house_number(property), '\0');
-    insert_string_in_txt(QDC_TXTFILE, number);
-    insert_string_in_txt(QDC_TXTFILE, get_property_additional_address_data(property));
-
-    free(cardinal_direction);
-    free(number);
-}
-
-void _QDC_report_property_lease_txt_(type_property property){
-    insert_string_in_txt(QDC_TXTFILE, get_property_lease_id(property));
-    _QDC_report_property_txt_(property);
-    
-    char *area = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
-    sprintf(area, "%.2lf%c", get_property_area(property), '\0');
-    insert_string_in_txt(QDC_TXTFILE, area);
-
-    char *monthly_rent = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
-    sprintf(monthly_rent, "%.2lf%c", get_property_monthly_rent(property), '\0');
-    insert_string_in_txt(QDC_TXTFILE, monthly_rent);
-
-    free(area);
-    free(monthly_rent);
-}
-
-void _QDC_report_person_txt_(type_person person){
-    char *gender = malloc(sizeof(char)*3);
-    char *name = get_person_full_name(person);
-    sprintf(gender, "%c%c", get_person_gender(person), '\0');
-    insert_string_in_txt(QDC_TXTFILE, get_person_cpf(person));
-    insert_string_in_txt(QDC_TXTFILE, name);
-    insert_string_in_txt(QDC_TXTFILE, gender);
-    insert_string_in_txt(QDC_TXTFILE, get_person_birthday(person));
-    free(name);
-    free(gender);
-}
-
-void _QDC_report_block_txt_(type_rect block_rect){
-    type_block block_data = get_rect_data(block_rect);
-    insert_string_in_txt(QDC_TXTFILE, get_block_cep(block_data));
-
-    char *x_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
-    sprintf(x_string, "%.2lf%c", get_rect_x(block_rect), '\0');
-    insert_string_in_txt(QDC_TXTFILE, x_string);
-
-    char *y_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
-    sprintf(y_string, "%.2lf%c", get_rect_y(block_rect), '\0');
-    insert_string_in_txt(QDC_TXTFILE, y_string);
-
-    char *w_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
-    sprintf(w_string, "%.2lf%c", get_rect_width(block_rect), '\0');
-    insert_string_in_txt(QDC_TXTFILE, w_string);
-
-    char *h_string = malloc(sizeof(char) * QDC_SIZE_DOUBLESTR);
-    sprintf(h_string, "%.2lf%c", get_rect_height(block_rect), '\0');
-    insert_string_in_txt(QDC_TXTFILE, h_string);
-}
-
-
-void action_property_catac_(type_hashitem property){
-    type_person owner = get_property_owner(property);
-    if(owner != NULL){
-        _QDC_report_person_txt_(owner);
-        remove_owned_property_from_person(owner, 0);
-        set_id(get_person_cpf(owner));
-        type_hashitem del_owner = delete_item_in_hash_table(QDC_people_table, get_person_formatted_cpf(owner), (void*)get_person_formatted_cpf, (void*)verify_person_found);
-        remove_person(del_owner);
-    }
-    _QDC_report_property_txt_(property);
-    set_id(get_property_cep(property));
-    type_property del_property = delete_item_in_hash_table(QDC_properties_table, get_property_cep_key(property), (void*)get_property_cep_key, (void*)verify_property_found);
-    remove_property(del_property);
-}
-
 void deallocate_property_catac_(type_hashitem property){
     type_person owner = get_property_owner(property);
     if(owner != NULL){
-        _QDC_report_person_txt_(owner);
+        _report_person_txt_(owner);
         remove_owned_property_from_person(owner, 0);
         set_id(get_person_cpf(owner));
         type_hashitem del_owner = delete_item_in_hash_table(QDC_people_table, get_person_formatted_cpf(owner), (void*)get_person_formatted_cpf, (void*)verify_person_found);
         remove_person(del_owner);
     }
-    _QDC_report_property_txt_(property);
+    _report_property_txt_(property);
     set_id(get_property_cep(property));
     remove_property(property);
 }
@@ -115,33 +34,13 @@ long condition_property_lease_catac_(type_property property_lease){
     return 0;
 }
 
-void action_property_lease_catac_(type_hashitem property_lease){
-    int rent_status = get_property_rent_status(property_lease);
-        // If it's not for rent then there is a tenant
-        if(rent_status == 0){
-            type_person tenant = get_property_tenant(property_lease);
-            if(tenant != NULL){
-                _QDC_report_person_txt_(tenant);
-                remove_rented_property_from_person(tenant, 0);
-
-                set_id(get_person_cpf(tenant));
-                type_hashitem del_tenant = delete_item_in_hash_table(QDC_people_table, get_person_formatted_cpf(tenant), (void*)get_person_formatted_cpf, (void*)verify_person_found);
-                remove_person(del_tenant);
-            }
-        }
-    _QDC_report_property_txt_(property_lease);
-    set_id(get_property_cep(property_lease));
-    type_property del_property = delete_item_in_hash_table(QDC_properties_table, get_property_cep_key(property_lease), (void*)get_property_cep_key, (void*)verify_property_leases);
-    remove_property(del_property);
-}
-
 void deallocate_property_lease_catac_(type_hashitem property_lease){
     int rent_status = get_property_rent_status(property_lease);
     // If it's not for rent then there is a tenant
     if(rent_status == 0){
         type_person tenant = get_property_tenant(property_lease);
         if(tenant != NULL){
-            _QDC_report_person_txt_(tenant);
+            _report_person_txt_(tenant);
             remove_rented_property_from_person(tenant, 0);
 
             set_id(get_person_cpf(tenant));
@@ -149,7 +48,7 @@ void deallocate_property_lease_catac_(type_hashitem property_lease){
             remove_person(del_tenant);
         }
     }
-    _QDC_report_property_txt_(property_lease);
+    _report_property_lease_txt_(property_lease);
     set_id(get_property_cep(property_lease));
     remove_property(property_lease);
 }
@@ -164,17 +63,11 @@ void action_catac(type_mMlavlitems block_rect){
     long cep_key = get_block_formatted_cep(block);
     char *cep = get_block_cep(block);
 
-    void(*action_property_ptr)(type_property);
-    action_property_ptr = action_property_catac_;
-
     void(*deallocate_property_ptr)(type_property);
     deallocate_property_ptr = deallocate_property_catac_;
 
     void(*deallocate_property_lease_ptr)(type_property);
     deallocate_property_lease_ptr = deallocate_property_lease_catac_;
-
-    void(*action_property_lease_ptr)(type_property);
-    action_property_lease_ptr = action_property_lease_catac_;
 
     long(*condition_property_lease_ptr)(type_property);
     condition_property_lease_ptr = condition_property_lease_catac_;
@@ -198,8 +91,8 @@ void action_catac(type_mMlavlitems block_rect){
     insert_item_at_the_end_of_list(QDC_blocks_to_delete, block_rect_del);
 
     //type_mMlavltree block_avl = delete_item_in_mMl_avl_tree(QDC_blocks_avl, block_rect_del, (void*)compare_rectangles_by_x_coordinate);
-    _QDC_report_block_txt_(block_rect_del);
-    _catac_svg(block_rect_del);
+    _report_block_txt_(block_rect_del);
+    //_catac_svg(block_rect_del);
     // type_block block_data = get_rect_data(block_rect_del);
     // remove_block(block_data);
     // destroi_rectangle(block_rect_del);
@@ -242,7 +135,7 @@ type_mMlavltree delete_blocks_from_blocks_avl(type_mMlavltree blocks_avl, type_l
 type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_hashtable properties_table, type_hashtable property_leases, type_hashtable people_table, double x, double y, double w, double h){
 
     QDC_SVGFILE = SVGFILE;
-    QDC_TXTFILE = TXTFILE;
+    set_txt_file(TXTFILE);
 
     QDC_property_leases = property_leases;
     QDC_properties_table = properties_table;
@@ -257,6 +150,7 @@ type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks
     traverse_mMlavltree_with_conditional_action(blocks_avl, (void*)traverse_side_rect_in_rect_, (void*)condition_rect_in_rect_, (void*)action_ptr);    
 
     blocks_avl = delete_blocks_from_blocks_avl(blocks_avl, QDC_blocks_to_delete);
+    insert_rectangle_with_different_opacity_in_svg(QDC_SVGFILE, x, y, w, h, "#AB37C8", "#AA0044", 0.5, 2);
     return blocks_avl;
 }
 

@@ -42,7 +42,7 @@ void _oloc_svg(type_property property){
     int house_number = get_property_house_number(property);
     char color[8];
     sprintf(color, "black%c", '\0');
-    char *string = malloc(sizeof(char) * 2);
+    char *string = malloc(sizeof(char) * 3);
     sprintf(string, "*%c", '\0');
 
     char cardinal_direction = get_property_cardinal_direction(property);

@@ -119,7 +119,7 @@ void _report_property_txt_(type_property property){
 void _report_property_lease_txt_(type_property property){
     _report_property_txt_(property);
     char *property_id = get_property_lease_id(property);
-    char *property_id_string = malloc(sizeof(char) * strlen(property_id) + 17);
+    char *property_id_string = malloc(sizeof(char) * strlen(property_id) + 20);
     sprintf(property_id_string, "ID da locação: %s%c", property_id, '\0');
     insert_string_in_txt(QAF_TXTFILE, property_id_string);    
     
@@ -150,7 +150,7 @@ void _report_person_txt_(type_person person){
     insert_string_in_txt(QAF_TXTFILE, string_name_with_gender);
     
     char *birthday = get_person_birthday(person);
-    char *birthday_string = malloc(sizeof(birthday) + 20);
+    char *birthday_string = malloc(sizeof(birthday) + 25);
     sprintf(birthday_string, "Data de nascimento: %s%c", birthday, '\0');
     insert_string_in_txt(QAF_TXTFILE, birthday_string);
     
@@ -183,7 +183,7 @@ void _report_block_txt_(type_rect block_rect){
 }
 
 void _report_property_lease_available(){
-    char *string = malloc(sizeof(char) * 12);
+    char *string = malloc(sizeof(char) * 15);
     sprintf(string, "Disponível%c", '\0');
     insert_string_in_txt(QAF_TXTFILE, string);
     free(string);

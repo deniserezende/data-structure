@@ -29,7 +29,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
     if (qryfile == NULL) {
         return NULL;
     }
-    char *line = (char*)malloc(70 * sizeof(char));
+    char *line = (char*)malloc(80 * sizeof(char));
     char *helper = (char*)malloc(10 * sizeof(char));
     char *cep = (char*)malloc(40 * sizeof(char));
     char *cpf = (char*)malloc(40 * sizeof(char));

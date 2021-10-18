@@ -43,6 +43,8 @@ type_person new_person(char cpf[], char first_name[], char last_name[], char gen
 
     person->has_property_leases = 0;
     person->own_properties = 0;
+    person->amount_of_properties_leases = 0;
+    person->amount_of_owned_properties = 0;
     return(person);
 }
 

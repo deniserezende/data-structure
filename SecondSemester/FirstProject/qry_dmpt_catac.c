@@ -194,7 +194,7 @@ char* get_info_for_dot_catac(type_list list){
                 sprintf(string_of_xs, "%sright minimum %ld\n", string_of_xs, list_item);
                 break;
             case 4:
-                sprintf(string_of_xs, "%sright minimum %ld", string_of_xs, list_item);
+                sprintf(string_of_xs, "%sright maximum %ld", string_of_xs, list_item);
                 break;
             default:
                 break;

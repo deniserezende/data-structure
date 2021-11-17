@@ -14,7 +14,7 @@ typedef struct queue_node{
 	struct queue_node *next; // next = item in front ... first pointer to item  = NULL
 }NODE;
 
-typedef struct list_structure{
+typedef struct queue_structure{
 	NODE *front;
 	NODE *rear;
     int current_size; // :) sim ou nem

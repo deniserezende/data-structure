@@ -160,7 +160,7 @@ void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, doubl
     printf("após o traverse_verticies_until_conditional_action_graph\n");
     QRV_f = f;
     QRV_index = 0;
-    traverse_breadth_search_with_conditional_actions_in_graph(mst, QRV_ID, (void*)_rv_reduce_speed_action_vertex, (void*)_rv_reduce_speed_condition_vertex, (void*)_rv_reduce_speed_action_edge, (void*)_rv_reduce_speed_condition_edge);
+    breadth_first_search_traversal_with_conditional_actions_in_graph(mst, QRV_ID, (void*)_rv_reduce_speed_action_vertex, (void*)_rv_reduce_speed_condition_vertex, (void*)_rv_reduce_speed_action_edge, (void*)_rv_reduce_speed_condition_edge);
     printf("após o traverse_breadth_search_with_conditional_actions_in_graph\n");
     insert_dasharray_rect_in_svg(SVGFILE, x, y, w, h, "Transparent", "Red", 4, 4);
 

@@ -776,7 +776,7 @@ void _traverse_breadth_search_with_conditional_actions_in_graph(GRAPH *graph, VE
 }
 
 
-void traverse_breadth_search_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
+void breadth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
 	GRAPH *graph_ = graph; 
 	VERTEX* source_node = _find_vertex_by_id_in_graph(graph_, source);
 	printf("apos aqui\n");

@@ -40,7 +40,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
 
     char cardinal_direction;
     int house_number;
-    double x, y, w, h, limiar;
+    double x, y, w, h, f, limiar;
     type_property property = NULL;
 
     type_svg svg_temp_file = start_new_svg_file("deniserezendeqrytempfile.svg"); // file to store temp data
@@ -62,8 +62,9 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                 insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             }
             else if(strncmp(line, "rv", 2) == 0){
-                    //sscanf(line, "%s %s", helper, cpf);
+                    sscanf(line, "%s %lf %lf %lf %lf %lf", helper, &x, &y, &w, &h, &f);
                     insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>rv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                    rv(svg_temp_file, txtfile, via_graph, x, y, w, h, f);
                     printf("rv não implementado\n");
                     insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                 }

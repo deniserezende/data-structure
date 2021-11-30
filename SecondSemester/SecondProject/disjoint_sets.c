@@ -56,15 +56,17 @@ DISJOINT_SET* _finding_the_representative_of_the_set_containing_element_in_disjo
 // Finding the representative of the set containing a given element; 
 int finding_the_representative_of_the_set_containing_element_in_disjoint_sets(type_disjoint_sets sets, int index){
     ALL_SETS* sets_ = sets;
-    DISJOINT_SET * parent;    
+    DISJOINT_SET* node;    
 
-    parent = sets_->vector[index]->parent;
+    node = sets_->vector[index];
 
-    _finding_the_representative_of_the_set_containing_element_in_disjoint_sets(parent);
+    _finding_the_representative_of_the_set_containing_element_in_disjoint_sets(node);
 
-    int representive_id = (parent->parent)->representative_id;
+    if(node->parent != NULL){
+        return (node->parent)->representative_id;
+    }
 
-    return representive_id;
+    return node->representative_id;
 }
 
 

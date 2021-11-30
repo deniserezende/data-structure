@@ -1,6 +1,6 @@
 LINK_TARGET = t2
 
-OBJECTS = main.o commandline.o path.o list_dynamic.o graph.o dijkstras_algorithm.o ascending_priority_queue.o descending_priority_queue.o via_operations.o vertex.o edge.o _auxiliary_functions.o hash_table.o mM_avl_tree_wlist.o rectangle.o block.o TXT.o _string_editing.o geo_operations.o SVG.o output_svg.o qry_operations.o qry_catac.o qry_p_.o qry_o_.o property.o _geometry_operations.o qry_cx.o
+OBJECTS = main.o commandline.o path.o list_dynamic.o graph.o dijkstras_algorithm.o ascending_priority_queue.o descending_priority_queue.o via_operations.o vertex.o edge.o _auxiliary_functions.o hash_table.o mM_avl_tree_wlist.o rectangle.o block.o TXT.o _string_editing.o geo_operations.o SVG.o output_svg.o qry_operations.o qry_catac.o qry_p_.o qry_o_.o property.o _geometry_operations.o qry_cx.o kruskals_algorithm.o qry_rv.o disjoint_sets.o
 
 # Make Macro defined by 3 macro expansions
 REBUILDABLES = $(OBJECTS)
@@ -36,6 +36,9 @@ qry_o_.o : qry_o_.h property.h SVG.h
 qry_catac.o : qry_catac.h
 property.o : property.h
 _geometry_operations.o : _geometry_operations.h
+kruskals_algorithm.o : kruskals_algorithm.h graph.h disjoint_sets.h ascending_priority_queue.h
+disjoint_sets.o : disjoint_sets.h
+qry_rv.o : qry_rv.h graph.h vertex.h edge.h rectangle.h _geometry_operations.h kruskals_algorithm.h
 qry_cx.o : qry_cx.h graph.h vertex.h edge.h _auxiliary_functions.h SVG.h
 
 $(LINK_TARGET): $(OBJECTS) 

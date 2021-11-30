@@ -16,6 +16,7 @@
 #include "qry_p_.h"
 #include "qry_o_.h"
 #include "qry_cx.h"
+#include "qry_rv.h"
 
 #include "output_svg.h"
 #include "path.h"

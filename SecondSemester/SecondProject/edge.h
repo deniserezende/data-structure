@@ -11,6 +11,8 @@ double get_edge_length(type_edge edge);
 
 double get_edge_speed_limit(type_edge edge);
 
+void set_edge_speed_limit(type_edge edge, double speed_limit);
+
 void destroi_edge(type_edge edge);
 
 #endif 

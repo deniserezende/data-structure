@@ -14,7 +14,7 @@
 #include "SVG.h"
 #include "TXT.h"
 #include "graph.h"
-#include "graph_algorithms.h"
+#include "dijkstras_algorithm.h"
 #include "property.h"
 #include "edge.h" //aquide
 #include "vertex.h" //aquide

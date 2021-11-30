@@ -98,7 +98,6 @@ VERTEX *_find_vertex_by_id_in_graph(type_graph graph, char id[]){
 EDGE * _find_edge_by_id_in_edges_list_in_graph(type_list edges, char to_vertex_id[]){
 	if(edges == NULL) return NULL;
 	if(empty_list(edges)) return NULL;
-	
 	set_current_to_first_item_in_list(edges);
 	int done;
 	do{
@@ -197,11 +196,11 @@ type_graphinfos get_vertex_info_in_graph(type_graph graph, char id[]){
 
 // já insere a aresta junto com a info dela
 // tenho que verificar se já tá la? o edge?????????????/
-int add_edge_to_graph(type_graph graph, char from_vertex_id[], char to_vertex_id[]){
+int add_edge_to_graph(type_graph graph, char from_vertex_id[], char to_vertex_id[]){	
 	GRAPH *graph_ = graph;
 
 	VERTEX *from_vertex_node = _find_vertex_by_id_in_graph(graph_, from_vertex_id);
-	
+
 	if(from_vertex_node != NULL){
 		VERTEX *to_vertex_node = _find_vertex_by_id_in_graph(graph_, to_vertex_id);
 		if(to_vertex_node != NULL){
@@ -226,11 +225,13 @@ int set_edge_info_in_graph(type_graph graph, char from_vertex_id[], char to_vert
 	VERTEX *from_vertex_node = _find_vertex_by_id_in_graph(graph_, from_vertex_id);
 	
 	if(from_vertex_node != NULL){
-		_find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
+		// _find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
 		EDGE *edge_node = _find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
 
-		//EDGE *edge_node = _find_vertex_by_id_in_graph(graph_->vertices, to_vertex_id);
-		edge_node->edge_info = edge_info;
+		if(edge_node != NULL){
+			edge_node->edge_info = edge_info;
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -436,27 +437,6 @@ type_list destroi_list_created_with_vertex_neighbors_in_graph(type_list list){
 	return NULL;
 }
 
-void _traverse_graph_verticies_with_action(type_graph graph, type_lptrf_oneitem action){
-	GRAPH *graph_ = graph; 
-	if(graph_ == NULL) return;
-	
-	if(empty_list(graph_->vertices)){
-		printf("Graph is empty.\n"); return;
-	}
-
-	set_current_to_first_item_in_list(graph_->vertices);
-
-	int done;
-	do{
-		done = is_current_last_item_in_list(graph_->vertices);
-		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
-		action(current_vertex);
-		move_current_forward_in_list(graph_->vertices);
-	}while (!done);
-
-	return;	
-}
-
 void traverse_graph_conditional_actions(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
 	GRAPH *graph_ = graph; 
 	if(graph_ == NULL) return;
@@ -598,193 +578,203 @@ void traverse_verticies_with_conditional_action_graph(type_graph graph, type_lpt
 }
 
 
-// void traverse_verticies_with_conditional_deletion_graph(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_oneitem deallocate_vertex, type_lptrf_oneitem deallocate_edge){
-// 	GRAPH *graph_ = graph; 
-// 	if(graph_ == NULL) return;
-	
-// 	if(empty_list(graph_->vertices)){
-// 		printf("Graph is empty.\n"); 
-// 		return;
-// 	}
+type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_condition){
+	GRAPH* graph_ = graph; 
+	if(graph_ == NULL) return NULL;
 
-// 	set_current_to_first_item_in_list(graph_->vertices);
+	GRAPH* duplicated_graph = create_graph();
+	if(empty_list(graph_->vertices)){
+		printf("Graph is empty.\n"); 
+		return duplicated_graph;
+	}
 
-// 	int done;
-// 	do{
-// 		done = is_current_last_item_in_list(graph_->vertices);
-// 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
+	set_current_to_first_item_in_list(graph_->vertices);
+
+	int done;
+	do{
+		done = is_current_last_item_in_list(graph_->vertices);
+		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
 		
-// 		if(vertex_condition(current_vertex->vertex_info)){
-// 			vertex_action(current_vertex->vertex_info);
-// 			if(current_vertex != NULL){
-// 				// Deallocating the vertex edges
-// 				_deallocate_edges_aux_graph(current_vertex->edges, deallocate_edge);
-// 				current_vertex->edges = NULL;
+		if(vertex_condition(current_vertex->vertex_info)){
+			add_vertex_to_graph(duplicated_graph, current_vertex->id);
+			set_vertex_info_in_graph(duplicated_graph, current_vertex->id, current_vertex->vertex_info);
+		
+			if(current_vertex->edges == NULL || empty_list(current_vertex->edges)){
+				move_current_forward_in_list(graph_->vertices);
+				continue;
+			} 
+			int done_;
 
-// 				// Deallocating other vertex edges that pointed to that vertex
-// 				_deallocate_edges_that_point_to_vertex(graph, current_vertex->id, deallocate_edge);
-
-// 				delete_item_in_list(graph_->vertices, current_vertex, (void*)_compare_verticies_graph);
-
-// 				type_graphinfos vertex_info = current_vertex->vertex_info;
-// 				free(current_vertex);
+			set_current_to_first_item_in_list(current_vertex->edges);
+			do {
+				done_ = is_current_last_item_in_list(current_vertex->edges);
+				EDGE *current_edge = get_current_item_in_list(current_vertex->edges);
 				
-// 				graph_->current_size--;
-// 			}
-// 		}
+				if(edge_condition(current_vertex->vertex_info, current_edge->edge_info, (current_edge->to)->vertex_info)){
+					add_edge_to_graph(duplicated_graph, current_vertex->id, (current_edge->to)->id);
+					set_edge_info_in_graph(duplicated_graph, current_vertex->id, (current_edge->to)->id, current_edge->edge_info);
+				}
+				move_current_forward_in_list(current_vertex->edges);
+			}while(!done_);
+		}
 
-// 		move_current_forward_in_list(graph_->vertices);
-// 	}while (!done);
+		move_current_forward_in_list(graph_->vertices);
+	}while (!done);
 
-// 	return;	
-// }
+	return duplicated_graph;	
+}
 
 
 
-// void traverse_verticies_until_conditional_action_graph(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition){
-// 	GRAPH *graph_ = graph; 
-// 	if(graph_ == NULL) return;
+
+
+
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+long G_PATHCOST;
+type_apqueue G_PRIORITY_QUEUE;
+VERTEX* G_SOURCE;
+
+void _traverse_graph_verticies_with_action(type_graph graph, type_graphptrf_onetypeinfo action){
+	GRAPH *graph_ = graph; 
+	if(graph_ == NULL) return;
 	
-// 	if(empty_list(graph_->vertices)){
-// 		printf("Graph is empty.\n"); return;
-// 	}
+	if(empty_list(graph_->vertices)){
+		printf("Graph is empty.\n"); 
+        return;
+	}
 
-// 	set_current_to_first_item_in_list(graph_->vertices);
+	set_current_to_first_item_in_list(graph_->vertices);
+	int done;
+	do{
+		done = is_current_last_item_in_list(graph_->vertices);
+		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
+		action(current_vertex);
+		move_current_forward_in_list(graph_->vertices);
+	}while (!done);
+	return;	
+}
 
-// 	int done;
-// 	do{
-// 		done = is_current_last_item_in_list(graph_->vertices);
-// 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
-		
-// 		if(vertex_condition(current_vertex)){
-// 			vertex_action(current_vertex->vertex_info);
-// 		}
-// 		int done_;
-
-// 		move_current_forward_in_list(graph_->vertices);
-// 	}while (!done);
-
-// 	return;	
-// }
-
-// nao implementado pq nao fazia sentido nesse tipo de implementacao
-// get_vertex_value(G, x): returns the value associated with the vertex x;
-
-
-
-// não sei se foi feito da melhor forma....
-// set_vertex_value(G, x, v): sets the value associated with the vertex x to v. => change
-// set_edge_value(G, x, y, v): sets the value associated with the edge (x, y) to v. => change
-// neighbors(G, x): lists all vertices y such that there is an edge from the vertex x to the vertex y; => lista nova com possibilidade de desaloca-la sem mudar o grafo
-// => essa lista nao pode ser alterada!!!!! 
+void _set_up_traverse_breadth_search_values_in_graph_action_aux(VERTEX* vertex){
+    int size1 = strlen(vertex->id);
+    int size2 = strlen(G_SOURCE->id);
+    int max = size1 > size2 ? size1 : size2;
+    if(size2 == size1 && strncmp(G_SOURCE->id, vertex->id, max) == 0){
+        return;
+    }
+    vertex->dijkstra_tmp_value = __LONG_MAX__; 
+    vertex->dijkstra_from_vertex = NULL;
+    insert_item_in_ascending_priority_queue(G_PRIORITY_QUEUE, __LONG_MAX__, vertex);
+    // FLOAT?
+}
 
 
-
-// adjacent(G, x, y): tests whether there is an edge from the vertex x to the vertex y;
-// add_vertex(G, x): adds the vertex x, if it is not there;
-// remove_vertex(G, x): removes the vertex x, if it is there;
-// add_edge(G, x, y): adds the edge from the vertex x to the vertex y, if it is not there;
-// remove_edge(G, x, y): removes the edge from the vertex x to the vertex y, if it is there;
-// Structures that associate values to the edges usually also provide:[1]
-// get_edge_value(G, x, y): returns the value associated with the edge (x, y);
-
-// /* -------------------------------------- dijkstras -------------------------------------- */
-
-// #include "ascending_priority_queue.h"
-// int GA_PATHCOST;
+void _set_up_traverse_breadth_search_values_in_graph_aux(GRAPH * graph, VERTEX* source, type_apqueue priority_queue){
+    G_PRIORITY_QUEUE = priority_queue;
+    G_SOURCE = source;
+    _traverse_graph_verticies_with_action(graph, (void*)_set_up_traverse_breadth_search_values_in_graph_action_aux);
+    source->dijkstra_definitive_value = 0;
+    source->dijkstra_from_vertex = NULL;
+}
 
 
-// void _set_up_dijkstras_values_in_graph_action_aux(VERTEX* vertex){
-//     vertex->dijkstra_tmp_value = __INT_MAX__; // INT64_MAX
-//     // FLOAT?
-// }
+long _compare_two_vertex_in_graph(VERTEX* vertex, VERTEX* vertex2){
+    int size1 = strlen(vertex->id);
+    int size2 = strlen(vertex2->id);
+    int max = size1 > size2 ? size1 : size2;
 
-// void _set_up_dijkstras_values_in_graph_aux(GRAPH * graph, VERTEX* source){
-//     _traverse_graph_verticies_with_action(graph, (void*)_set_up_dijkstras_values_in_graph_action_aux);
-//     source->dijkstra_definitive_value = 0;
-// }
+    if(strncmp(vertex->id,vertex2->id, max) == 0){
+        return 0;
+    } 
+    return -1;
+}
 
+long _condition_vertex_for_traverse_breadth_search_with_conditional_actions_in_graph(VERTEX* vertex){
+    if(G_PATHCOST < vertex->dijkstra_tmp_value){
+        return 1;
+    }
+    return 0;
+}
 
-
-
-// long _compare_two_vertex_for_galgorithms(VERTEX* vertex, VERTEX* vertex2){
-//     return(strcmp(vertex->id,vertex2->id));
-// }
-
-// long _condition_vertex_for_galgorithms(VERTEX* vertex){
-//     if(GA_PATHCOST < vertex->dijkstra_tmp_value){
-//         return 1;
-//     }
-//     return 0;
-// }
-
-
-// void _dijkstras_algorithm_in_graph_aux(GRAPH *graph, VERTEX* vertex, type_list priority_queue, type_graphptrf_onetypeinfo get_edge_value){
-// 	// base case:
-//     // visit os vizinhos e coloco valores temporarios do custo
-//     // tanto no grafo quanto na fila
-
-//     // setando os valores temp! -------------------
-//     if(vertex->edges != NULL){
-//         if(!empty_list(vertex->edges)){
-            
-//             set_current_to_first_item_in_list(vertex->edges);
-
-//             int done;
-//             do{
-//                 done = is_current_last_item_in_list(vertex->edges);
-
-//                 // FALTA ALGUM TIPO DE VERIFICACAO SE O ELEMENTO JA TA LA 
-//                 // SE SIM COMPARAR VALORES E MUDAR A PRIORIDADE
-//                 //int change_item_priority_in_ascending_priority_queue(type_apqueue queue, int new_priority, type_apqitems item, type_apqptrf_twoitems check_if_equal);
+void _traverse_breadth_search_with_conditional_actions_in_graph(GRAPH *graph, VERTEX* vertex_source, type_apqueue priority_queue, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
     
-//                 // colocando valores temporários no gráfo
-//                 EDGE* edge = get_current_item_in_list(vertex->edges);
-//                 // valor da aresta + valor que está no nó anterior
-//                 long path_cost = (long)get_edge_value(edge->edge_info) + vertex->dijkstra_definitive_value;
-//                 GA_PATHCOST = path_cost;
-                
-//                 int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, edge->to, (void*)_compare_two_vertex_for_galgorithms, (void*)_condition_vertex_for_galgorithms);
-//                 if(changed){
-//                     (edge->to)->dijkstra_tmp_value = path_cost;
-//                 }
-//                 // colocando valores temporários na fila
-//                 else if(changed == -1) {
-//                         insert_item_in_ascending_priority_queue(priority_queue, path_cost, edge->to);
-//                         (edge->to)->dijkstra_tmp_value = path_cost;
-//                     }
+    // base case:
+    // visit os vizinhos e coloco valores temporarios do custo
+    // tanto no grafo quanto na fila
+	printf("no _traverse_breadth_search_with_conditional_actions_in_graph\n");
+    VERTEX* vertex = vertex_source;
 
-//                 move_current_forward_in_list(vertex->edges);
-//             }while(!done);
+    while(!empty_ascending_priority_queue(priority_queue)){
+		printf("no !empty_ascending_priority_queue\n");
 
-//             // pego o de menor custo e seto para definitivo
-//         }
-//     }
+		if((long)vertex_condition(vertex->vertex_info)){
+			vertex_action(vertex->vertex_info);
+		}
+		printf("apos vertex_condition and action\n");
 
-//     // condicao de parada ====== fim
-//     if(empty_ascending_priority_queue(priority_queue)) return;
+        if(vertex->edges != NULL){
+            if(!empty_list(vertex->edges)){
+                set_current_to_first_item_in_list(vertex->edges);
 
-//     // para onde vou?
-//     // PEGANDO DO PRIORITY QUEUE O MENOR 
-//     VERTEX* next_vertex =  pull_item_in_ascending_priority_queue(priority_queue);
-//     next_vertex->dijkstra_definitive_value = next_vertex->dijkstra_tmp_value;
+				printf("apos set_current_to_first_item_in_list\n");
 
-//     //_dijkstras_algorithm_in_graph_aux(graph, next_vertex, priority_queue, get_edge_value);
-//     return _dijkstras_algorithm_in_graph_aux(graph, next_vertex, priority_queue, get_edge_value);
-// }
+                int done;
+                do{
+                    done = is_current_last_item_in_list(vertex->edges);
 
-// // SOS AQUIDE ver que tipo colocar a variavel do edge!!!!!!
+                    // colocando valores temporários no gráfo
+                    EDGE* edge = get_current_item_in_list(vertex->edges);
+                    // valor da aresta + valor que está no nó anterior
+                    long path_cost = (long) 1 + vertex->dijkstra_definitive_value;
+                    G_PATHCOST = path_cost;
+                    
+                    int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_in_graph, (void*)_condition_vertex_for_traverse_breadth_search_with_conditional_actions_in_graph);
+                    // colocando valores temporários na fila                
+                    if(changed == 1){
+                        // printf("mudei alguem\n");
+                        (edge->to)->dijkstra_tmp_value = path_cost;
+                        (edge->to)->dijkstra_from_vertex = vertex;
+                    }
+
+					printf("antes do edge_condition\n");
+
+					if((long)edge_condition(vertex->vertex_info, edge->edge_info, (edge->to)->vertex_info)){
+						printf("antes do edge_action\n");
+						edge_action(vertex->vertex_info, edge->edge_info, (edge->to)->vertex_info);
+					}
+					printf("apos o edge_action\n");
+
+                    move_current_forward_in_list(vertex->edges);
+                }while(!done);
+
+                // pego o de menor custo e seto para definitivo
+            }
+        }
+        VERTEX* next_vertex = pull_item_in_ascending_priority_queue(priority_queue);
+        next_vertex->dijkstra_definitive_value = next_vertex->dijkstra_tmp_value;
+        vertex = next_vertex;
+    }
+}
 
 
+void traverse_breadth_search_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
+	GRAPH *graph_ = graph; 
+	VERTEX* source_node = _find_vertex_by_id_in_graph(graph_, source);
+	printf("apos aqui\n");
+    set_ascending_priority_queue_max_size(graph_->current_size+1);
+	printf("apos set_ascending_priority_queue_max_size\n");
 
-// void dijkstras_algorithm_in_graph(type_graph graph, char source_info_id[], type_graphptrf_onetypeinfo get_edge_value){
-// 	GRAPH *graph_ = graph; 
-//     printf("antes do _find_vertex_by_id_in_graph_alg\n");
-// 	VERTEX* source_node = _find_vertex_by_id_in_graph(graph, source_info_id);
-//     printf("antes do _set_up_dijkstras_values_in_graph_aux\n");
-// 	_set_up_dijkstras_values_in_graph_aux(graph_, source_node);
-//     set_list_max_size(graph_->current_size+1);
-//     type_apqueue priority_queue = create_ascending_priority_queue();
-// 	_dijkstras_algorithm_in_graph_aux(graph, source_node, priority_queue, get_edge_value);
-// }
+    type_apqueue priority_queue = create_ascending_priority_queue();
+	printf("apos create_ascending_priority_queue\n");
 
+	_set_up_traverse_breadth_search_values_in_graph_aux(graph_, source_node, priority_queue);
+	printf("apos _set_up_traverse_breadth_search_values_in_graph_aux\n");
+
+	_traverse_breadth_search_with_conditional_actions_in_graph(graph_, source_node, priority_queue, vertex_action, vertex_condition, edge_action, edge_condition);
+
+    return;
+}

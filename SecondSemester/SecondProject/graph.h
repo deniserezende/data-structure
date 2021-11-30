@@ -8,6 +8,7 @@
 #ifndef graph_h
 #define graph_h
 #include "list.h"
+#include "ascending_priority_queue.h"
 
 typedef void* type_graph; 
 typedef void* type_graphinfos;
@@ -55,5 +56,10 @@ int traverse_verticies_until_conditional_action_graph(type_graph graph, type_lpt
 void traverse_verticies_with_conditional_action_graph(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition);
 
 void traverse_graph_conditional_actions_plus_vertex_condition_is_no_edges(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_threeitems edge_action, type_lptrf_oneitem edge_condition);
+
+type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_condition);
+
+
+void traverse_breadth_search_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition);
 
 #endif 

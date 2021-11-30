@@ -46,6 +46,8 @@
         "math.h": "c",
         "dijkstras_algorithm.h": "c",
         "string.h": "c",
-        "kruskals_algorithm.h": "c"
+        "kruskals_algorithm.h": "c",
+        "qry_rv.h": "c",
+        "disjoint_sets.h": "c"
     }
 }

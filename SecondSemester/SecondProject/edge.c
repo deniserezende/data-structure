@@ -45,6 +45,11 @@ double get_edge_speed_limit(type_edge edge){
     return(edge_->speed_limit);  
 }
 
+void set_edge_speed_limit(type_edge edge, double speed_limit){
+    EDGE *edge_ = edge;
+    edge_->speed_limit = speed_limit;
+}
+
 void destroi_edge(type_edge edge){
     EDGE *edge_ = edge;
     free(edge_);

@@ -65,7 +65,6 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                     sscanf(line, "%s %lf %lf %lf %lf %lf", helper, &x, &y, &w, &h, &f);
                     insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>rv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     rv(svg_temp_file, txtfile, via_graph, x, y, w, h, f);
-                    printf("rv não implementado\n");
                     insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                 }
                 else if(strncmp(line, "cx", 2) == 0){

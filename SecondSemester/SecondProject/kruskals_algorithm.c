@@ -36,6 +36,7 @@ typedef struct edge_kruskals{
 void _kruskals_traverse_graph_conditional_actions(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
 	GRAPH *graph_ = graph; 
 	if(graph_ == NULL) return;
+    int in = 0;
 	
 	if(empty_list(graph_->vertices)){
 		printf("Graph is empty.\n"); return;
@@ -48,22 +49,23 @@ void _kruskals_traverse_graph_conditional_actions(type_graph graph, type_lptrf_o
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
 		
-		if(vertex_condition(current_vertex)){
+		if((long)vertex_condition(current_vertex)){
 			vertex_action(current_vertex);
 		}
-		int done_;
 
 		if(current_vertex->edges == NULL || empty_list(current_vertex->edges)){
 			move_current_forward_in_list(graph_->vertices);
 			continue;
 		} 
-		
+
+		int done_;
 		set_current_to_first_item_in_list(current_vertex->edges);
 		do {
+            in++;
 			done_ = is_current_last_item_in_list(current_vertex->edges);
 			EDGE *current_edge = get_current_item_in_list(current_vertex->edges);
 			
-			if(edge_condition(current_vertex, current_edge, (current_edge->to))){
+			if((long)edge_condition(current_vertex, current_edge, (current_edge->to))){
 				edge_action(current_vertex, current_edge, (current_edge->to));
 			}
 			
@@ -74,6 +76,7 @@ void _kruskals_traverse_graph_conditional_actions(type_graph graph, type_lptrf_o
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
 
+    printf("era para ter.... %d\n", in);
 	return;	
 }
 
@@ -180,7 +183,7 @@ void _set_up_kruskals_union_find_and_edges_aux(type_graph graph, type_disjoint_s
 
 void print_edd(KEDGE *kedge){
     long v = (long)KA_get_edge_value((kedge->edge)->edge_info);
-    printf("e=%lf \t", v);
+    printf("e=%ld \t", v);
 }
 
 
@@ -189,7 +192,7 @@ void print_edd(KEDGE *kedge){
 type_graph _kruskals_algorithm_in_graph(type_graph graph, type_apqueue edges, type_disjoint_sets union_find, type_graph solution_graph){
     int amount_of_minimum_edges = 0;
     int amount_of_vertex = get_disjoint_sets_max(union_find);
-
+    printf("amount_of_vertex=%d\n", amount_of_vertex);
 
     while(amount_of_minimum_edges < amount_of_vertex-1){
         if(empty_ascending_priority_queue(edges)) break; // to só colocando um break por enquanto
@@ -221,7 +224,7 @@ type_graph _kruskals_algorithm_in_graph(type_graph graph, type_apqueue edges, ty
         }
         free(kedge);
     }
-
+    printf("amount_of_minimum_edges=%d\n", amount_of_minimum_edges);
     return solution_graph;
 }
 
@@ -229,7 +232,9 @@ type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypei
 	GRAPH *graph_ = graph; 
     type_graph solution_graph = create_graph();
     KA_get_edge_value = get_edge_value;
-
+    
+    set_ascending_priority_queue_max_size(graph_->amount_of_edges + 1);
+    printf("amount of edges: %d\n", graph_->amount_of_edges);
     // criar uma lista de arestas
     type_apqueue edges = create_ascending_priority_queue();
     // criar um union find com os verticies

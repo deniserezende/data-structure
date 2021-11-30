@@ -215,7 +215,9 @@ int add_edge_to_graph(type_graph graph, char from_vertex_id[], char to_vertex_id
 			graph_->amount_of_edges++;
 			return 1;
 		}
+		else printf("to_Vertex == NULL");
 	}
+	else printf("from_vertex == NULL");
 	return 0;
 }
 
@@ -581,7 +583,6 @@ void traverse_verticies_with_conditional_action_graph(type_graph graph, type_lpt
 type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_condition){
 	GRAPH* graph_ = graph; 
 	if(graph_ == NULL) return NULL;
-
 	GRAPH* duplicated_graph = create_graph();
 	if(empty_list(graph_->vertices)){
 		printf("Graph is empty.\n"); 
@@ -591,11 +592,26 @@ type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneite
 	set_current_to_first_item_in_list(graph_->vertices);
 
 	int done;
+
+	//inserting vertex
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
 		
-		if(vertex_condition(current_vertex->vertex_info)){
+		if((long)vertex_condition(current_vertex->vertex_info)){
+			add_vertex_to_graph(duplicated_graph, current_vertex->id);
+			set_vertex_info_in_graph(duplicated_graph, current_vertex->id, current_vertex->vertex_info);
+		}
+		move_current_forward_in_list(graph_->vertices);
+	}while (!done);
+
+	set_current_to_first_item_in_list(graph_->vertices);
+	//inserting edges
+	do{
+		done = is_current_last_item_in_list(graph_->vertices);
+		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
+		
+		if((long)vertex_condition(current_vertex->vertex_info)){
 			add_vertex_to_graph(duplicated_graph, current_vertex->id);
 			set_vertex_info_in_graph(duplicated_graph, current_vertex->id, current_vertex->vertex_info);
 		
@@ -610,14 +626,13 @@ type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneite
 				done_ = is_current_last_item_in_list(current_vertex->edges);
 				EDGE *current_edge = get_current_item_in_list(current_vertex->edges);
 				
-				if(edge_condition(current_vertex->vertex_info, current_edge->edge_info, (current_edge->to)->vertex_info)){
+				if((long)edge_condition(current_vertex->vertex_info, current_edge->edge_info, (current_edge->to)->vertex_info)){
 					add_edge_to_graph(duplicated_graph, current_vertex->id, (current_edge->to)->id);
 					set_edge_info_in_graph(duplicated_graph, current_vertex->id, (current_edge->to)->id, current_edge->edge_info);
 				}
 				move_current_forward_in_list(current_vertex->edges);
 			}while(!done_);
 		}
-
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
 

@@ -59,6 +59,10 @@ void traverse_graph_conditional_actions_plus_vertex_condition_is_no_edges(type_g
 
 type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_condition);
 
+type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_condition);
 
 void breadth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition);
+
+void depth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, int order[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition);
+
 #endif 

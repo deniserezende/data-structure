@@ -10,7 +10,7 @@ typedef struct queue_node{
 }NODE; 
 
 typedef struct queue_structure{
-	type_dpqitems *vector;
+	type_dpqitems *vector; //AQUIDE não era para ser NODE*
 	//int current;
 	int next_item;
 	int size;
@@ -34,12 +34,14 @@ void _reset_priority_in_pqueue(type_dpqueue queue){
 type_dpqueue create_descending_priority_queue(){
 	STRUCTURE *new_queue = malloc(sizeof(STRUCTURE));
 	new_queue->vector = malloc(sizeof(NODE *) * max + 1);
-
+	printf("criei\n");
 	// new_queue->current = 0;
 	new_queue->next_item = -1; // Empty queue
 	new_queue->size = max+1;
 	new_queue->next_free_space = new_queue->next_item + 1;
+	printf("other\n");
 	_reset_priority_in_pqueue(new_queue);
+	printf("reset ok\n");
 	return new_queue;
 }
 

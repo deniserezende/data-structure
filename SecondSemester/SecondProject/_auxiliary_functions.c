@@ -99,6 +99,23 @@ void _report_block_txt_(type_rect block_rect){
     free(w_h_string);
 }
 
+void _report_property_txt_(type_property property){
+    char *cardinal_direction = malloc(sizeof(char)*3);
+    sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
+    insert_string_in_txt(QAF_TXTFILE, "");
+    insert_string_in_txt(QAF_TXTFILE, "CASA:");
+    char *cep = get_property_cep(property);
+    char *add = get_property_additional_address_data(property);
+    int number = get_property_house_number(property);
+
+    char *tmp = malloc(sizeof(char) *(strlen(cep) + strlen(add) + 40));
+    sprintf(tmp, "CEP: %s  Nº: %d  Face: %s  Complemento: %s", cep, number, cardinal_direction, add);
+    insert_string_in_txt(QAF_TXTFILE, tmp);
+
+    free(cardinal_direction);
+    free(tmp);
+}
+
 void _report_property_lease_available(){
     char *string = malloc(sizeof(char) * 15);
     sprintf(string, "Disponível%c", '\0');

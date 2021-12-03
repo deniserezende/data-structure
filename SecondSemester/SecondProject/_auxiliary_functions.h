@@ -15,6 +15,7 @@
 #include "TXT.h"
 #include "vertex.h"
 #include "edge.h"
+#include "property.h"
 
 long compare_rect_blocks_cep(type_rect block1, type_rect block2);
 
@@ -36,5 +37,7 @@ void _report_property_lease_not_available();
 void _report_vertex_txt_(type_vertex vertex);
 
 void _report_edge_txt_(type_edge edge);
+
+void _report_property_txt_(type_property property);
 
 #endif /* _auxiliary_functions_h */

@@ -97,6 +97,14 @@ void insert_circle_with_different_opacity_in_svg(type_svg file, double x, double
 void insert_animated_circle_in_svg(type_svg file, double x, double y, double x2, double y2, double radius, char *fill, char *stroke, double stroke_width, char* pathfill, int dasharray, char *dashstroke, double dashwidth, int duration, char* repeatcount);
 
 // Pre-conditon: The svg file has to have been 'started'.
+// Condition: You have to use all three functions
+// The second one can 
+// Post-condition: An animated circle has been inserted.
+void start_insert_animated_circle_with_multiple_points_in_svg(type_svg file, int dasharray, char *dashstroke, double dashwidth);
+void add_path_to_insert_animated_circle_with_multiple_points_in_svg(type_svg file, double x, double y, double x2, double y2);
+void end_insert_animated_circle_with_multiple_points_in_svg(type_svg file, char* id, double radius, char *fill, char *stroke, double stroke_width, char* pathfill, int duration, char* repeatcount);
+
+// Pre-conditon: The svg file has to have been 'started'.
 // Post-condition: A line has been inserted.
 void insert_line_in_svg(type_svg file, double xstart, double ystart, double xend, double yend, char *stroke, double stroke_width);
 

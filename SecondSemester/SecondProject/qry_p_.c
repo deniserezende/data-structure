@@ -4,8 +4,6 @@
 #include <string.h>
 // AQUIDE verificar se em ponteiros não estou passando double!
 
-type_svg QP_SVGFILE;
-
 long _get_fastest_route_time(type_edge edge){
     double length = get_edge_length(edge);
     double speed_limit = get_edge_speed_limit(edge);
@@ -49,11 +47,21 @@ void find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prop
         shift_amount_x = house_number;
         shift_amount_y = 0;
         break;
-    case 'L':
+    // before
+    // case 'L':
+    //     shift_amount_x = 0;
+    //     shift_amount_y = house_number;
+    //     break;
+    // case 'O':
+    //     shift_amount_x = w;
+    //     shift_amount_y = house_number;
+    //     break;
+    // after arrumei conforme o do mateus
+    case 'O':
         shift_amount_x = 0;
         shift_amount_y = house_number;
         break;
-    case 'O':
+    case 'L':
         shift_amount_x = w;
         shift_amount_y = house_number;
         break;
@@ -116,7 +124,7 @@ void traverse_action_destination_p_(type_vertex vertex){
     QP_destination_vertex = vertex;
 }
 
-void p_svg_output(type_list vertices, char color[], double stroke_width){
+void p_svg_output(type_svg SVGFILE, type_list vertices, char color[], double stroke_width){
     int done;
     type_vertex vertex;
     if(empty_list(vertices)){
@@ -143,9 +151,9 @@ void p_svg_output(type_list vertices, char color[], double stroke_width){
 
         x2 = get_vertex_x(vertex);
         y2 = get_vertex_y(vertex);
-        char* id = get_vertex_id(vertex);
 
-        insert_line_in_svg(QP_SVGFILE, x, y, x2, y2, color, stroke_width);
+        //insert_line_in_svg(SVGFILE, x, y, x2, y2, color, stroke_width);
+        add_path_to_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, x, y, x2, y2);
 
         move_current_backward_in_list(vertices);
         x = x2;
@@ -153,6 +161,66 @@ void p_svg_output(type_list vertices, char color[], double stroke_width){
     }
 
     destroi_list(vertices);
+}
+
+
+// void p_txt_output(type_txt TXTFILE, type_list vertices){
+//     int done;
+//     type_vertex vertex;
+//     if(empty_list(vertices)){
+//         printf("EMPTY LIST OF VERTICES REPRESENTING PATH\n");
+//         return;
+//     }
+//     set_current_to_last_item_in_list(vertices);
+//     vertex = get_current_item_in_list(vertices);
+    
+//     if(is_current_first_item_in_list(vertices)){
+//         printf("Only one element\n");
+//         return;
+//     }
+    
+//     char* id1 = get_vertex_id(vertex);
+//     char* id2;
+//     char string_for_txt[150];
+
+//     move_current_backward_in_list(vertices);
+//     printf("é aqui?\n");
+//     while(!is_current_first_item_in_list(vertices)){
+//         printf("é aqui?4\n");
+//         vertex = get_current_item_in_list(vertices);
+//         printf("é aqui?1\n");
+
+//         id2 = get_vertex_id(vertex);
+//         printf("é aqui?1.1\n");
+//         sprintf(string_for_txt, "Vá do vértice  ao vértice ");
+//         printf("é aqui?1.2\n");
+//         insert_string_in_txt(TXTFILE, string_for_txt);
+//         printf("é aqui?2\n");
+
+//         move_current_backward_in_list(vertices);
+//         printf("é aqui?3\n");
+//         id1 = id2;
+//     }
+//     free(string_for_txt);
+//     destroi_list(vertices);
+//     printf("fim é aqui?\n");
+// }
+
+// AQUIDE falta descrever o caminho!!!
+void p_txt_output_fastest_route(type_txt TXTFILE, type_list vertices, char origin[], char destination[]){
+    char *basic = malloc(sizeof(char) * 100);
+    sprintf(basic, "Rota mais rápida do vértice %s ao vértice %s", origin, destination);
+    insert_string_in_txt(TXTFILE, basic);
+    free(basic);
+    //p_txt_output(TXTFILE, vertices);
+}
+
+void p_txt_output_shortest_route(type_txt TXTFILE, type_list vertices, char origin[], char destination[]){
+    char *basic = malloc(sizeof(char) * 100);
+    sprintf(basic, "Rota mais curta do vértice %s ao vértice %s", origin, destination);
+    insert_string_in_txt(TXTFILE, basic);
+    free(basic);
+    //p_txt_output(TXTFILE, vertices);
 }
 
 
@@ -168,7 +236,6 @@ void p_svg_output(type_list vertices, char color[], double stroke_width){
 // o fim do percurso. As linhas devem ser grossas,
 // mas menos espessas que as arestas da AGM
 void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_hashtable, type_graph via_graph, type_property origin_property, char cep[], char cardinal_direction, int house_number, char shortest_route_color[], char fastest_route_color[]){
-    QP_SVGFILE = SVGFILE;
     // achar o vertice mais proximo da property
     // pegar o cep for no retangulo (pela hash) verificar o vertice mais proximo 
 
@@ -195,19 +262,41 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
     QP_dist = __INT_MAX__;
 
     traverse_verticies_with_conditional_action_graph(via_graph, (void*)traverse_action_destination_p_, (void*)traverse_condition_p_);
+    
+    double xi = get_vertex_x(QP_origin_vertex);
+    double yi = get_vertex_y(QP_origin_vertex);
+    double xf = get_vertex_x(QP_destination_vertex);
+    double yf = get_vertex_y(QP_destination_vertex);
 
+    insert_circle_in_svg(SVGFILE, xi, yi, 10, "Black", "Black", 1);
+    insert_circle_in_svg(SVGFILE, xf, yf, 10, "Pink", "Pink", 1);
 
-    insert_circle_in_svg(SVGFILE, minimum_distance_point_origin[0], minimum_distance_point_origin[1], 10, "Black", "Black", 1);
-    insert_circle_in_svg(SVGFILE, minimum_distance_point_destination[0], minimum_distance_point_destination[1], 10, "Pink", "Pink", 1);
+    // insert_circle_in_svg(SVGFILE, minimum_distance_point_origin[0], minimum_distance_point_origin[1], 10, "Black", "Black", 1);
+    // insert_circle_in_svg(SVGFILE, minimum_distance_point_destination[0], minimum_distance_point_destination[1], 10, "Pink", "Pink", 1);
 
     char *sourceid = get_vertex_id(QP_origin_vertex);
     char *destinationid = get_vertex_id(QP_destination_vertex);
     printf("sourceid=%s\n", sourceid);
     printf("destinationid=%s\n", destinationid);
     type_list shortest_solution = dijkstras_algorithm_with_destination_in_graph(via_graph, sourceid, destinationid, (void*)_get_edge_length);
-    p_svg_output(shortest_solution, shortest_route_color, 4);
+    
+    start_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, 1, shortest_route_color, 2);
+    p_svg_output(SVGFILE, shortest_solution, shortest_route_color, 4);
+    int r = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+    char id[20];
+    sprintf(id, "%d%c", r, '\0');
+    end_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, id, 5, shortest_route_color, shortest_route_color, 2, shortest_route_color, 5, "indefinite");
+    p_txt_output_shortest_route(TXTFILE, shortest_solution, sourceid, destinationid);
+
+
 
     type_list fastest_solution =  dijkstras_algorithm_with_destination_in_graph(via_graph, sourceid, destinationid, (void*)_get_fastest_route_time);
-    p_svg_output(fastest_solution, fastest_route_color, 1);
+    start_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, 1, fastest_route_color, 2);
+    p_svg_output(SVGFILE, fastest_solution, fastest_route_color, 1);
+    r = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+    sprintf(id, "%d%c", r, '\0');
+    end_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, id, 5, fastest_route_color, fastest_route_color, 2, fastest_route_color, 4, "indefinite");
+    p_txt_output_fastest_route(TXTFILE, fastest_solution, sourceid, destinationid);
+
 } 
 

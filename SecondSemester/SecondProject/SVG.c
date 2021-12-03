@@ -158,6 +158,31 @@ void insert_animated_circle_in_svg(type_svg file, double x, double y, double x2,
 	fprintf(fsf->fsvg,"\t</circle>\n");
 }
 
+void start_insert_animated_circle_with_multiple_points_in_svg(type_svg file, int dasharray, char *dashstroke, double dashwidth){
+	STRUCTSVG *fsf = file; 
+	
+	fprintf(fsf->fsvg,"\t<path fill=\"none\" stroke=\"%s\" stroke-width=\"%lf\" stroke-dasharray=\"%d\"", dashstroke, dashwidth, dasharray);
+	fprintf(fsf->fsvg," d=\"");
+
+}
+
+void add_path_to_insert_animated_circle_with_multiple_points_in_svg(type_svg file, double x, double y, double x2, double y2){
+	STRUCTSVG *fsf = file; 
+	fprintf(fsf->fsvg," M %lf %lf L %lf %lf ", x, y, x2, y2);
+}
+
+void end_insert_animated_circle_with_multiple_points_in_svg(type_svg file, char* id, double radius, char *fill, char *stroke, double stroke_width, char* pathfill, int duration, char* repeatcount){
+	STRUCTSVG *fsf = file; 
+	fprintf(fsf->fsvg,"\" ");
+	fprintf(fsf->fsvg,"id=\"%s\"/>\n", id);
+
+	
+	fprintf(fsf->fsvg,"\t<circle r=\"%f\" stroke=\"%s\"  fill=\"%s\" stroke-width=\"%f\">\n", radius, stroke, fill, stroke_width);
+	fprintf(fsf->fsvg,"\t<animateMotion dur=\"%ds\" repeatCount=\"%s\">\n", duration, repeatcount);
+	fprintf(fsf->fsvg,"\t\t<mpath xlink:href=\"#%s\"/>\n", id);
+	fprintf(fsf->fsvg,"\t</animateMotion>\n");
+	fprintf(fsf->fsvg,"\t</circle>\n");
+}
 
 void insert_line_in_svg(type_svg file, double xstart, double ystart, double xend, double yend, char *stroke, double stroke_width){
 	STRUCTSVG *fsf = file; 

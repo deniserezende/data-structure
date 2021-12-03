@@ -3,15 +3,31 @@
 #include <string.h>
 #include "dijkstras_algorithm.h"
 
+typedef struct vertex_aux_data{
+	// dijkstra
+	long dijkstra_tmp_value;
+	long dijkstra_definitive_value;
+	struct vertex *dijkstra_from_vertex;
+	
+	// kruskals
+    int kruskals_index;
+
+	// depth first search
+	int dfs_visited;
+    int dfs_starting_time;
+    int dfs_finnishing_time;
+
+	// breadth first search
+	long bfs_tmp_value;
+	long bfs_def_value;
+	struct vertex *bfs_from_vertex;
+}DATA;
+
 typedef struct vertex{
 	char id[41];
 	type_graphinfos *vertex_info;
 	type_list edges;
-
-	long dijkstra_tmp_value;
-	long dijkstra_definitive_value;
-	struct vertex *dijkstra_from_vertex;
-    int kruskals_index;
+	DATA *data_for_other_algorithms;
 }VERTEX;
 
 typedef struct edge{
@@ -83,8 +99,8 @@ void _set_up_dijkstras_values_in_graph_action_aux(VERTEX* vertex){
     if(size2 == size1 && strncmp(GA_SOURCE->id, vertex->id, max) == 0){
         return;
     }
-    vertex->dijkstra_tmp_value = __LONG_MAX__; 
-    vertex->dijkstra_from_vertex = NULL;
+    vertex->data_for_other_algorithms->dijkstra_tmp_value = __LONG_MAX__; 
+    vertex->data_for_other_algorithms->dijkstra_from_vertex = NULL;
     insert_item_in_ascending_priority_queue(GA_PRIORITY_QUEUE, __LONG_MAX__, vertex);
     // FLOAT?
 }
@@ -94,8 +110,8 @@ void _set_up_dijkstras_values_in_graph_aux(GRAPH * graph, VERTEX* source, type_a
     GA_PRIORITY_QUEUE = priority_queue;
     GA_SOURCE = source;
     _traverse_graph_alg_verticies_with_action(graph, (void*)_set_up_dijkstras_values_in_graph_action_aux);
-    source->dijkstra_definitive_value = 0;
-    source->dijkstra_from_vertex = NULL;
+    source->data_for_other_algorithms->dijkstra_definitive_value = 0;
+    source->data_for_other_algorithms->dijkstra_from_vertex = NULL;
 }
 
 
@@ -111,19 +127,19 @@ long _compare_two_vertex_for_galgorithms(VERTEX* vertex, VERTEX* vertex2){
 }
 
 long _condition_vertex_for_galgorithms(VERTEX* vertex){
-    if(GA_PATHCOST < vertex->dijkstra_tmp_value){
+    if(GA_PATHCOST < vertex->data_for_other_algorithms->dijkstra_tmp_value){
         return 1;
     }
     return 0;
 }
 
 void print_(VERTEX* vertex){
-    printf("%ld ", vertex->dijkstra_tmp_value);
+    printf("%ld ", vertex->data_for_other_algorithms->dijkstra_tmp_value);
 
 }
 
 long _print_condition_dijkstra(VERTEX* vertex){
-    if(vertex->dijkstra_tmp_value == __INT_MAX__) return 0;
+    if(vertex->data_for_other_algorithms->dijkstra_tmp_value == __INT_MAX__) return 0;
     return 1;
 }
 
@@ -148,15 +164,15 @@ type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTE
                     // colocando valores temporários no gráfo
                     EDGE* edge = get_current_item_in_list(vertex->edges);
                     // valor da aresta + valor que está no nó anterior
-                    long path_cost = (long)get_edge_value(edge->edge_info) + vertex->dijkstra_definitive_value;
+                    long path_cost = (long)get_edge_value(edge->edge_info) + vertex->data_for_other_algorithms->dijkstra_definitive_value;
                     GA_PATHCOST = path_cost;
                     
                     int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_for_galgorithms, (void*)_condition_vertex_for_galgorithms);
                     // colocando valores temporários na fila                
                     if(changed == 1){
                         // printf("mudei alguem\n");
-                        (edge->to)->dijkstra_tmp_value = path_cost;
-                        (edge->to)->dijkstra_from_vertex = vertex;
+                        (edge->to)->data_for_other_algorithms->dijkstra_tmp_value = path_cost;
+                        (edge->to)->data_for_other_algorithms->dijkstra_from_vertex = vertex;
                     }
                     move_current_forward_in_list(vertex->edges);
                 }while(!done);
@@ -168,7 +184,7 @@ type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTE
         // printf("next=[%ld]\n", next_vertex->dijkstra_tmp_value);
         // printf("NEXT ID:[%s]\n", next_vertex->id);
         // printf("dps do pull_item_in_ascending_priority_queue\n");
-        next_vertex->dijkstra_definitive_value = next_vertex->dijkstra_tmp_value;
+        next_vertex->data_for_other_algorithms->dijkstra_definitive_value = next_vertex->data_for_other_algorithms->dijkstra_tmp_value;
         vertex = next_vertex;
         printf("------------------------------------------------------------------------------------------------\n\n\n");
         print_ascending_priority_queue_with_condition(priority_queue, (void*)print_, (void*)_print_condition_dijkstra);
@@ -181,7 +197,7 @@ type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTE
     do{
         done = (strcmp(vertex->id, vertex_source->id) == 0);
         insert_item_at_the_end_of_list(solution_array, vertex->vertex_info); 
-        vertex = vertex->dijkstra_from_vertex;
+        vertex = vertex->data_for_other_algorithms->dijkstra_from_vertex;
     }while(!done);
 
     return solution_array;

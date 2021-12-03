@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "ascending_priority_queue.h"
 
 

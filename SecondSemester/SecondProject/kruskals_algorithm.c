@@ -4,15 +4,38 @@
 #include <stdlib.h>
 #include "kruskals_algorithm.h"
 
+typedef struct vertex_aux_data{
+	// dijkstra
+	long dijkstra_tmp_value;
+	long dijkstra_definitive_value;
+	struct vertex *dijkstra_from_vertex;
+	
+	// kruskals
+    int kruskals_index;
+
+	// depth first search
+	int dfs_visited;
+    int dfs_starting_time;
+    int dfs_finnishing_time;
+
+	// breadth first search
+	long bfs_tmp_value;
+	long bfs_def_value;
+	struct vertex *bfs_from_vertex;
+}DATA;
+
+// // testar se vai assim:
+// // se der mudar nos outros externos
+// typedef struct vertex_aux_data{
+// 	// kruskals
+//     int kruskals_index;
+// }DATA;
+
 typedef struct vertex{
 	char id[41];
 	type_graphinfos *vertex_info;
 	type_list edges;
-
-	long dijkstra_tmp_value;
-	long dijkstra_definitive_value;
-	struct vertex *dijkstra_from_vertex;
-    int kruskals_index;
+	DATA *data_for_other_algorithms;
 }VERTEX;
 
 typedef struct edge{
@@ -24,7 +47,6 @@ typedef struct graph{
 	type_list vertices; // VERTEX
 	int current_size; // amount of vertices
 	int amount_of_edges;
-
 }GRAPH;
 
 typedef struct edge_kruskals{
@@ -140,8 +162,9 @@ long _kruskals_true_vertex(VERTEX* vertex){
 long _kruskals_true_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
     return 1;
 }
-
+// ou aqui o problem
 void _kruskals_edges_action_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
+    printf("no _kruskals_edges_action_edge\n");
     KEDGE* kedge = malloc(sizeof(KEDGE));
     kedge->from = from_vertex;
     kedge->to = to_vertex;
@@ -152,6 +175,7 @@ void _kruskals_edges_action_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_ver
 
 VERTEX* _kruskals_new_vertex_for_graph_aux(GRAPH * graph, char id[]){
 	VERTEX *vertex_node = malloc(sizeof(VERTEX));
+    vertex_node->data_for_other_algorithms = malloc(sizeof(DATA));
 	vertex_node->vertex_info = NULL;
 	vertex_node->edges = NULL;
 	sprintf(vertex_node->id, "%s%c", id, '\0');
@@ -165,19 +189,24 @@ VERTEX * _kruskals_add_vertex_to_graph(type_graph graph, char id[]){
     graph_->current_size++;
     return vertex_node;
 }
-
+// ou aqui o problem
 void _kruskals_union_find_action_vertex(VERTEX* vertex){
-    vertex->kruskals_index = making_a_new_set_containing_a_new_element(KA_union_find, vertex);
+    printf("no _kruskals_union_find_action_vertex\n");
+    vertex->data_for_other_algorithms->kruskals_index = making_a_new_set_containing_a_new_element(KA_union_find, vertex);
     VERTEX* vertex_added = _kruskals_add_vertex_to_graph(KA_solution_graph, vertex->id);
+    printf("depois do  vertex_added\n");
     vertex_added->vertex_info = vertex->vertex_info;
-    vertex_added->kruskals_index = vertex->kruskals_index;
+    printf("depois do vertex_added->vertex_info\n");
+    // nessa linhas
+    vertex_added->data_for_other_algorithms->kruskals_index  = vertex->data_for_other_algorithms->kruskals_index;
     return;
 }
-
+// sipa o problema tá aqui
 void _set_up_kruskals_union_find_and_edges_aux(type_graph graph, type_disjoint_sets union_find, type_apqueue edges, type_graph solution_graph){
     KA_union_find = union_find;
     KA_edges = edges;
     KA_solution_graph = solution_graph;
+    printf("setei o basico\n");
     _kruskals_traverse_graph_conditional_actions(graph, (void*)_kruskals_union_find_action_vertex, (void*)_kruskals_true_vertex, (void*)_kruskals_edges_action_edge, (void*)_kruskals_true_edge);
 }
 
@@ -201,8 +230,8 @@ type_graph _kruskals_algorithm_in_graph(type_graph graph, type_apqueue edges, ty
         print_ascending_priority_queue(edges, (void*)print_edd);
         printf("\n");
 
-        int from_index = (kedge->from)->kruskals_index;
-        int to_index = (kedge->to)->kruskals_index;
+        int from_index = (kedge->from)->data_for_other_algorithms->kruskals_index;
+        int to_index = (kedge->to)->data_for_other_algorithms->kruskals_index;
         int representive_from = finding_the_representative_of_the_set_containing_element_in_disjoint_sets(union_find, from_index);
         int representive_to = finding_the_representative_of_the_set_containing_element_in_disjoint_sets(union_find, to_index);
         if(representive_from != representive_to){
@@ -237,13 +266,16 @@ type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypei
     printf("amount of edges: %d\n", graph_->amount_of_edges);
     // criar uma lista de arestas
     type_apqueue edges = create_ascending_priority_queue();
+    printf("fim do edges\n");
+
     // criar um union find com os verticies
     type_disjoint_sets union_find = start_disjoint_sets(graph_->current_size);
+    printf("fim do union_find\n");
 
     // inserir todos os vertices no meu union find
     // inserir todas as arestas no priority queue
     _set_up_kruskals_union_find_and_edges_aux(graph_, union_find, edges, solution_graph);
-
+    printf("fim do _set_up_kruskals_union_find_and_edges_aux\n");
 
     print_ascending_priority_queue(edges, (void*)print_edd);
 
@@ -251,81 +283,6 @@ type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypei
     // analizar as arestas
     solution_graph = _kruskals_algorithm_in_graph(graph_, edges, union_find, solution_graph);
 
-    return solution_graph;
-}
-
-
-
-
-
-
-
-void _kruskals_algorithm_in_graph_forest_action(VERTEX* vertex){
-    printf("vertex->kruskals_index=%d\n", vertex->kruskals_index);
-    int representative_index = finding_the_representative_of_the_set_containing_element_in_disjoint_sets(KA_union_find, vertex->kruskals_index);
-    printf("representative_index=%d\n", representative_index);
-    KA_vector_solution[KA_index] = representative_index;
-    KA_index++;
-}
-
-
-type_graph _kruskals_algorithm_in_graph_forest(type_graph graph, type_apqueue edges, type_disjoint_sets union_find, type_graph solution_graph, int vector[]){
-    int amount_of_minimum_edges = 0;
-    int amount_of_vertex = get_disjoint_sets_max(union_find);
-
-    while(amount_of_minimum_edges < amount_of_vertex-1 && !empty_ascending_priority_queue(edges)){
-
-        KEDGE* kedge = pull_item_in_ascending_priority_queue(edges);
-        print_ascending_priority_queue(edges, (void*)print_edd);
-
-        int from_index = (kedge->from)->kruskals_index;
-        int to_index = (kedge->to)->kruskals_index;
-        int representive_from = finding_the_representative_of_the_set_containing_element_in_disjoint_sets(union_find, from_index);
-        int representive_to = finding_the_representative_of_the_set_containing_element_in_disjoint_sets(union_find, to_index);
-
-        if(representive_from != representive_to){
-            merging_two_sets_in_disjoint_sets(union_find, from_index, to_index);
-            amount_of_minimum_edges++;
-
-
-            // COLOCANDO NO GRAFO SOLUCAO
-            // verificar se já existe
-            add_edge_to_graph(solution_graph, (kedge->from)->id, (kedge->to)->id);
-            set_edge_info_in_graph(solution_graph, (kedge->from)->id, (kedge->to)->id, (kedge->edge)->edge_info);
-
-        }
-        printf("fim do while\n");
-        free(kedge);
-    }
-
-    int amount_of_spanning_tree = amount_of_vertex - amount_of_minimum_edges;
-
-    KA_vector_solution = vector;
-    KA_union_find = union_find;
-    KA_index = 0;
-    _kruskals_traverse_verticies_with_conditional_action_graph(solution_graph, (void*)_kruskals_algorithm_in_graph_forest_action, (void*)_kruskals_true_vertex);
-
-    return solution_graph;
-}
-
-type_graph kruskals_algorithm_in_graph_forest(type_graph graph, type_graphptrf_onetypeinfo get_edge_value, int vector[]){
-	GRAPH *graph_ = graph; 
-    type_graph solution_graph = create_graph();
-    KA_get_edge_value = get_edge_value;
-
-    // criar uma lista de arestas
-    type_apqueue edges = create_ascending_priority_queue();
-    // criar um union find com os verticies
-    type_disjoint_sets union_find = start_disjoint_sets(graph_->current_size);
-
-    // inserir todos os vertices no meu union find
-    // inserir todas as arestas no priority queue
-    _set_up_kruskals_union_find_and_edges_aux(graph_, union_find, edges, solution_graph);
-
-    print_ascending_priority_queue(edges, (void*)print_edd);
-
-    // analizar as arestas
-    solution_graph = _kruskals_algorithm_in_graph_forest(graph_, edges, union_find, solution_graph, vector);
-
+    printf("fim do kruskal");
     return solution_graph;
 }

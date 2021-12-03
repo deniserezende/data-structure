@@ -51,7 +51,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
         if(strncmp(line, "@o?", 3) == 0){ 
             sscanf(line, "%s %s %c %d", helper, cep, &cardinal_direction, &house_number);
             insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@o?<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            property = o_(svg_temp_file, cep, cardinal_direction, house_number);
+            property = o_(svg_temp_file, txtfile, blocks_table, cep, cardinal_direction, house_number, viewbox);
             insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         else if(strncmp(line, "catac", 5) == 0){

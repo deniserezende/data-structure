@@ -4,15 +4,12 @@
 #include <stdlib.h>
 #include "kruskals_algorithm.h"
 
-typedef struct vertex_aux_data{
-	// dijkstra
-	long dijkstra_tmp_value;
-	long dijkstra_definitive_value;
-	struct vertex *dijkstra_from_vertex;
-	
+typedef struct kruskals_data{
 	// kruskals
     int kruskals_index;
+}KRUSKALS_DATA;
 
+typedef struct vertex_aux_data{
 	// depth first search
 	int dfs_visited;
     int dfs_starting_time;
@@ -35,7 +32,8 @@ typedef struct vertex{
 	char id[41];
 	type_graphinfos *vertex_info;
 	type_list edges;
-	DATA *data_for_other_algorithms;
+	DATA *other_data;
+	KRUSKALS_DATA *data_for_other_algorithms;
 }VERTEX;
 
 typedef struct edge{
@@ -175,7 +173,8 @@ void _kruskals_edges_action_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_ver
 
 VERTEX* _kruskals_new_vertex_for_graph_aux(GRAPH * graph, char id[]){
 	VERTEX *vertex_node = malloc(sizeof(VERTEX));
-    vertex_node->data_for_other_algorithms = malloc(sizeof(DATA));
+    vertex_node->other_data = malloc(sizeof(DATA));
+    vertex_node->data_for_other_algorithms = malloc(sizeof(KRUSKALS_DATA));
 	vertex_node->vertex_info = NULL;
 	vertex_node->edges = NULL;
 	sprintf(vertex_node->id, "%s%c", id, '\0');
@@ -192,6 +191,7 @@ VERTEX * _kruskals_add_vertex_to_graph(type_graph graph, char id[]){
 // ou aqui o problem
 void _kruskals_union_find_action_vertex(VERTEX* vertex){
     printf("no _kruskals_union_find_action_vertex\n");
+	vertex->data_for_other_algorithms = malloc(sizeof(KRUSKALS_DATA));
     vertex->data_for_other_algorithms->kruskals_index = making_a_new_set_containing_a_new_element(KA_union_find, vertex);
     VERTEX* vertex_added = _kruskals_add_vertex_to_graph(KA_solution_graph, vertex->id);
     printf("depois do  vertex_added\n");
@@ -284,5 +284,6 @@ type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypei
     solution_graph = _kruskals_algorithm_in_graph(graph_, edges, union_find, solution_graph);
 
     printf("fim do kruskal");
+	//AQUIDE cleanup function desalocar memória do KRUSKALS_DATA
     return solution_graph;
 }

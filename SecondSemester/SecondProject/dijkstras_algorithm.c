@@ -1,17 +1,17 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "dijkstras_algorithm.h"
 
-typedef struct vertex_aux_data{
+typedef struct dijkstra_data{
 	// dijkstra
 	long dijkstra_tmp_value;
 	long dijkstra_definitive_value;
 	struct vertex *dijkstra_from_vertex;
-	
-	// kruskals
-    int kruskals_index;
+}DIJKSTRA_DATA;
 
+typedef struct vertex_aux_data{
 	// depth first search
 	int dfs_visited;
     int dfs_starting_time;
@@ -27,7 +27,8 @@ typedef struct vertex{
 	char id[41];
 	type_graphinfos *vertex_info;
 	type_list edges;
-	DATA *data_for_other_algorithms;
+	DATA *other_data;
+	DIJKSTRA_DATA *data_for_other_algorithms;
 }VERTEX;
 
 typedef struct edge{
@@ -39,7 +40,6 @@ typedef struct graph{
 	type_list vertices; // VERTEX
 	int current_size; // amount of vertices
 	int amount_of_edges;
-
 }GRAPH;
 
 type_apqueue GA_PRIORITY_QUEUE;
@@ -99,6 +99,7 @@ void _set_up_dijkstras_values_in_graph_action_aux(VERTEX* vertex){
     if(size2 == size1 && strncmp(GA_SOURCE->id, vertex->id, max) == 0){
         return;
     }
+    vertex->data_for_other_algorithms = malloc(sizeof(DIJKSTRA_DATA));
     vertex->data_for_other_algorithms->dijkstra_tmp_value = __LONG_MAX__; 
     vertex->data_for_other_algorithms->dijkstra_from_vertex = NULL;
     insert_item_in_ascending_priority_queue(GA_PRIORITY_QUEUE, __LONG_MAX__, vertex);
@@ -110,6 +111,7 @@ void _set_up_dijkstras_values_in_graph_aux(GRAPH * graph, VERTEX* source, type_a
     GA_PRIORITY_QUEUE = priority_queue;
     GA_SOURCE = source;
     _traverse_graph_alg_verticies_with_action(graph, (void*)_set_up_dijkstras_values_in_graph_action_aux);
+    source->data_for_other_algorithms = malloc(sizeof(DIJKSTRA_DATA));
     source->data_for_other_algorithms->dijkstra_definitive_value = 0;
     source->data_for_other_algorithms->dijkstra_from_vertex = NULL;
 }
@@ -217,7 +219,7 @@ type_list dijkstras_algorithm_with_destination_in_graph(type_graph graph, char s
     type_list solution_array = create_list();
 
 	solution_array = _dijkstras_algorithm_with_destination_in_graph_aux(graph_, source_node, destination_node, priority_queue, (void*)get_edge_value, solution_array);
-
+	//AQUIDE cleanup function desalocar memória do DIJKSTRA DATA
     return solution_array;
 }
 

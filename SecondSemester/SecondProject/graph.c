@@ -25,14 +25,6 @@
 // }NEIGHBORS;
 
 typedef struct vertex_aux_data{
-	// dijkstra
-	long dijkstra_tmp_value;
-	long dijkstra_definitive_value;
-	struct vertex *dijkstra_from_vertex;
-	
-	// kruskals
-    int kruskals_index;
-
 	// depth first search
 	int dfs_visited;
     int dfs_starting_time;
@@ -48,7 +40,8 @@ typedef struct vertex{
 	char id[41];
 	type_graphinfos *vertex_info;
 	type_list edges;
-	DATA *data_for_other_algorithms;
+	DATA *other_data;
+	void* data_for_other_algorithms;
 }VERTEX;
 
 typedef struct edge{
@@ -86,7 +79,7 @@ VERTEX* _new_vertex_for_graph_aux(GRAPH * graph, char id[]){
 	VERTEX *vertex_node = malloc(sizeof(VERTEX));
 	vertex_node->vertex_info = NULL;
 	vertex_node->edges = NULL;
-	vertex_node->data_for_other_algorithms = malloc(sizeof(DATA));
+	vertex_node->other_data = malloc(sizeof(DATA));
 	sprintf(vertex_node->id, "%s%c", id, '\0');
 	return vertex_node;
 }
@@ -306,7 +299,7 @@ type_graphinfos remove_vertex_from_graph(type_graph graph, char id[], type_graph
 		delete_item_in_list(graph_->vertices, vertex_node, (void*)_compare_verticies_graph);
 
 		type_graphinfos vertex_info = vertex_node->vertex_info;
-		free(vertex_node->data_for_other_algorithms);
+		free(vertex_node->other_data);
 		free(vertex_node);
 		
 		graph_->current_size--;
@@ -388,7 +381,7 @@ void destroi_graph(type_graph graph, type_graphptrf_onetypeinfo deallocate_verte
 		delete_current_item_in_list(graph_->vertices);
 		//delete_item_in_list(graph_->vertices, current_vertex, (void*)_compare_verticies_graph);
 		deallocate_vertex(current_vertex->vertex_info);
-		free(current_vertex->data_for_other_algorithms);
+		free(current_vertex->other_data);
 		free(current_vertex);
 
 		move_current_forward_in_list(graph_->vertices);
@@ -752,8 +745,8 @@ void _set_up_traverse_breadth_search_values_in_graph_action_aux(VERTEX* vertex){
     if(size2 == size1 && strncmp(G_SOURCE->id, vertex->id, max) == 0){
         return;
     }
-    vertex->data_for_other_algorithms->bfs_tmp_value = __LONG_MAX__; 
-    vertex->data_for_other_algorithms->bfs_from_vertex = NULL;
+    vertex->other_data->bfs_tmp_value = __LONG_MAX__; 
+    vertex->other_data->bfs_from_vertex = NULL;
     insert_item_in_ascending_priority_queue(G_PRIORITY_QUEUE, __LONG_MAX__, vertex);
     // FLOAT?
 }
@@ -762,8 +755,8 @@ void _set_up_traverse_breadth_search_values_in_graph_aux(GRAPH * graph, VERTEX* 
     G_PRIORITY_QUEUE = priority_queue;
     G_SOURCE = source;
     _traverse_graph_verticies_with_action(graph, (void*)_set_up_traverse_breadth_search_values_in_graph_action_aux);
-    source->data_for_other_algorithms->bfs_def_value = 0;
-    source->data_for_other_algorithms->bfs_from_vertex = NULL;
+    source->other_data->bfs_def_value = 0;
+    source->other_data->bfs_from_vertex = NULL;
 }
 
 long _compare_two_vertex_in_graph(VERTEX* vertex, VERTEX* vertex2){
@@ -778,7 +771,7 @@ long _compare_two_vertex_in_graph(VERTEX* vertex, VERTEX* vertex2){
 }
 
 long _condition_vertex_for_traverse_breadth_search_in_graph(VERTEX* vertex){
-    if(G_PATHCOST < vertex->data_for_other_algorithms->bfs_tmp_value){
+    if(G_PATHCOST < vertex->other_data->bfs_tmp_value){
         return 1;
     }
     return 0;
@@ -813,15 +806,15 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
                     // colocando valores temporários no gráfo
                     EDGE* edge = get_current_item_in_list(vertex->edges);
                     // valor da aresta + valor que está no nó anterior
-                    long path_cost = (long) 1 + vertex->data_for_other_algorithms->bfs_def_value;
+                    long path_cost = (long) 1 + vertex->other_data->bfs_def_value;
                     G_PATHCOST = path_cost;
                     
                     int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_in_graph, (void*)_condition_vertex_for_traverse_breadth_search_in_graph);
                     // colocando valores temporários na fila                
                     if(changed == 1){
                         // printf("mudei alguem\n");
-                        (edge->to)->data_for_other_algorithms->bfs_tmp_value = path_cost;
-                        (edge->to)->data_for_other_algorithms->bfs_from_vertex = vertex;
+                        (edge->to)->other_data->bfs_tmp_value = path_cost;
+                        (edge->to)->other_data->bfs_from_vertex = vertex;
                     }
 
 					printf("antes do edge_condition\n");
@@ -839,7 +832,7 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
             }
         }
         VERTEX* next_vertex = pull_item_in_ascending_priority_queue(priority_queue);
-        next_vertex->data_for_other_algorithms->bfs_def_value = next_vertex->data_for_other_algorithms->bfs_tmp_value;
+        next_vertex->other_data->bfs_def_value = next_vertex->other_data->bfs_tmp_value;
         vertex = next_vertex;
     }
 }
@@ -882,20 +875,20 @@ VERTEX* _find_unvisited_vertex_for_depth_first_search(GRAPH* graph, int order[])
 
 	VERTEX * current_vertex = get_current_item_in_list(graph->vertices);
 	G_order_index++;
-	if(current_vertex->data_for_other_algorithms->dfs_visited == 0) return current_vertex;
+	if(current_vertex->other_data->dfs_visited == 0) return current_vertex;
 
 	return _find_unvisited_vertex_for_depth_first_search(graph, order);
 }
 
 void _depth_first_search_visit_start(VERTEX* vertex){
 	G_time++;
-	vertex->data_for_other_algorithms->dfs_visited = 1;
-	vertex->data_for_other_algorithms->dfs_starting_time = G_time;
+	vertex->other_data->dfs_visited = 1;
+	vertex->other_data->dfs_starting_time = G_time;
 }
 
 void _depth_first_search_visit_finnish(VERTEX* vertex){
 	G_time++;
-	vertex->data_for_other_algorithms->dfs_finnishing_time = G_time;
+	vertex->other_data->dfs_finnishing_time = G_time;
 }
 
 void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph graph, int order[], VERTEX* from_vertex, VERTEX* vertex){
@@ -911,11 +904,11 @@ void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph g
 	do{
 		done = is_current_last_item_in_list(vertex->edges);
 		edge = get_current_item_in_list(vertex->edges);
-		if(edge->to->data_for_other_algorithms->dfs_visited == 0) break;
+		if(edge->to->other_data->dfs_visited == 0) break;
 		move_current_forward_in_list(vertex->edges);
 	}while(!done);
 
-	if(edge->to->data_for_other_algorithms->dfs_visited == 1) return;
+	if(edge->to->other_data->dfs_visited == 1) return;
 
 	_traverse_depth_first_search_with_conditional_actions_in_graph(graph, order, vertex, edge->to);
 	_depth_first_search_visit_finnish(vertex);
@@ -933,9 +926,9 @@ void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph g
 }
 
 void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph_action(VERTEX* vertex){
-	vertex->data_for_other_algorithms->dfs_visited = 0;
-	vertex->data_for_other_algorithms->dfs_starting_time = 0;
-	vertex->data_for_other_algorithms->dfs_finnishing_time = 0;
+	vertex->other_data->dfs_visited = 0;
+	vertex->other_data->dfs_starting_time = 0;
+	vertex->other_data->dfs_finnishing_time = 0;
 }
 
 void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph){

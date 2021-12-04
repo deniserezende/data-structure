@@ -60,7 +60,7 @@ $(LINK_TARGET): $(OBJECTS)
 # gcc -fstack-protector-all -std=c99 -g -o $@ -c $<
 #gcc -std=c99 -Wall -g -o $@ -c $<
 #dell
-	gcc -o $@ -c $< - lm
+	gcc -o $@ -c $< -lm
 
 #mac
 # gcc -o $@ -c $<

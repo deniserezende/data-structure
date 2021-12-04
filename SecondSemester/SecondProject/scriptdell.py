@@ -10,7 +10,7 @@ BED = '/home/pjr/Downloads/t2'
 BSD = '/home/pjr/Downloads/output'
 
 # src = input("Path da pasta SRC:")
-src = 'home/pjr/Downloads/SecondProject'
+src = '/home/pjr/Downloads/SecondProject'
 
 
 ini = datetime.datetime.now()

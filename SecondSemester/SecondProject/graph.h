@@ -18,7 +18,9 @@ typedef void* type_lptrf_threeitems(type_graphinfos, type_graphinfos, type_graph
 
 type_graph create_graph();
 
-int empty_graph();
+int empty_graph(type_graph graph);
+
+int get_amount_of_vertices_in_graph(type_graph graph);
 
 // returns the id of the inserted info
 int add_vertex_to_graph(type_graph graph, char id[]);
@@ -63,6 +65,6 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 
 void breadth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition);
 
-void depth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, int order[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition);
+void depth_first_search_traversal_with_actions_in_graph(type_graph graph, int order[], type_lptrf_oneitem vertex_action_one, type_lptrf_oneitem vertex_action_two);
 
 #endif 

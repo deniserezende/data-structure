@@ -50,6 +50,7 @@
         "qry_rv.h": "c",
         "disjoint_sets.h": "c",
         "ios": "c",
-        "txt.h": "c"
+        "txt.h": "c",
+        "strongly_connected_components_algorithm.h": "c"
     }
 }

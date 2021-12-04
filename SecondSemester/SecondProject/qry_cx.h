@@ -5,6 +5,7 @@
 #include "vertex.h"
 #include "edge.h"
 #include "_auxiliary_functions.h"
+#include "strongly_connected_components_algorithm.h"
 
 
 void cx(type_svg SVGFILE, type_txt TXTFILE, type_graph via_graph, double limiar);

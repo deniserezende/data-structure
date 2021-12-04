@@ -1,10 +1,8 @@
-#ifndef kruskals_algorithm_h
-#define kruskals_algorithm_h
+#ifndef strongly_connected_components_algorithm_h
+#define strongly_connected_components_algorithm_h
 
 #include "graph.h"
 
-type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypeinfo get_edge_value);
+void strongly_connected_components_algorithm(type_graph graph, int solution_vector[]);
 
-
-// type_graph kruskals_algorithm_in_graph_forest(type_graph graph, type_graphptrf_onetypeinfo get_edge_value, int *vector);
 #endif

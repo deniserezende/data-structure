@@ -25,7 +25,7 @@ void find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prop
     set_id(cep);
     type_hashitem block = lookup_item_in_hash_table(cityblocks_hash, cep_key, (void*)get_key_from_block, (void*)verify_block_found);
     if(block == NULL){
-        printf("vish! Block == NULL\n");
+        printf("vish! Block == NULL no p?\n");
     }
     double x = get_rect_x(block);
     double y = get_rect_y(block);

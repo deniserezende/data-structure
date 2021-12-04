@@ -143,7 +143,7 @@ long _print_condition_dijkstra(VERTEX* vertex){
     if(vertex->data_for_other_algorithms->dijkstra_tmp_value == __INT_MAX__) return 0;
     return 1;
 }
-
+// AQUIDE poderia só chamar a função que fiz no graph?
 type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTEX* vertex_source, VERTEX* vertex_destination, type_apqueue priority_queue, type_graphptrf_onetypeinfo get_edge_value, type_list solution_array){
     
     // base case:

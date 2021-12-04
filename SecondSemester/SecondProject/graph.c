@@ -166,6 +166,11 @@ type_graph create_graph(){
 	return graph;
 }
 
+int get_amount_of_vertices_in_graph(type_graph graph){
+	GRAPH *graph_ = graph; 
+	return graph_->current_size;
+}
+
 int empty_graph(type_graph graph){
 	GRAPH *graph_ = graph;
 	if(empty_list(graph_->vertices)) return 1;
@@ -653,7 +658,7 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 	GRAPH *graph_ = base_graph; 
 	if(graph_ == NULL) return NULL;
 	
-	GRAPH *reversed_graph = create_graph();
+	type_graph reversed_graph = create_graph();
 	if(empty_list(graph_->vertices)){
 		printf("Graph is empty.\n"); 
 		return reversed_graph;
@@ -673,18 +678,21 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 		}
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
+	printf("inseri os verticies\n");
 
+	set_current_to_first_item_in_list(graph_->vertices);
 	// inserting reversed edges
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
-		
+		printf("antes do if\n");
 		if((long)vertex_condition(current_vertex->vertex_info)){
 			if(current_vertex->edges == NULL || empty_list(current_vertex->edges)){
 				move_current_forward_in_list(graph_->vertices);
 				continue;
 			} 
 			int done_;
+			printf("antes do DO\n");
 
 			set_current_to_first_item_in_list(current_vertex->edges);
 			do {
@@ -697,9 +705,11 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 				}
 				move_current_forward_in_list(current_vertex->edges);
 			}while(!done_);
+			printf("depois do WHILE\n");
 		}
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
+	printf("inseri as edges\n");
 
 	return reversed_graph;	
 }
@@ -891,15 +901,16 @@ void _depth_first_search_visit_finnish(VERTEX* vertex){
 	vertex->other_data->dfs_finnishing_time = G_time;
 }
 
-void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph graph, int order[], VERTEX* from_vertex, VERTEX* vertex){
+void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph graph, int order[], VERTEX* from_vertex, VERTEX* vertex, type_lptrf_oneitem vertex_action_one, type_lptrf_oneitem vertex_action_two){
 	_depth_first_search_visit_start(vertex);
+	vertex_action_one(vertex->vertex_info);
 
 	if(vertex->edges == NULL || empty_list(vertex->edges)){
-		return;
+		return; // stuck
 	}
+
 	set_current_to_first_item_in_list(vertex->edges);
 	EDGE* edge;
-
 	int done;
 	do{
 		done = is_current_last_item_in_list(vertex->edges);
@@ -908,21 +919,21 @@ void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph g
 		move_current_forward_in_list(vertex->edges);
 	}while(!done);
 
-	if(edge->to->other_data->dfs_visited == 1) return;
+	VERTEX* _next_vertex;
+	VERTEX* _from_vertex;
+	if(edge->to->other_data->dfs_visited == 1){
+		_next_vertex = _find_unvisited_vertex_for_depth_first_search(graph, order);
+		if(_next_vertex == NULL) return; // done
+		_from_vertex = NULL;
+	}
+	else{ // if edge has not been visited
+		_next_vertex = edge->to;
+		_from_vertex = vertex;
+	}
 
-	_traverse_depth_first_search_with_conditional_actions_in_graph(graph, order, vertex, edge->to);
+	_traverse_depth_first_search_with_conditional_actions_in_graph(graph, order, _from_vertex, _next_vertex, vertex_action_one, vertex_action_two);
 	_depth_first_search_visit_finnish(vertex);
-
-	VERTEX* next_vertex = _find_unvisited_vertex_for_depth_first_search(graph, order);
-	if(next_vertex == NULL) return; //done
-	_traverse_depth_first_search_with_conditional_actions_in_graph(graph, order, NULL, next_vertex);
-	return;
-	// visita um nó, seu filho, seu filho do filho...
-	// tudo isso setando o valor do time inicial
-	// até não ter mais para onde ir desse filho
-	// ai seta esse nó para time de fim
-	// ai volta um
-	// veja se esse tem para onde ir...
+	vertex_action_two(vertex->vertex_info);
 }
 
 void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph_action(VERTEX* vertex){
@@ -932,19 +943,17 @@ void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph_acti
 }
 
 void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph){
-// for each vertex u 2 G:V u:color D WHITE u:􏱓 D NIL
-// timeD0
 	G_time = 0;
 	_traverse_graph_verticies_with_action(graph, (void*)_set_up_depth_first_search_traversal_with_conditional_actions_in_graph_action);
 }
 
-void depth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, int order[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
+void depth_first_search_traversal_with_actions_in_graph(type_graph graph, int order[], type_lptrf_oneitem vertex_action_one, type_lptrf_oneitem vertex_action_two){
 	GRAPH *graph_ = graph; 
 	if(graph_ == NULL || empty_graph(graph_)) return;
 	_set_up_depth_first_search_traversal_with_conditional_actions_in_graph(graph_);
 
 	G_order_index = 0;
 	VERTEX* vertex = _find_unvisited_vertex_for_depth_first_search(graph, order);
-    _traverse_depth_first_search_with_conditional_actions_in_graph(graph_, order, NULL, vertex);
+    _traverse_depth_first_search_with_conditional_actions_in_graph(graph_, order, NULL, vertex, vertex_action_one, vertex_action_two);
 }
 

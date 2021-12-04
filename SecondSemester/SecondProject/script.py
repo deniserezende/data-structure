@@ -10,7 +10,7 @@ BED = '/Users/Denise/Downloads/t2'
 BSD = '/Users/Denise/Downloads/output'
 
 # src = input("Path da pasta SRC:")
-src = '/Users/Denise/Dropbox/a.UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/SecondProject'
+src = '/Users/Denise/Dropbox/UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/SecondProject'
 
 
 ini = datetime.datetime.now()

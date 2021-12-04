@@ -49,14 +49,21 @@ $(LINK_TARGET): $(OBJECTS)
 # Note that -lm is used because of the dependency on math.h
 # gcc -fstack-protector-all -std=c99 -g -o $@ $^ -lm
 # gcc -std=c99 -Wall -o $@ $^ -lm
-	gcc -o $@ $^
+#dell 
+	gcc -o $@ $^ -lm
+# mac
+# gcc -o $@ $^
 
 %.o : %.c
 # $@ for the pattern-matched target
 # $< for the pattern-matched dependency
 # gcc -fstack-protector-all -std=c99 -g -o $@ -c $<
 #gcc -std=c99 -Wall -g -o $@ -c $<
-	gcc -o $@ -c $<
+#dell
+	gcc -o $@ -c $< - lm
+
+#mac
+# gcc -o $@ -c $<
 
 # Cleaning build environment
 clean:

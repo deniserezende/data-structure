@@ -160,6 +160,13 @@ long _kruskals_true_vertex(VERTEX* vertex){
 long _kruskals_true_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
     return 1;
 }
+
+long _kruskals_false_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
+    return 0;
+}
+void _kruskals_do_nothing_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
+    return;
+}
 // ou aqui o problem
 void _kruskals_edges_action_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
     printf("no _kruskals_edges_action_edge\n");
@@ -221,14 +228,11 @@ void print_edd(KEDGE *kedge){
 type_graph _kruskals_algorithm_in_graph(type_graph graph, type_apqueue edges, type_disjoint_sets union_find, type_graph solution_graph){
     int amount_of_minimum_edges = 0;
     int amount_of_vertex = get_disjoint_sets_max(union_find);
-    printf("amount_of_vertex=%d\n", amount_of_vertex);
 
     while(amount_of_minimum_edges < amount_of_vertex-1){
         if(empty_ascending_priority_queue(edges)) break; // to só colocando um break por enquanto
         // sem warning "AQUIDE"
         KEDGE* kedge = pull_item_in_ascending_priority_queue(edges);
-        print_ascending_priority_queue(edges, (void*)print_edd);
-        printf("\n");
 
         int from_index = (kedge->from)->data_for_other_algorithms->kruskals_index;
         int to_index = (kedge->to)->data_for_other_algorithms->kruskals_index;
@@ -253,8 +257,11 @@ type_graph _kruskals_algorithm_in_graph(type_graph graph, type_apqueue edges, ty
         }
         free(kedge);
     }
-    printf("amount_of_minimum_edges=%d\n", amount_of_minimum_edges);
     return solution_graph;
+}
+
+void _kruskals_clean_up_vertices(VERTEX* vertex){
+    free(vertex->data_for_other_algorithms);
 }
 
 type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypeinfo get_edge_value){
@@ -263,27 +270,23 @@ type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypei
     KA_get_edge_value = get_edge_value;
     
     set_ascending_priority_queue_max_size(graph_->amount_of_edges + 1);
-    printf("amount of edges: %d\n", graph_->amount_of_edges);
+
     // criar uma lista de arestas
     type_apqueue edges = create_ascending_priority_queue();
-    printf("fim do edges\n");
 
     // criar um union find com os verticies
     type_disjoint_sets union_find = start_disjoint_sets(graph_->current_size);
-    printf("fim do union_find\n");
 
     // inserir todos os vertices no meu union find
     // inserir todas as arestas no priority queue
     _set_up_kruskals_union_find_and_edges_aux(graph_, union_find, edges, solution_graph);
-    printf("fim do _set_up_kruskals_union_find_and_edges_aux\n");
 
     print_ascending_priority_queue(edges, (void*)print_edd);
-
 
     // analizar as arestas
     solution_graph = _kruskals_algorithm_in_graph(graph_, edges, union_find, solution_graph);
 
-    printf("fim do kruskal");
 	//AQUIDE cleanup function desalocar memória do KRUSKALS_DATA
+    _kruskals_traverse_graph_conditional_actions(graph, (void*)_kruskals_clean_up_vertices, (void*)_kruskals_true_vertex, (void*)_kruskals_do_nothing_edge, (void*)_kruskals_false_edge);
     return solution_graph;
 }

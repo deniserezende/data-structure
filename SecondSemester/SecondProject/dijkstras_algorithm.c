@@ -50,7 +50,7 @@ VERTEX* GA_SOURCE;
 // ACHO MELHOR FLOAT
 // AI EU LIDO COM UM APONTADOR!!!!!!
 
-void _traverse_graph_alg_verticies_with_action(type_graph graph, type_graphptrf_onetypeinfo action){
+void _dijkstra_traverse_graph_verticies_with_action(type_graph graph, type_graphptrf_onetypeinfo action){
 	GRAPH *graph_ = graph; 
 	if(graph_ == NULL) return;
 	
@@ -109,7 +109,7 @@ void _set_up_dijkstras_values_in_graph_action_aux(VERTEX* vertex){
 void _set_up_dijkstras_values_in_graph_aux(GRAPH * graph, VERTEX* source, type_apqueue priority_queue){
     GA_PRIORITY_QUEUE = priority_queue;
     GA_SOURCE = source;
-    _traverse_graph_alg_verticies_with_action(graph, (void*)_set_up_dijkstras_values_in_graph_action_aux);
+    _dijkstra_traverse_graph_verticies_with_action(graph, (void*)_set_up_dijkstras_values_in_graph_action_aux);
     source->data_for_other_algorithms = malloc(sizeof(DIJKSTRA_DATA));
     source->data_for_other_algorithms->dijkstra_definitive_value = 0;
     source->data_for_other_algorithms->dijkstra_from_vertex = NULL;
@@ -171,7 +171,6 @@ type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTE
                     int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_for_galgorithms, (void*)_condition_vertex_for_galgorithms);
                     // colocando valores temporários na fila                
                     if(changed == 1){
-                        // printf("mudei alguem\n");
                         (edge->to)->data_for_other_algorithms->dijkstra_tmp_value = path_cost;
                         (edge->to)->data_for_other_algorithms->dijkstra_from_vertex = vertex;
                     }
@@ -182,15 +181,8 @@ type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTE
             }
         }
         VERTEX* next_vertex = pull_item_in_ascending_priority_queue(priority_queue);
-        // printf("next=[%ld]\n", next_vertex->dijkstra_tmp_value);
-        // printf("NEXT ID:[%s]\n", next_vertex->id);
-        // printf("dps do pull_item_in_ascending_priority_queue\n");
         next_vertex->data_for_other_algorithms->dijkstra_definitive_value = next_vertex->data_for_other_algorithms->dijkstra_tmp_value;
         vertex = next_vertex;
-        printf("------------------------------------------------------------------------------------------------\n\n\n");
-        print_ascending_priority_queue_with_condition(priority_queue, (void*)print_, (void*)_print_condition_dijkstra);
-        printf("------------------------------------------------------------------------------------------------\n\n\n");
-
     }
 
     vertex = vertex_destination;
@@ -205,6 +197,9 @@ type_list _dijkstras_algorithm_with_destination_in_graph_aux(GRAPH *graph, VERTE
 }
 
 
+void _dijkstras_clean_up_vertices(VERTEX* vertex){
+    free(vertex->data_for_other_algorithms);
+}
 type_list dijkstras_algorithm_with_destination_in_graph(type_graph graph, char source_info_id[], char destination_info_id[], type_graphptrf_onetypeinfo get_edge_value){
 	GRAPH *graph_ = graph; 
 	VERTEX* source_node = _find_vertex_by_id_in_graph_alg(graph_, source_info_id);
@@ -218,74 +213,8 @@ type_list dijkstras_algorithm_with_destination_in_graph(type_graph graph, char s
     type_list solution_array = create_list();
 
 	solution_array = _dijkstras_algorithm_with_destination_in_graph_aux(graph_, source_node, destination_node, priority_queue, (void*)get_edge_value, solution_array);
-	//AQUIDE cleanup function desalocar memória do DIJKSTRA DATA
+	
+    //AQUIDE cleanup function desalocar memória do DIJKSTRA DATA
+    _dijkstra_traverse_graph_verticies_with_action(graph, (void*)_dijkstras_clean_up_vertices);
     return solution_array;
 }
-
-
-
-
-
-
-// ACHO QUE PODE APAGAR
-
-// void _dijkstras_algorithm_with_destination_in_graph_aux_recursive(GRAPH *graph, VERTEX* vertex, VERTEX* vertex_destination, type_apqueue priority_queue, type_graphptrf_onetypeinfo get_edge_value){
-    
-//     // base case:
-//     // visit os vizinhos e coloco valores temporarios do custo
-//     // tanto no grafo quanto na fila
-//     printf("------------------------------------------------------------------------------------------------\n\n\n");
-//     print_ascending_priority_queue_with_condition(priority_queue, (void*)print_, (void*)_print_condition_dijkstra);
-//     printf("------------------------------------------------------------------------------------------------\n\n\n");
-
-//     // setando os valores temp! -------------------
-//     if(vertex->edges != NULL){
-//         if(!empty_list(vertex->edges)){
-//             set_current_to_first_item_in_list(vertex->edges);
-//             int done;
-//             do{
-//                 done = is_current_last_item_in_list(vertex->edges);
-
-//                 // colocando valores temporários no gráfo
-//                 EDGE* edge = get_current_item_in_list(vertex->edges);
-//                 // valor da aresta + valor que está no nó anterior
-//                 long path_cost = (long)get_edge_value(edge->edge_info) + vertex->dijkstra_definitive_value;
-//                 GA_PATHCOST = path_cost;
-                
-//                 int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_for_galgorithms, (void*)_condition_vertex_for_galgorithms);
-                
-//                 // colocando valores temporários na fila                
-//                 if(changed == 1){
-//                     printf("mudei alguem\n");
-//                     (edge->to)->dijkstra_tmp_value = path_cost;
-//                     (edge->to)->dijkstra_from_vertex = vertex;
-//                 }
-//                 move_current_forward_in_list(vertex->edges);
-//             }while(!done);
-
-//             // pego o de menor custo e seto para definitivo
-//         }
-//     }
-//     printf("fora do while\n");
-
-//     // condicao de parada ====== fim
-//     if(strcmp(vertex->id, vertex_destination->id) == 0){
-//         printf("CURRENT ID: [%s]\n", vertex->id);
-//         printf("LAST ID: [%s]\n", vertex_destination->id);
-//         return;
-//     }
-//     if(empty_ascending_priority_queue(priority_queue)) return;
-
-//     // para onde vou?
-//     // PEGANDO DO PRIORITY QUEUE O MENOR 
-//     VERTEX* next_vertex = pull_item_in_ascending_priority_queue(priority_queue);
-//     printf("next=[%ld]\n", next_vertex->dijkstra_tmp_value);
-//     printf("NEXT ID:[%s]\n", next_vertex->id);
-//     printf("dps do pull_item_in_ascending_priority_queue\n");
-//     next_vertex->dijkstra_definitive_value = next_vertex->dijkstra_tmp_value;
-
-//     //return _dijkstras_algorithm_in_graph_aux(graph, next_vertex, priority_queue, get_edge_value);
-//     _dijkstras_algorithm_with_destination_in_graph_aux_recursive(graph, next_vertex, vertex_destination, priority_queue, get_edge_value);
-// }
-
-

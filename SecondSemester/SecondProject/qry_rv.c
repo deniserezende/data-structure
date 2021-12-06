@@ -36,22 +36,15 @@ long _rv_graph_duplicate_vertex_condition(type_graphinfos vertex){
     double vertex_x = get_vertex_x(vertex);
     double vertex_y = get_vertex_y(vertex);
 
-    printf("\nvertex_X = %lf\n", vertex_x);
-    printf("vertex_Y = %lf\n", vertex_y);
-
     return point_in_rect(QRV_rectangle, vertex_x, vertex_y);
 }
 
 long _rv_graph_duplicate_edge_condition(type_graphinfos from_vertex, type_graphinfos edge, type_graphinfos to_vertex){
-    printf("\n\n_rv_graph_duplicate_edge_condition\n");
     long from_vertex_in_rect = _rv_graph_duplicate_vertex_condition(from_vertex);
     long to_vertex_in_rect = _rv_graph_duplicate_vertex_condition(to_vertex);
-    printf("__________________________________\n");
 
     if(from_vertex_in_rect && to_vertex_in_rect) return 1;
-    printf("not in the rectangle\n");
     return 0;
-    //return(from_vertex_in_rect && to_vertex_in_rect);
 }
 
 long _kruskals_get_edge_length(type_edge edge){
@@ -83,11 +76,9 @@ void _rv_reduce_speed_action_vertex(type_graphinfos vertex){
 }
 
 void _rv_reduce_speed_action_edge(type_graphinfos from_vertex, type_graphinfos edge, type_graphinfos to_vertex){
-    printf("no _rv_reduce_speed_action_edge\n");
     double current_speed = get_edge_speed_limit(edge);
     double new_speed = current_speed * (QRV_f * QRV_index);
     set_edge_speed_limit(edge, new_speed); 
-    printf("depois do set_edge_speed_limit\n");
 
 
     // values for report
@@ -95,13 +86,12 @@ void _rv_reduce_speed_action_edge(type_graphinfos from_vertex, type_graphinfos e
     double y1 = get_vertex_y(from_vertex);
     double x2 = get_vertex_x(to_vertex);
     double y2 = get_vertex_y(to_vertex);
-    printf("depois do get_vertex_x\n");
 
     // reporting
     _report_edge_txt_(edge);
     char color_blue[6];
     sprintf(color_blue, "Blue%c", '\0');
-    char color_PeachPuff[11];
+    char color_PeachPuff[12];
     sprintf(color_PeachPuff, "PeachPuff%c", '\0');
 
     insert_line_in_svg(QRV_SVGFILE, x1, y1, x2, y2, color_PeachPuff, 5);
@@ -125,25 +115,18 @@ void _rv_get_id_action(type_vertex vertex){
 void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, double y, double w, double h, double f){
     QRV_SVGFILE = SVGFILE;
     set_txt_file(TXTFILE);
-    printf("no rv\n");
     type_rect rectangle = new_rectangle("", x, y, w, h, "", "");
-    printf("x=%lf\ty=%lf\tw=%lf\t,h=%lf\n", x, y, w, h);
     QRV_rectangle = rectangle;
     
     // achar os elementos que estao na regiao dada => criando um subgrafo
     type_graph subgraph = duplicate_graph_with_conditionals(via_graph, (void*)_rv_graph_duplicate_vertex_condition, (void*)_rv_graph_duplicate_edge_condition);
-    printf("criei o subgraph no rv\n");
     print_graph(subgraph, (void*)_kruskals_print_vertex, (void*)_kruskals_print_edge);
-    printf("fim o subgraph no rv\n");
 
     // aplicar o kruskal para achar a arvore geradora minima do subgrafo
     type_graph mst = kruskals_algorithm_in_graph(subgraph, (void*)_kruskals_get_edge_length);
-    printf("kruskals_algorithm_in_graph no rv\n");
 
-    printf("====================================== no rv\n");
 
     print_graph(mst, (void*)_kruskals_print_vertex, (void*)_kruskals_print_edge);
-    printf("print_graph no rv\n");
 
 
     // COMO DETERMINAR A RAIZ DESSA ARVORE??????????????
@@ -157,11 +140,9 @@ void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, doubl
 
     traverse_verticies_until_conditional_action_graph(mst, (void*)_rv_get_id_action, (void*)_rv_get_id_condition);
 
-    printf("após o traverse_verticies_until_conditional_action_graph\n");
     QRV_f = f;
     QRV_index = 0;
     breadth_first_search_traversal_with_conditional_actions_in_graph(mst, QRV_ID, (void*)_rv_reduce_speed_action_vertex, (void*)_rv_reduce_speed_condition_vertex, (void*)_rv_reduce_speed_action_edge, (void*)_rv_reduce_speed_condition_edge);
-    printf("após o traverse_breadth_search_with_conditional_actions_in_graph\n");
     insert_dasharray_rect_in_svg(SVGFILE, x, y, w, h, "Transparent", "Red", 4, 4);
 
     // ATENÇÃO: Indicar a raiz da AGM

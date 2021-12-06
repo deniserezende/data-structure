@@ -63,6 +63,11 @@ long cx_duplicate_edge_condition(type_vertex from_vertex, type_edge edge, type_v
     return 1;
 }
 
+// como para svg so existem 147 cores, se houverem mais de 147 componentes fortemente conexas em algum ponto algumas cores serao repetidas
+// depois ver se isso 'e verdade ou se d'a para colocar:
+// background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='10' ><path fill='%23FF0000' d='M 0,10 H 20 L 10,0 Z' /></svg>")  repeat-x;
+// equivalente ao hexa
+// maior numero de componentes conexas ate agr foi 350 +-
 void cx_vertex_action_svg(type_vertex vertex){
     double x = get_vertex_x(vertex);
     double y = get_vertex_y(vertex);
@@ -74,11 +79,18 @@ void cx_vertex_action_svg(type_vertex vertex){
     // txt
     _report_vertex_txt_(vertex);
     char* string = malloc(sizeof(char) * 60);
-    sprintf(string, "REGIÃO %s", colors[QCX_solution[QCX_index]]);
+    
+    if(QCX_solution[QCX_index] != 122){
+    printf("QCX_index=%d\n", QCX_index);
+    printf("QCX_solution[QCX_index]=%d\n", QCX_solution[QCX_index]);        
+    }
+
+    
+    sprintf(string, "REGIÃO %s", colors[QCX_solution[QCX_index]%145]);
     insert_string_in_txt(QCX_TXTFILE, string);
     free(string);
     // svg
-    insert_ellipse_in_svg(QCX_SVGFILE, x, y, 6, 3, colors[QCX_solution[QCX_index]], colors[QCX_solution[QCX_index]], 1);
+    insert_ellipse_in_svg(QCX_SVGFILE, x, y, 6, 3, colors[QCX_solution[QCX_index]%145], colors[QCX_solution[QCX_index]%145], 1);
     QCX_index++;
 
 }
@@ -96,12 +108,11 @@ void cx_vertex_action_svg(type_vertex vertex){
 // Colocar sob os vértices, elipses de cores
 // diferentes para cada região desconectada. 
 void cx(type_svg SVGFILE, type_txt TXTFILE, type_graph via_graph, double limiar){
-    printf("limiar=%lf\n", limiar);
     QCX_limiar = limiar;
     QCX_SVGFILE = SVGFILE;
 
     int size = get_amount_of_vertices_in_graph(via_graph);
-    int *solution = malloc(sizeof(int) * size);
+    int *solution = malloc(sizeof(int) * (size + 1));
 
     // fazer mini grafico
     type_graph subgraph = duplicate_graph_with_conditionals(via_graph, (void*)cx_vertex_condition_true, (void*)cx_duplicate_edge_condition);

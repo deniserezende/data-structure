@@ -678,21 +678,18 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 		}
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
-	printf("inseri os verticies\n");
 
 	set_current_to_first_item_in_list(graph_->vertices);
 	// inserting reversed edges
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
-		printf("antes do if\n");
 		if((long)vertex_condition(current_vertex->vertex_info)){
 			if(current_vertex->edges == NULL || empty_list(current_vertex->edges)){
 				move_current_forward_in_list(graph_->vertices);
 				continue;
 			} 
 			int done_;
-			printf("antes do DO\n");
 
 			set_current_to_first_item_in_list(current_vertex->edges);
 			do {
@@ -705,11 +702,9 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 				}
 				move_current_forward_in_list(current_vertex->edges);
 			}while(!done_);
-			printf("depois do WHILE\n");
 		}
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
-	printf("inseri as edges\n");
 
 	return reversed_graph;	
 }
@@ -792,22 +787,18 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
     // base case:
     // visit os vizinhos e coloco valores temporarios do custo
     // tanto no grafo quanto na fila
-	printf("no _traverse_breadth_search_with_conditional_actions_in_graph\n");
     VERTEX* vertex = vertex_source;
 
     while(!empty_ascending_priority_queue(priority_queue)){
-		printf("no !empty_ascending_priority_queue\n");
 
 		if((long)vertex_condition(vertex->vertex_info)){
 			vertex_action(vertex->vertex_info);
 		}
-		printf("apos vertex_condition and action\n");
 
         if(vertex->edges != NULL){
             if(!empty_list(vertex->edges)){
                 set_current_to_first_item_in_list(vertex->edges);
 
-				printf("apos set_current_to_first_item_in_list\n");
 
                 int done;
                 do{
@@ -822,18 +813,14 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
                     int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_in_graph, (void*)_condition_vertex_for_traverse_breadth_search_in_graph);
                     // colocando valores temporários na fila                
                     if(changed == 1){
-                        // printf("mudei alguem\n");
                         (edge->to)->other_data->bfs_tmp_value = path_cost;
                         (edge->to)->other_data->bfs_from_vertex = vertex;
                     }
 
-					printf("antes do edge_condition\n");
 
 					if((long)edge_condition(vertex->vertex_info, edge->edge_info, (edge->to)->vertex_info)){
-						printf("antes do edge_action\n");
 						edge_action(vertex->vertex_info, edge->edge_info, (edge->to)->vertex_info);
 					}
-					printf("apos o edge_action\n");
 
                     move_current_forward_in_list(vertex->edges);
                 }while(!done);
@@ -850,15 +837,11 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
 void breadth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
 	GRAPH *graph_ = graph; 
 	VERTEX* source_node = _find_vertex_by_id_in_graph(graph_, source);
-	printf("apos aqui\n");
     set_ascending_priority_queue_max_size(graph_->current_size+1);
-	printf("apos set_ascending_priority_queue_max_size\n");
 
     type_apqueue priority_queue = create_ascending_priority_queue();
-	printf("apos create_ascending_priority_queue\n");
 
 	_set_up_traverse_breadth_search_values_in_graph_aux(graph_, source_node, priority_queue);
-	printf("apos _set_up_traverse_breadth_search_values_in_graph_aux\n");
 
 	_traverse_breadth_first_search_with_conditional_actions_in_graph(graph_, source_node, priority_queue, vertex_action, vertex_condition, edge_action, edge_condition);
 

@@ -96,7 +96,6 @@ void _kruskals_traverse_graph_conditional_actions(type_graph graph, type_lptrf_o
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
 
-    printf("era para ter.... %d\n", in);
 	return;	
 }
 
@@ -169,7 +168,6 @@ void _kruskals_do_nothing_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_verte
 }
 // ou aqui o problem
 void _kruskals_edges_action_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_vertex){
-    printf("no _kruskals_edges_action_edge\n");
     KEDGE* kedge = malloc(sizeof(KEDGE));
     kedge->from = from_vertex;
     kedge->to = to_vertex;
@@ -197,13 +195,10 @@ VERTEX * _kruskals_add_vertex_to_graph(type_graph graph, char id[]){
 }
 // ou aqui o problem
 void _kruskals_union_find_action_vertex(VERTEX* vertex){
-    printf("no _kruskals_union_find_action_vertex\n");
 	vertex->data_for_other_algorithms = malloc(sizeof(KRUSKALS_DATA));
     vertex->data_for_other_algorithms->kruskals_index = making_a_new_set_containing_a_new_element(KA_union_find, vertex);
     VERTEX* vertex_added = _kruskals_add_vertex_to_graph(KA_solution_graph, vertex->id);
-    printf("depois do  vertex_added\n");
     vertex_added->vertex_info = vertex->vertex_info;
-    printf("depois do vertex_added->vertex_info\n");
     // nessa linhas
     vertex_added->data_for_other_algorithms->kruskals_index  = vertex->data_for_other_algorithms->kruskals_index;
     return;
@@ -213,7 +208,6 @@ void _set_up_kruskals_union_find_and_edges_aux(type_graph graph, type_disjoint_s
     KA_union_find = union_find;
     KA_edges = edges;
     KA_solution_graph = solution_graph;
-    printf("setei o basico\n");
     _kruskals_traverse_graph_conditional_actions(graph, (void*)_kruskals_union_find_action_vertex, (void*)_kruskals_true_vertex, (void*)_kruskals_edges_action_edge, (void*)_kruskals_true_edge);
 }
 

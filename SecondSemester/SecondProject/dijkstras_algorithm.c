@@ -60,16 +60,13 @@ void _dijkstra_traverse_graph_verticies_with_action(type_graph graph, type_graph
 	}
 
 	set_current_to_first_item_in_list(graph_->vertices);
-    int i = 0;
 	int done;
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
 		action(current_vertex);
 		move_current_forward_in_list(graph_->vertices);
-        i++;
 	}while (!done);
-    // printf("\n\n\nI=%d\n\n\n", i);
 	return;	
 }
 

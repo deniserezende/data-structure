@@ -38,7 +38,7 @@ void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]
     VO_maxx = 0;
     VO_maxy = 0;
    
-    char *line = malloc(80 * sizeof(char));
+    char *line = malloc(150 * sizeof(char));
     char *helper = malloc(3 *sizeof(char));
     char *id = malloc(40 *sizeof(char));
     char *id1 = malloc(40 *sizeof(char));
@@ -68,13 +68,13 @@ void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]
                 set_edge_info_in_graph(via_graph, id1, id2, edge);
             }
             else {
-                printf("line=%s\n", line);
+                //printf("line=%s\n", line);
             }
         // "Resets" the string
         strcpy(line, "\0");
     }
-    print_graph(via_graph, (void*)print_vertex, (void*)print_edge);
-    printf("\n------------------------------------------------\n");
+    //sprint_graph(via_graph, (void*)print_vertex, (void*)print_edge);
+    //printf("\n------------------------------------------------\n");
 
     free(line);
     free(helper);

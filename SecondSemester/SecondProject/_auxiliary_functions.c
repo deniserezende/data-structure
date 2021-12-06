@@ -163,7 +163,7 @@ void _report_edge_txt_(type_edge edge){
     sprintf(id_string, "ID: %s%c", id, '\0');
     insert_string_in_txt(QAF_TXTFILE, id_string);
     
-    char *x_y_string = malloc(sizeof(char) * (QAF_SIZE_DOUBLESTR + 12 + QAF_SIZE_DOUBLESTR + 12));
+    char *x_y_string = malloc(sizeof(char) * (QAF_SIZE_DOUBLESTR + 15 + QAF_SIZE_DOUBLESTR + 15));
     sprintf(x_y_string, "Comprimento: %.2lf \t Velocidade: %.2lf%c", length, speed_limit, '\0');
     insert_string_in_txt(QAF_TXTFILE, x_y_string);
 

@@ -17,7 +17,7 @@ long _get_edge_length(type_edge edge){
 }
 
 
-void find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_property property, double minimum_distance_point[2]){
+int find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_property property, double minimum_distance_point[2]){
     char* cep = get_property_cep(property);
     //long cep_key = get_property_cep_key(property);
     long cep_key = format_cep_from_base36_to_base10(cep);
@@ -25,7 +25,8 @@ void find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prop
     set_id(cep);
     type_hashitem block = lookup_item_in_hash_table(cityblocks_hash, cep_key, (void*)get_key_from_block, (void*)verify_block_found);
     if(block == NULL){
-        printf("vish! Block == NULL no p?\n");
+        printf("Bloco correspondente ao cep nao foi encontrado\n");
+        return 0;
     }
     double x = get_rect_x(block);
     double y = get_rect_y(block);
@@ -95,6 +96,7 @@ void find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prop
         minimum_distance_point[0] = x+w;
         minimum_distance_point[1] = y+h;  
     }
+    return 1;
 }
 
 double QP_minimum_distance_point[2];
@@ -245,8 +247,10 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
     // achar o vertice mais proximo do cep dado
     // pegar o id desse vertice = destination_id
     double minimum_distance_point_origin[2];
-    find_minimum_distance_to_property(blocks_hashtable, origin_property, minimum_distance_point_origin);
-    
+    int found_minimum_distance = find_minimum_distance_to_property(blocks_hashtable, origin_property, minimum_distance_point_origin);
+    // se nao achou 'e pq o cep nao correspondia a nenhum bloco que esta la
+    if(found_minimum_distance == 0) return;
+
     QP_minimum_distance_point[0] = minimum_distance_point_origin[0];
     QP_minimum_distance_point[1] = minimum_distance_point_origin[1];
     QP_dist = __INT_MAX__;
@@ -255,7 +259,9 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
 
     double minimum_distance_point_destination[2];
     type_property destination_property = new_property(cep, cardinal_direction, house_number, "");
-    find_minimum_distance_to_property(blocks_hashtable, destination_property, minimum_distance_point_destination);
+    found_minimum_distance = find_minimum_distance_to_property(blocks_hashtable, destination_property, minimum_distance_point_destination);
+    if(found_minimum_distance == 0) return;
+
 
     QP_minimum_distance_point[0] = minimum_distance_point_destination[0];
     QP_minimum_distance_point[1] = minimum_distance_point_destination[1];
@@ -276,8 +282,7 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
 
     char *sourceid = get_vertex_id(QP_origin_vertex);
     char *destinationid = get_vertex_id(QP_destination_vertex);
-    printf("sourceid=%s\n", sourceid);
-    printf("destinationid=%s\n", destinationid);
+
     type_list shortest_solution = dijkstras_algorithm_with_destination_in_graph(via_graph, sourceid, destinationid, (void*)_get_edge_length);
     
     start_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, 1, shortest_route_color, 2);

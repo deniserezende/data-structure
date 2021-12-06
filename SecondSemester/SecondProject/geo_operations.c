@@ -63,13 +63,11 @@ type_mMlavltree get_geo_input(char *geo_fullpath, type_mMlavltree cityblocks_tre
         else if(strncmp(line, "q", 1) == 0){
                 sscanf(line, "%s %s %lf %lf %lf %lf", helper, cep, &x, &y, &width, &height);
                 save_min_and_max_geo(x, y, x+width, y+height);
-                printf("cep=[%s]\n", cep);
 
                 type_block block_data = new_block(cep);
                 block = new_rectangle(cep, x, y, width, height, stroke_color, fill_color);
                 add_rectangles_stroke_width(block, stroke_width);
                 insert_data_in_rect(block, block_data);
-                printf("cep=[%ld]\n", get_key_from_block(block));
 
                 insert_item_in_hash_table(cityblocks_table, block,  get_key_from_block(block), (void*)get_rect_key_ptr, (void*)compare_rect_blocks_cep_ptr);
                 cityblocks_tree = insert_item_in_mMl_avl_tree(cityblocks_tree, block, (void*)compare_rects_x_ptr);

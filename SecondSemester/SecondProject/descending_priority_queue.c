@@ -33,15 +33,12 @@ void _reset_priority_in_pqueue(type_dpqueue queue){
 
 type_dpqueue create_descending_priority_queue(){
 	STRUCTURE *new_queue = malloc(sizeof(STRUCTURE));
-	new_queue->vector = malloc(sizeof(NODE *) * max + 1);
-	printf("criei\n");
+	new_queue->vector = malloc(sizeof(NODE *) * (max + 1));
 	// new_queue->current = 0;
 	new_queue->next_item = -1; // Empty queue
 	new_queue->size = max+1;
 	new_queue->next_free_space = new_queue->next_item + 1;
-	printf("other\n");
 	_reset_priority_in_pqueue(new_queue);
-	printf("reset ok\n");
 	return new_queue;
 }
 
@@ -63,7 +60,6 @@ int empty_descending_priority_queue(type_dpqueue queue){
 }
 
 void destroi_descending_priority_queue(type_dpqueue queue){
-	printf("testar!!!!!!\n");
 	STRUCTURE *stru = queue;
 
 	for(int i=0; i < stru->next_item+1; i++){
@@ -216,12 +212,15 @@ int conditionally_change_item_priority_in_descending_priority_queue(type_dpqueue
 
 type_dpqitems pull_item_in_descending_priority_queue(type_dpqueue queue){
 	STRUCTURE *stru = queue;
+	if(empty_descending_priority_queue(queue)) return NULL;	
+	if(stru->next_item < 0 || stru->next_item > stru->size) return NULL;
 	NODE *highest = stru->vector[stru->next_item];
+	type_dpqitems highest_item = highest->item;
 	free(stru->vector[stru->next_item]);
 	stru->vector[stru->next_item] = NULL;
 	stru->next_item = stru->next_item - 1;
 	stru->next_free_space = stru->next_free_space - 1;
-	return highest->item;
+	return highest_item;
 }
 
 type_dpqitems peek_item_in_descending_priority_queue(type_dpqueue queue){

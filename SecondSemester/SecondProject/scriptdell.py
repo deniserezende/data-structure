@@ -2,6 +2,7 @@ import os
 import subprocess
 import time
 import datetime
+import random
 
 # BED = input("Path BED (pasta de testes do e-vandro):") 
 BED = '/home/pjr/Downloads/t2'
@@ -12,8 +13,13 @@ BSD = '/home/pjr/Downloads/output'
 # src = input("Path da pasta SRC:")
 src = '/home/pjr/Downloads/SecondProject'
 
+valgrind = '/home/pjr/Downloads/valgrind'
+
 
 ini = datetime.datetime.now()
+
+random.seed(ini)
+print(f"time={ini}")
 
 os.chdir(src)
 subprocess.call(["make", "clean"])
@@ -48,9 +54,11 @@ subdir.sort()
 count = 0
 for files_in_subqry in subqry:
     for j in files_in_subqry:
+        valgrind_filename = random.randrange(200000)
+        valgrind_fullpath = f"{valgrind}/{valgrind_filename}.txt"
         print(f"./t2 -e {BED} -o {BSD} -f {geo[count]} -v {via[count]} -q {subdir[count] + '/' + j}")
         print("\n")
-        subprocess.call(["./t2", "-e", BED, "-o", BSD, "-f", geo[count], "-v", via[count], "-q", subdir[count] + "/" + j])
+        subprocess.call(["valgrind", f"--log-file={valgrind_fullpath}", "./t2", "-e", BED, "-o", BSD, "-f", geo[count], "-v", via[count], "-q", subdir[count] + "/" + j])
         
 
     count += 1 
@@ -58,4 +66,5 @@ for files_in_subqry in subqry:
 
 fin = datetime.datetime.now()
 
+print(f"time={ini}")
 print(f"Tempo para rodar:\n{str(fin - ini)}")

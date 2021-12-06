@@ -80,18 +80,11 @@ void _DFS_depth_first_search_visit_start(VERTEX* vertex){
 	DFS_time++;
 	vertex->data_for_other_algorithms->DFS_visited = 1;
 	vertex->data_for_other_algorithms->DFS_starting_time = DFS_time;
-
-	printf("id=%s\n",vertex->id);
-	printf("st=%d\n", vertex->data_for_other_algorithms->DFS_starting_time);
-	printf("---------------\n");
 }
 
 void _DFS_depth_first_search_visit_finnish(VERTEX* vertex){
 	DFS_time++;
 	vertex->data_for_other_algorithms->DFS_finnishing_time = DFS_time;
-	printf("id=%s\n",vertex->id);
-	printf("ft=%d\n", vertex->data_for_other_algorithms->DFS_finnishing_time);
-	printf("---------------\n");
 }
 
 
@@ -121,6 +114,9 @@ VERTEX* _DFS_find_unvisited_vertex_for_depth_first_search(GRAPH* graph, int orde
 	if(current_vertex->data_for_other_algorithms->DFS_visited == 0) return current_vertex;
 	return NULL;
 }
+
+
+
 
 void _DFS_(VERTEX* vertex, type_lptrf_oneitem vertex_action_one, type_lptrf_oneitem vertex_action_two){
 	vertex_action_one(vertex);
@@ -159,6 +155,8 @@ void _DFS_depth_first_search_with_actions_in_graph(type_graph graph, int order[]
 	    VERTEX* vertex = _DFS_find_unvisited_vertex_for_depth_first_search(graph, order, i);//, &new_i);
         if(vertex == NULL) continue;//break;
         _DFS_(vertex, vertex_action_one, vertex_action_two);
+		printf("i=%d\n", i); 
+		printf("DFS_index_components=%d\n", DFS_index_components); 
         DFS_index_components++;
     }
     
@@ -191,6 +189,7 @@ void _set_up_vector_order(VERTEX* vertex){
 
 void _set_up_reversed_graph(VERTEX* vertex){
 	vertex->data_for_other_algorithms = malloc(sizeof(DFS_DATA));
+	vertex->data_for_other_algorithms->DFS_visited = 0;
 }
 
 void _saving_computed_finishing_time(VERTEX* vertex){
@@ -200,12 +199,18 @@ void _saving_computed_finishing_time(VERTEX* vertex){
     SCCA_index++;
 }
 
-void _SCCA_return(VERTEX* vertex){
+void _SCCA_compute_visit_start(VERTEX* vertex){
 	_DFS_depth_first_search_visit_start(vertex);
     return;
 }
 
+void _SCCA_compute_visit(VERTEX* vertex){
+	vertex->data_for_other_algorithms->DFS_visited = 1;
+    return;
+}
+
 void _SCCA_output_ending(VERTEX* vertex){
+	printf("DFS_index_components no _SCCA_output_ending = %d\n", DFS_index_components);
     vertex->data_for_other_algorithms->DFS_component = DFS_index_components;
 }
 
@@ -267,7 +272,7 @@ void strongly_connected_components_algorithm(type_graph graph, int *solution_vec
     _DFS_traverse_graph_verticies_with_action(graph_, (void*)_set_up_vector_order);
     SCCA_index = 0;
 // 1 call DFS.G/ to compute finishing times u:f for each vertex u 
-    _DFS_depth_first_search_with_actions_in_graph(graph_, order, (void*)_SCCA_return, (void*)_saving_computed_finishing_time);
+    _DFS_depth_first_search_with_actions_in_graph(graph_, order, (void*)_SCCA_compute_visit_start, (void*)_saving_computed_finishing_time);
 
 // 2 compute GT
     type_graph reversed_graph = create_reverse_graph_with_conditionals(graph, (void*)_SCCA_reverse_graph_vertex_condition, (void*)_SCCA_reverse_graph_edge_condition);
@@ -276,7 +281,7 @@ void strongly_connected_components_algorithm(type_graph graph, int *solution_vec
 
 // 3 call DFS.GT/, but in the main loop of DFS, consider the vertices in order of decreasing u:f (as computed in line 1)
     _DFS_traverse_graph_verticies_with_action(reversed_graph, (void*)_set_up_reversed_graph);
-	_DFS_depth_first_search_with_actions_in_graph(reversed_graph, backorder, (void*)_SCCA_return, (void*)_SCCA_output_ending);
+	_DFS_depth_first_search_with_actions_in_graph(reversed_graph, backorder, (void*)_SCCA_compute_visit, (void*)_SCCA_output_ending);
 
 
 // 4 output the vertices of each tree in the depth-first forest formed in line 3 as a separate strongly connected component
@@ -289,7 +294,10 @@ void strongly_connected_components_algorithm(type_graph graph, int *solution_vec
 	_DFS_traverse_graph_verticies_with_action(graph, (void*)_SCCA_clean_up_vertices);
 	_DFS_traverse_graph_verticies_with_action(reversed_graph, (void*)_SCCA_clean_up_vertices);
 	destroi_graph(reversed_graph, (void*)_SCCA_vertex_nothing, (void*)_SCCA_edge_nothing);
-    return;
+    
+	
+	
+	return;
 }
 
 

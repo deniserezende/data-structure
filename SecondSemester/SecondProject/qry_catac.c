@@ -112,7 +112,6 @@ void delete_vertex_from_graph_catac(type_graph via_graph, type_list list_of_vert
     type_vertex vertex;
     type_block block_data;
     if(empty_list(list_of_vertex)){
-        printf("empty vertex delete list in catac\n");
         destroi_list(list_of_vertex);
         return;
     }
@@ -157,7 +156,6 @@ type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks
     set_x1_x2_y1_y2(x, x+w, y, y+h);
     traverse_mMlavltree_with_conditional_action(blocks_avl, (void*)traverse_side_rect_in_rect_, (void*)condition_rect_in_rect_, (void*)action_catac_blocks);    
 
-    printf("no delete_blocks_from_blocks_avl do catac\n");
     blocks_avl = delete_blocks_from_blocks_avl(blocks_avl, QDC_blocks_to_delete);
     insert_rectangle_with_different_opacity_in_svg(QDC_SVGFILE, x, y, w, h, "#AB37C8", "#AA0044", 0.5, 2);
     
@@ -165,7 +163,6 @@ type_mMlavltree catac(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks
 
     traverse_verticies_with_conditional_action_graph(via_graph, (void*)action_catac_vertex, (void*)condition_catac_vertex);
 
-    printf("no delete_vertex_from_graph_catac do catac\n");
     delete_vertex_from_graph_catac(via_graph, QDC_vertex_to_delete);
     return blocks_avl;
 }

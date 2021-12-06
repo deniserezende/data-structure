@@ -2,37 +2,13 @@
 #include <stdlib.h>
 #include "qry_cx.h"
 
-
-
 double QCX_limiar;
 type_svg QCX_SVGFILE;
 type_txt QCX_TXTFILE;
 int *QCX_solution;
 int QCX_index;
 
-
-// void cx_vertex_action(type_vertex vertex){
-//     _report_vertex_txt_(vertex);
-//     double x = get_vertex_x(vertex);
-//     double y = get_vertex_y(vertex);
-//     char* colors[40] = {"Calamime", "Cardinal", "Celadon", "Cerulean", "Charcoal", "Chocolate", "Cyan", "Cornflower"};
-//     int max = 7;
-//     int min = 0;
-//     int randNum = rand()%(max-min + 1) + min;
-
-
-// // Colocar sob os vértices, elipses de cores
-// // diferentes para cada região desconectada. 
-//     insert_ellipse_in_svg(QCX_SVGFILE, x, y, 6, 3, colors[randNum], colors[randNum], 1);
-
-// }
-
 void cx_edge_action(type_vertex from_vertex, type_edge edge, type_vertex to_vertex){
-
-// SVG: pintar de vermelho e com traço grosso os
-// trechos com velocidade abaixo do limiar.
-// Colocar sob os vértices, elipses de cores
-// diferentes para cada região desconectada. 
 
     double x = get_vertex_x(from_vertex);
     double x2 = get_vertex_x(to_vertex);
@@ -42,9 +18,7 @@ void cx_edge_action(type_vertex from_vertex, type_edge edge, type_vertex to_vert
     sprintf(color, "red%c", '\0');
     insert_line_in_svg(QCX_SVGFILE, x, y, x2, y2, color, 3);
 
-    //AQUI DE precisa disso??
     _report_edge_txt_(edge);
-
 }
 
 long cx_edge_condition(type_vertex from_vertex, type_edge edge, type_vertex to_vertex){
@@ -63,11 +37,8 @@ long cx_duplicate_edge_condition(type_vertex from_vertex, type_edge edge, type_v
     return 1;
 }
 
-// como para svg so existem 147 cores, se houverem mais de 147 componentes fortemente conexas em algum ponto algumas cores serao repetidas
-// depois ver se isso 'e verdade ou se d'a para colocar:
-// background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='10' ><path fill='%23FF0000' d='M 0,10 H 20 L 10,0 Z' /></svg>")  repeat-x;
-// equivalente ao hexa
-// maior numero de componentes conexas ate agr foi 350 +-
+// como para svg so existem 147 cores, se houverem mais de 147 componentes fortemente conexas 
+// em algum ponto algumas cores serao repetidas
 void cx_vertex_action_svg(type_vertex vertex){
     double x = get_vertex_x(vertex);
     double y = get_vertex_y(vertex);
@@ -86,7 +57,6 @@ void cx_vertex_action_svg(type_vertex vertex){
     // svg
     insert_ellipse_in_svg(QCX_SVGFILE, x, y, 6, 3, colors[QCX_solution[QCX_index]%145], colors[QCX_solution[QCX_index]%145], 1);
     QCX_index++;
-
 }
 
 
@@ -108,14 +78,12 @@ void cx(type_svg SVGFILE, type_txt TXTFILE, type_graph via_graph, double limiar)
     int size = get_amount_of_vertices_in_graph(via_graph);
     int *solution = malloc(sizeof(int) * (size + 1));
 
-    // fazer mini grafico
     type_graph subgraph = duplicate_graph_with_conditionals(via_graph, (void*)cx_vertex_condition_true, (void*)cx_duplicate_edge_condition);
 
     strongly_connected_components_algorithm(subgraph, solution);
 
     QCX_solution = solution;
     QCX_index = 0;
-    //traverse_verticies_with_conditional_action_graph(subgraph, (void*)cx_vertex_action_svg, (void*)cx_vertex_condition_true);
     set_txt_file(TXTFILE);
     QCX_TXTFILE = TXTFILE;
     traverse_graph_conditional_actions(via_graph, (void*)cx_vertex_action_svg, (void*)cx_vertex_condition_true, (void*)cx_edge_action, (void*)cx_edge_condition);

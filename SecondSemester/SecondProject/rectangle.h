@@ -28,7 +28,7 @@ long compare_rectangles_by_reference_point(type_rect rectangle1, type_rect recta
 long compare_rectangle_reference_point_with_point(type_rect rectangle, double pointx, double pointy, int axis);
 long compare_rectangles_by_id(type_rect rectangle1, type_rect rectangle2);
 
-
+// Function returns 0 if equal, 1 if the first one is bigger and -1 if the first one is smaller
 long compare_rectangles_by_x_coordinate(type_rect rectangle1, type_rect rectangle2);
 
 // Functions to get information from the rectangle:

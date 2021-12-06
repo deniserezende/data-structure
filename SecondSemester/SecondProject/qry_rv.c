@@ -2,29 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// AQUIDE verificar se em ponteiros não estou passando double!
-
-
-// Calcule a árvore geradora mínima do subgrafo
-// com os vértices que estão dentro da região
-// especificada pela retângulo x,y,w,h. A velocidade
-// dos trechos relativos às arestas da árvore
-// geradora mínima deve ser reduzida, a cada nível
-// da árvore, de acordo com o fator f (0.0 < f <
-// 1.0), até, no mínimo, 0.01 (ou seja, 1%). Por
-// exemplo, se f = 0.05, a velocidade deve ser
-// reduzida de 5% da velocidade original nas
-// arestas que ligam a raiz da árvore aos seus
-// filhos; de 10% nas arestas que ligam os filhos
-// aos netos; de 15%, nas que ligam os netos aos
-// bisnetos e assim sucessivamente.
-// TXT: reportar arestas da AGM, incluindo seus
-// atributos (busca em largura)
-// SVG: pintar as arestas da AGM com um traço
-// bastante largo e de uma cor clara. Delimitar a
-// região x,y,w,h com um retângulo de bordas
-// grossas e tracejadas. ATENÇÃO: Indicar a raiz
-// da AGM
 
 type_rect QRV_rectangle;
 char* QRV_ID;
@@ -69,7 +46,6 @@ void _rv_reduce_speed_action_edge(type_graphinfos from_vertex, type_graphinfos e
     double new_speed = current_speed * (QRV_f * QRV_index);
     set_edge_speed_limit(edge, new_speed); 
 
-
     // values for report
     double x1 = get_vertex_x(from_vertex);
     double y1 = get_vertex_y(from_vertex);
@@ -100,59 +76,9 @@ void _rv_get_id_action(type_vertex vertex){
     QRV_ID = id;
 }
 
-
-void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, double y, double w, double h, double f){
-    QRV_SVGFILE = SVGFILE;
-    set_txt_file(TXTFILE);
-    type_rect rectangle = new_rectangle("", x, y, w, h, "", "");
-    QRV_rectangle = rectangle;
-    
-    // achar os elementos que estao na regiao dada => criando um subgrafo
-    type_graph subgraph = duplicate_graph_with_conditionals(via_graph, (void*)_rv_graph_duplicate_vertex_condition, (void*)_rv_graph_duplicate_edge_condition);
-
-    // aplicar o kruskal para achar a arvore geradora minima do subgrafo
-    type_graph mst = kruskals_algorithm_in_graph(subgraph, (void*)_kruskals_get_edge_length);
-
-    // COMO DETERMINAR A RAIZ DESSA ARVORE??????????????
-    // é o cara que ninguem aponta para ele
-
-    // reduzir a velocidade das arestas dessa regiao no grafo original!!!!!!!
-    // raiz da arvore será o primeiro vertice
-
-    // traverse diferente
-    // comeco no primeiro vertice e sigo seu caminho
-
-    traverse_verticies_until_conditional_action_graph(mst, (void*)_rv_get_id_action, (void*)_rv_get_id_condition);
-
-    QRV_f = f;
-    QRV_index = 0;
-    breadth_first_search_traversal_with_conditional_actions_in_graph(mst, QRV_ID, (void*)_rv_reduce_speed_action_vertex, (void*)_rv_reduce_speed_condition_vertex, (void*)_rv_reduce_speed_action_edge, (void*)_rv_reduce_speed_condition_edge);
-    insert_dasharray_rect_in_svg(SVGFILE, x, y, w, h, "Transparent", "Red", 4, 4);
-
-    // ATENÇÃO: Indicar a raiz da AGM
-    // Delimitar a
-    // região x,y,w,h com um retângulo de bordas
-    // grossas e tracejadas. 
-
-
-    // reportar
-    // TXT: reportar arestas da AGM, incluindo seus
-    // atributos (busca em largura)
-    // SVG: pintar as arestas da AGM com um traço
-    // bastante largo e de uma cor clara. PeachPuff
-
-    
-
-}
-
-
-//duvidas
 // Calcule a árvore geradora mínima do subgrafo
 // com os vértices que estão dentro da região
-// especificada pela retângulo x,y,w,h. 
-// COM BASE NA DISTANCIA CERTO?
-
-// A velocidade
+// especificada pela retângulo x,y,w,h. A velocidade
 // dos trechos relativos às arestas da árvore
 // geradora mínima deve ser reduzida, a cada nível
 // da árvore, de acordo com o fator f (0.0 < f <
@@ -163,4 +89,34 @@ void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, doubl
 // filhos; de 10% nas arestas que ligam os filhos
 // aos netos; de 15%, nas que ligam os netos aos
 // bisnetos e assim sucessivamente.
-// TANTO FAZ QUANDO EU FAÇO ISSO??
+// TXT: reportar arestas da AGM, incluindo seus
+// atributos (busca em largura)
+// SVG: pintar as arestas da AGM com um traço
+// bastante largo e de uma cor clara. Delimitar a
+// região x,y,w,h com um retângulo de bordas
+// grossas e tracejadas. ATENÇÃO: Indicar a raiz
+// da AGM
+
+void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, double y, double w, double h, double f){
+    QRV_SVGFILE = SVGFILE;
+    set_txt_file(TXTFILE);
+    type_rect rectangle = new_rectangle("", x, y, w, h, "", "");
+    QRV_rectangle = rectangle;
+    
+    // Find the items that are in the rectangle sent
+    // and create a subgraph based on the original graph
+    type_graph subgraph = duplicate_graph_with_conditionals(via_graph, (void*)_rv_graph_duplicate_vertex_condition, (void*)_rv_graph_duplicate_edge_condition);
+
+    // Kruskal in the subgraph to find the minimum generator tree
+    type_graph mst = kruskals_algorithm_in_graph(subgraph, (void*)_kruskals_get_edge_length);
+
+    // Getting an item to represent the root
+    traverse_verticies_until_conditional_action_graph(mst, (void*)_rv_get_id_action, (void*)_rv_get_id_condition);
+
+    QRV_f = f;
+    QRV_index = 0;
+    // Generating output
+    // and reducing the speed of some edges
+    breadth_first_search_traversal_with_conditional_actions_in_graph(mst, QRV_ID, (void*)_rv_reduce_speed_action_vertex, (void*)_rv_reduce_speed_condition_vertex, (void*)_rv_reduce_speed_action_edge, (void*)_rv_reduce_speed_condition_edge);
+    insert_dasharray_rect_in_svg(SVGFILE, x, y, w, h, "Transparent", "Red", 4, 4);
+}

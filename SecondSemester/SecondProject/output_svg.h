@@ -23,6 +23,7 @@ void insert_blocks_in_svg(type_svg svgfile, type_mMlavltree blocks);
 // Insert via in svg
 void insert_via_in_svg(type_svg svgfile, type_graph via_graph);
 
+// Insert a svg file in another svg file
 int insert_svg_file_in_other_svg_file(char* origin_svgfilename, type_svg destination_svgfile);
 
 #endif /* output_svg_h */

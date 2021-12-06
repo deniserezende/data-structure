@@ -88,9 +88,6 @@ void _dijkstras_algorithm_in_graph_aux(GRAPH * graph, VERTEX* vertex, type_list 
 
 }
 
-// SOS AQUIDE ver que tipo colocar a variavel do edge!!!!!!
-
-
 
 
 

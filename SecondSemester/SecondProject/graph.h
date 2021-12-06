@@ -172,8 +172,8 @@ typedef struct edge{
 }EDGE;
 
 typedef struct graph{
-	type_list vertices; // VERTEX
-	int current_size; // amount of vertices
+	type_list vertices; // VERTEX *
+	int amount_of_vertices;
 	int amount_of_edges;
 }GRAPH;
 

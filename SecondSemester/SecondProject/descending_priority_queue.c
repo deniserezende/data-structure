@@ -10,8 +10,8 @@ typedef struct queue_node{
 }NODE; 
 
 typedef struct queue_structure{
-	type_dpqitems *vector; //AQUIDE não era para ser NODE*
-	//int current;
+	type_dpqitems *vector; 
+	// ao invés de type_dpqitems poderia ser NODE*
 	int next_item;
 	int size;
 	int next_free_space;
@@ -30,18 +30,15 @@ void _reset_priority_in_pqueue(type_dpqueue queue){
 	}
 }
 
-
 type_dpqueue create_descending_priority_queue(){
 	STRUCTURE *new_queue = malloc(sizeof(STRUCTURE));
 	new_queue->vector = malloc(sizeof(NODE *) * (max + 1));
-	// new_queue->current = 0;
 	new_queue->next_item = -1; // Empty queue
 	new_queue->size = max+1;
 	new_queue->next_free_space = new_queue->next_item + 1;
 	_reset_priority_in_pqueue(new_queue);
 	return new_queue;
 }
-
 
 int full_descending_priority_queue(type_dpqueue queue){
 	STRUCTURE *stru = queue;
@@ -86,10 +83,6 @@ void _insertion_sort_item_by_priority_in_pqueue(STRUCTURE *stru, int unsorted_it
 	}
 }
 
-// compare should return 0 if equal
-// -1 if the element to be inserted is less than the other
-// 1 if the elemtent to be inserted is more than the other
-// element to be inserted - other
 int insert_item_in_descending_priority_queue(type_dpqueue queue, long priority, type_dpqitems item){
 	STRUCTURE *stru = queue;
 
@@ -101,7 +94,7 @@ int insert_item_in_descending_priority_queue(type_dpqueue queue, long priority, 
 	item_node->priority = priority;
 	stru->vector[stru->next_free_space] = item_node;
 
-	// correcting its place
+	// correcting it's place
 	_insertion_sort_item_by_priority_in_pqueue(stru, stru->next_free_space);
 
 	stru->next_item = stru->next_item + 1;
@@ -128,8 +121,8 @@ void _sort_item_by_priority_in_p_queue(STRUCTURE *stru, int unsorted_item_index)
 	NODE *aux;
 	NODE *unsorted_item = stru->vector[unsorted_item_index];
 
+	// Sorting in case the new value is bigger than the next
 	int unsorted_item_index_one = unsorted_item_index;
-
 	for(int i=unsorted_item_index; i < stru->next_item; i++){
 		NODE *posterior_item = stru->vector[i+1];
 		if(unsorted_item->priority > posterior_item->priority){
@@ -140,6 +133,7 @@ void _sort_item_by_priority_in_p_queue(STRUCTURE *stru, int unsorted_item_index)
 		}
 		else break;
 	}
+	// Sorting in case the new value is smaller than the previous
 	int unsorted_item_index_two = unsorted_item_index;
 	for(int j=unsorted_item_index; j > 1; j--){
 		NODE *previous_item = stru->vector[j-1];
@@ -153,35 +147,31 @@ void _sort_item_by_priority_in_p_queue(STRUCTURE *stru, int unsorted_item_index)
 	}
 }
 
-// AQUIDE EFICIENCIA = DAR O VALOR ANTIGO PARA ELE!!!
 int change_item_priority_in_descending_priority_queue(type_dpqueue queue, long new_priority, type_dpqitems item, type_dpqptrf_twoitems check_if_equal){
 	STRUCTURE *stru = queue;
 	int index = _find_item_in_descending_priority_queue(stru, item, check_if_equal);
 	if(index == -1) return 0;
-	// changing priority
+	
+	// Changing priority
 	NODE *item_node = stru->vector[index];
 	item_node->priority = new_priority;
 
-	// sort that unsorted item
-	// for now this function doesnt work for this
+	// Sort that unsorted item
 	_sort_item_by_priority_in_p_queue(stru, index);
 	return 1;
 }
 
-// if item not found returns -1
-// if didn't change returns 0
-// if changed returns 1
 int conditionally_change_item_priority_in_descending_priority_queue(type_dpqueue queue, long new_priority, type_dpqitems item, type_dpqptrf_twoitems check_if_equal, type_dpqptrf_oneitem condition){
 	STRUCTURE *stru = queue;
 	int index = _find_item_in_descending_priority_queue(stru, item, check_if_equal);
 	if(index == -1) return -1;
-	// changing priority
+	// Changing priority
 	NODE *item_node = stru->vector[index];
 	
 	if(condition(item_node->item)){
 		item_node->priority = new_priority;
-		// sort that unsorted item
-		// for now this function doesnt work for this
+
+		// Sort that unsorted item
 		_sort_item_by_priority_in_p_queue(stru, index);
 		return 1;
 	}

@@ -51,6 +51,10 @@ int change_item_priority_in_descending_priority_queue(type_dpqueue queue, long n
 // Pre-condition: The item was to have been inserted in the priority queue
 // Post-condition: Depending on condition the item has to have a new priority
 // See (1) and (2)
+// This function returns
+// -1 if item not found
+// 0 if didn't change priority
+// 1 if changed priority
 int conditionally_change_item_priority_in_descending_priority_queue(type_dpqueue queue, long new_priority, type_dpqitems item, type_dpqptrf_twoitems check_if_equal, type_dpqptrf_oneitem condition);
 
 // Pre-condition: The priority queue has to have been created

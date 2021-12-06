@@ -1,5 +1,5 @@
 //
-//  pm_operations.h -> interprets the geofile of the first project of Data Structure II
+//  qry_operations.h 
 //  
 //
 //  Created by Denise F. de Rezende on 12/09/21.
@@ -17,13 +17,12 @@
 #include "qry_o_.h"
 #include "qry_cx.h"
 #include "qry_rv.h"
-
 #include "output_svg.h"
 #include "path.h"
 #include "graph.h"
 #include "property.h"
 
-
+// Reads and interprets the qryfile.
 type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *output_path, char *geo_filename, type_txt txtfile, type_svg svgfile, type_mMlavltree blocks_avl, type_hashtable blocks_table, type_graph via_graph, double viewbox[4]);
 
 #endif /* qry_operations_h */

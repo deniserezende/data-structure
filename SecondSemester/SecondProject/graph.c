@@ -11,19 +11,6 @@
 #include <string.h>
 #include "graph.h"
 
-// two lists:
-// vertical que armazena os vertic
-// list of VERTEX
-// |
-// |
-// |
-// list of EDGE | | | | | | 
-
-// typedef struct neighbors_node{
-// 	type_graphinfos* vertex_info;
-// 	type_graphinfos* edge_info;
-// }NEIGHBORS;
-
 typedef struct vertex_aux_data{
 	// depth first search
 	int dfs_visited;
@@ -50,11 +37,10 @@ typedef struct edge{
 }EDGE;
 
 typedef struct graph{
-	type_list vertices; // VERTEX
-	int current_size; // amount of vertices
+	type_list vertices; // VERTEX *
+	int amount_of_vertices;
 	int amount_of_edges;
 }GRAPH;
-
 
 int _deallocate_edges_aux_graph(type_list edges, type_graphptrf_onetypeinfo deallocate){
 	int done;
@@ -118,7 +104,6 @@ EDGE * _find_edge_by_id_in_edges_list_in_graph(type_list edges, char to_vertex_i
 	return NULL;
 }
 
-
 void _deallocate_edges_that_point_to_vertex(GRAPH *graph, char id[], type_graphptrf_onetypeinfo deallocate_edge){
 	int done;
 	set_current_to_first_item_in_list(graph->vertices);
@@ -157,18 +142,17 @@ long _compare_verticies_graph(VERTEX *vertex_one, VERTEX *vertex_two){
 	return strcmp(vertex_one->id,vertex_two->id);
 }
 
-// AQUIDE remover esse amount_of_vertices nao uso para nada
 type_graph create_graph(){
 	GRAPH *graph = malloc(sizeof(GRAPH)); 
 	graph->vertices = create_list();
-	graph->current_size = 0;
+	graph->amount_of_vertices = 0;
 	graph->amount_of_edges = 0;
 	return graph;
 }
 
 int get_amount_of_vertices_in_graph(type_graph graph){
 	GRAPH *graph_ = graph; 
-	return graph_->current_size;
+	return graph_->amount_of_vertices;
 }
 
 int empty_graph(type_graph graph){
@@ -177,15 +161,13 @@ int empty_graph(type_graph graph){
 	return 0;
 }
 
-
-
 int add_vertex_to_graph(type_graph graph, char id[]){
 	GRAPH *graph_ = graph;
 	VERTEX *vertex = _find_vertex_by_id_in_graph(graph_, id);
 	if(vertex == NULL){
 		VERTEX *vertex_node = _new_vertex_for_graph_aux(graph_, id);
 		insert_item_at_the_end_of_list(graph_->vertices, vertex_node);
-		graph_->current_size++;
+		graph_->amount_of_vertices++;
 		return 1;
 	}
 	return 0;
@@ -206,9 +188,6 @@ type_graphinfos get_vertex_info_in_graph(type_graph graph, char id[]){
 	return NULL;
 }
 
-
-// já insere a aresta junto com a info dela
-// tenho que verificar se já tá la? o edge?????????????/
 int add_edge_to_graph(type_graph graph, char from_vertex_id[], char to_vertex_id[]){	
 	GRAPH *graph_ = graph;
 
@@ -284,8 +263,6 @@ type_graphinfos remove_edge_from_graph(type_graph graph, char from_vertex_id[], 
 	return NULL;
 }
 
-
-//type_graphinfos vertex_info, type_graphptrf_twoitems compare_vertices, type_graphptrf_onetypeinfo deallocate_vertex,
 type_graphinfos remove_vertex_from_graph(type_graph graph, char id[], type_graphptrf_onetypeinfo deallocate_edge){
 	GRAPH *graph_ = graph;
 	VERTEX *vertex_node = _find_vertex_by_id_in_graph(graph_, id);
@@ -305,12 +282,11 @@ type_graphinfos remove_vertex_from_graph(type_graph graph, char id[], type_graph
 		free(vertex_node->other_data);
 		free(vertex_node);
 		
-		graph_->current_size--;
+		graph_->amount_of_vertices--;
 		return vertex_info;
 	}
 	return NULL;
 }
-
 
 void print_graph(type_graph graph, type_graphptrf_onetypeinfo print_vertex, type_graphptrf_onetypeinfo print_edge){
 	GRAPH *graph_ = graph; 
@@ -368,7 +344,6 @@ void destroi_graph(type_graph graph, type_graphptrf_onetypeinfo deallocate_verte
 	GRAPH *graph_ = graph; 
 	if(graph_ == NULL) return;
 
-	
 	if(empty_list(graph_->vertices)){
 		printf("Can't destroi, graph is empty\n"); return;
 	}
@@ -398,24 +373,23 @@ void destroi_graph(type_graph graph, type_graphptrf_onetypeinfo deallocate_verte
 
 type_graphinfos are_vertex_adjacent_in_graph_return_edge(type_graph graph, char from_vertex_id[], char to_vertex_id[]){
 	GRAPH *graph_ = graph; 
-	// achar o vertex do from, 
+	// finding the "vertex from"
 	VERTEX *from_vertex_node = _find_vertex_by_id_in_graph(graph_, from_vertex_id);
 	if(from_vertex_node == NULL) return NULL;
 
-	//caminhar na sua lista de edges e ver se alguem aponta para vertex_info_to
+	// traverse the "vertex from" list of edges to try to find the "vertex to"
 	EDGE *edge = _find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
 	if(edge != NULL) return edge->edge_info;
 	return NULL;
 }
 
-
 int are_vertex_adjacent_in_graph(type_graph graph, char from_vertex_id[], char to_vertex_id[]){
 	GRAPH *graph_ = graph; 
-	// achar o vertex do from, 
+	// finding the "vertex from"
 	VERTEX *from_vertex_node = _find_vertex_by_id_in_graph(graph_, from_vertex_id);
 	if(from_vertex_node == NULL) return 0;
 
-	//caminhar na sua lista de edges e ver se alguem aponta para vertex_info_to
+	// traverse the "vertex from" list of edges to try to find the "vertex to"
 	EDGE *edge = _find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
 	if(edge != NULL) return 1;
 	return 0;
@@ -430,10 +404,7 @@ type_list vertex_neighbors_in_graph(type_graph graph, char id[]){
 	if(vertex->edges == NULL) return NULL;
 	if(empty_list(vertex->edges)) return NULL;
 
-	// não posso fazer isso se nao devolve umas coisas nada a ver
-	// return vertex->edges;
-
-	// formar uma lista para retornar
+	// Creating a list of neighbors to return to the user
 	type_list neighbors_list = create_list();
 	int done;
 	set_current_to_first_item_in_list(vertex->edges);
@@ -446,7 +417,6 @@ type_list vertex_neighbors_in_graph(type_graph graph, char id[]){
 
 	return neighbors_list;
 }
-
 
 type_list destroi_list_created_with_vertex_neighbors_in_graph(type_list list){
 	destroi_list(list);
@@ -551,7 +521,6 @@ void traverse_verticies_with_conditional_action_graph(type_graph graph, type_lpt
 	return;	
 }
 
-
 type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_condition){
 	GRAPH* graph_ = graph; 
 	if(graph_ == NULL) return NULL;
@@ -561,11 +530,9 @@ type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneite
 		return duplicated_graph;
 	}
 
+	// Inserting vertex
 	set_current_to_first_item_in_list(graph_->vertices);
-
 	int done;
-
-	//inserting vertex
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
@@ -577,17 +544,13 @@ type_graph duplicate_graph_with_conditionals(type_graph graph, type_lptrf_oneite
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
 
+	// Inserting edges
 	set_current_to_first_item_in_list(graph_->vertices);
-	//inserting edges
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
 		
 		if((long)vertex_condition(current_vertex->vertex_info)){
-			// ops I think I was adding it two times
-			// add_vertex_to_graph(duplicated_graph, current_vertex->id);
-			// set_vertex_info_in_graph(duplicated_graph, current_vertex->id, current_vertex->vertex_info);
-		
 			if(current_vertex->edges == NULL || empty_list(current_vertex->edges)){
 				move_current_forward_in_list(graph_->vertices);
 				continue;
@@ -622,9 +585,8 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 		return reversed_graph;
 	}
 
-	//inserting vertex
+	// Inserting vertex
 	set_current_to_first_item_in_list(graph_->vertices);
-
 	int done;
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
@@ -637,8 +599,8 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 		move_current_forward_in_list(graph_->vertices);
 	}while (!done);
 
+	// Inserting revesed edges 
 	set_current_to_first_item_in_list(graph_->vertices);
-	// inserting reversed edges
 	do{
 		done = is_current_last_item_in_list(graph_->vertices);
 		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);
@@ -667,15 +629,7 @@ type_graph create_reverse_graph_with_conditionals(type_graph base_graph, type_lp
 	return reversed_graph;	
 }
 
-
-
-
-
-
-
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+// breadth_first_search +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 long G_PATHCOST;
 type_apqueue G_PRIORITY_QUEUE;
@@ -711,7 +665,6 @@ void _set_up_traverse_breadth_search_values_in_graph_action_aux(VERTEX* vertex){
     vertex->other_data->bfs_tmp_value = __LONG_MAX__; 
     vertex->other_data->bfs_from_vertex = NULL;
     insert_item_in_ascending_priority_queue(G_PRIORITY_QUEUE, __LONG_MAX__, vertex);
-    // FLOAT?
 }
 
 void _set_up_traverse_breadth_search_values_in_graph_aux(GRAPH * graph, VERTEX* source, type_apqueue priority_queue){
@@ -741,10 +694,7 @@ long _condition_vertex_for_traverse_breadth_search_in_graph(VERTEX* vertex){
 }
 
 void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *graph, VERTEX* vertex_source, type_apqueue priority_queue, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
-    
-    // base case:
-    // visit os vizinhos e coloco valores temporarios do custo
-    // tanto no grafo quanto na fila
+    // Base case: Visit the neighbors and put temporary cost values in them (in graph and in priority queue)
     VERTEX* vertex = vertex_source;
 
     while(!empty_ascending_priority_queue(priority_queue)){
@@ -756,25 +706,24 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
         if(vertex->edges != NULL){
             if(!empty_list(vertex->edges)){
                 set_current_to_first_item_in_list(vertex->edges);
-
-
                 int done;
                 do{
                     done = is_current_last_item_in_list(vertex->edges);
 
-                    // colocando valores temporários no gráfo
                     EDGE* edge = get_current_item_in_list(vertex->edges);
-                    // valor da aresta + valor que está no nó anterior
                     long path_cost = (long) 1 + vertex->other_data->bfs_def_value;
                     G_PATHCOST = path_cost;
-                    
+
+                    // Changing temporary values in priority queue
+					// Edge value + previous node definitive value                    
                     int changed = conditionally_change_item_priority_in_ascending_priority_queue(priority_queue, path_cost, (edge->to), (void*)_compare_two_vertex_in_graph, (void*)_condition_vertex_for_traverse_breadth_search_in_graph);
-                    // colocando valores temporários na fila                
+                    
+					// If changed value in priority queue, than change in graph
+					// Edge value + previous node definitive value                
                     if(changed == 1){
                         (edge->to)->other_data->bfs_tmp_value = path_cost;
                         (edge->to)->other_data->bfs_from_vertex = vertex;
                     }
-
 
 					if((long)edge_condition(vertex->vertex_info, edge->edge_info, (edge->to)->vertex_info)){
 						edge_action(vertex->vertex_info, edge->edge_info, (edge->to)->vertex_info);
@@ -782,10 +731,10 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
 
                     move_current_forward_in_list(vertex->edges);
                 }while(!done);
-
-                // pego o de menor custo e seto para definitivo
             }
         }
+		// Get next item in priority queue
+		// Set to the definitive the cost and process the vertex
         VERTEX* next_vertex = pull_item_in_ascending_priority_queue(priority_queue);
         next_vertex->other_data->bfs_def_value = next_vertex->other_data->bfs_tmp_value;
         vertex = next_vertex;
@@ -795,12 +744,15 @@ void _traverse_breadth_first_search_with_conditional_actions_in_graph(GRAPH *gra
 void breadth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph, char source[], type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition, type_lptrf_threeitems edge_action, type_lptrf_threeitems edge_condition){
 	GRAPH *graph_ = graph; 
 	VERTEX* source_node = _find_vertex_by_id_in_graph(graph_, source);
-    set_ascending_priority_queue_max_size(graph_->current_size+1);
 
+	// Creating a priority queue
+    set_ascending_priority_queue_max_size(graph_->amount_of_vertices+1);
     type_apqueue priority_queue = create_ascending_priority_queue();
 
+	// Putting temporary values in graph -> max values (infinite)
 	_set_up_traverse_breadth_search_values_in_graph_aux(graph_, source_node, priority_queue);
 
+	// Doing the breadth first search traversal
 	_traverse_breadth_first_search_with_conditional_actions_in_graph(graph_, source_node, priority_queue, vertex_action, vertex_condition, edge_action, edge_condition);
 
     return;

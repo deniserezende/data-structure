@@ -35,7 +35,6 @@ void action_catac_blocks(type_mMlavlitems block_rect){
     _report_block_txt_(block_rect_del);
     return;
 }
-    //AQUIDE adicionar report das arestas e vertices
 
 type_mMlavltree delete_blocks_from_blocks_avl(type_mMlavltree blocks_avl, type_list list_of_blocks){
     int done;
@@ -59,37 +58,16 @@ type_mMlavltree delete_blocks_from_blocks_avl(type_mMlavltree blocks_avl, type_l
     destroi_list(list_of_blocks);
     
     return blocks_avl;
-
-    // ANTES TAVA ASSIm
-    // set_current_to_first_item_in_list(list_of_blocks);
-    // int i = 0;
-    // do{
-    //     i++;
-    //     done = is_current_last_item_in_list(list_of_blocks);
-    //     rect = get_current_item_in_list(list_of_blocks);
-
-    //     blocks_avl = delete_item_in_mMl_avl_tree(blocks_avl, rect, (void*)compare_rectangles_by_x_coordinate, (void*)compare_rect_blocks_cep);
-    //     block_data = get_rect_data(rect);
-    //     remove_block(block_data);
-    //     destroi_rectangle(rect);
-    //     delete_current_item_in_list(list_of_blocks);
-    //     move_current_forward_in_list(list_of_blocks);
-    // }while(!done);
-    // destroi_list(list_of_blocks);
-    // return blocks_avl;
 }
 
 type_list QDC_vertex_to_delete;
 type_list QDC_edges_to_delete;
 type_rect QDC_surronding_rect = NULL;
 
-//AQUIDE AINDA FALTA REMOVER AS ARESTAS E OS VERTICIES
 void action_catac_vertex(type_vertex vertex){
     char *id = get_vertex_id(vertex);
-
+    
     insert_item_at_the_end_of_list(QDC_vertex_to_delete, id);
-
-    //AQUIDE
     _report_vertex_txt_(vertex);
 }
 
@@ -101,9 +79,7 @@ long condition_catac_vertex(type_vertex vertex){
 }
 
 void deallocate_edge_and_report_edge(type_edge edge){
-
     _report_edge_txt_(edge);
-
     destroi_edge(edge);
 }
 

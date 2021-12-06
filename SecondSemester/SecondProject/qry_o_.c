@@ -4,7 +4,6 @@
 
 int _find_minimum_distance_to_property_o_(type_hashtable cityblocks_hash, type_property property, double minimum_distance_point[2]){
     char* cep = get_property_cep(property);
-    //long cep_key = get_property_cep_key(property);
     long cep_key = format_cep_from_base36_to_base10(cep);
 
     set_id(cep);
@@ -33,16 +32,6 @@ int _find_minimum_distance_to_property_o_(type_hashtable cityblocks_hash, type_p
         shift_amount_x = house_number;
         shift_amount_y = 0;
         break;
-    // before
-    // case 'L':
-    //     shift_amount_x = 0;
-    //     shift_amount_y = house_number;
-    //     break;
-    // case 'O':
-    //     shift_amount_x = w;
-    //     shift_amount_y = house_number;
-    //     break;
-    // after arrumei conforme o do mateus
     case 'O':
         shift_amount_x = 0;
         shift_amount_y = house_number;

@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// AQUIDE verificar se em ponteiros não estou passando double!
+
+double QP_minimum_distance_point[2];
+type_vertex QP_origin_vertex = NULL, QP_destination_vertex = NULL;
+double QP_dist;
 
 long _get_fastest_route_time(type_edge edge){
     double length = get_edge_length(edge);
@@ -16,10 +19,8 @@ long _get_edge_length(type_edge edge){
     return (long)length;
 }
 
-
 int find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_property property, double minimum_distance_point[2]){
     char* cep = get_property_cep(property);
-    //long cep_key = get_property_cep_key(property);
     long cep_key = format_cep_from_base36_to_base10(cep);
 
     set_id(cep);
@@ -48,16 +49,6 @@ int find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prope
         shift_amount_x = house_number;
         shift_amount_y = 0;
         break;
-    // before
-    // case 'L':
-    //     shift_amount_x = 0;
-    //     shift_amount_y = house_number;
-    //     break;
-    // case 'O':
-    //     shift_amount_x = w;
-    //     shift_amount_y = house_number;
-    //     break;
-    // after arrumei conforme o do mateus
     case 'O':
         shift_amount_x = 0;
         shift_amount_y = house_number;
@@ -99,12 +90,6 @@ int find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prope
     return 1;
 }
 
-double QP_minimum_distance_point[2];
-type_vertex QP_origin_vertex = NULL, QP_destination_vertex = NULL;
-double QP_dist;
-
-//AQUIDE conferir isso aqui!!!!!!!!!!!!!
-// x <= ??? x == ????
 long traverse_condition_p_(type_vertex vertex){
     double x = get_vertex_x(vertex);
     double y = get_vertex_y(vertex);
@@ -154,7 +139,6 @@ void p_svg_output(type_svg SVGFILE, type_list vertices, char color[], double str
         x2 = get_vertex_x(vertex);
         y2 = get_vertex_y(vertex);
 
-        //insert_line_in_svg(SVGFILE, x, y, x2, y2, color, stroke_width);
         add_path_to_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, x, y, x2, y2);
 
         move_current_backward_in_list(vertices);
@@ -182,7 +166,6 @@ void p_txt_output_shortest_route(type_txt TXTFILE, type_list vertices, char orig
     //p_txt_output(TXTFILE, vertices);
 }
 
-
 // Qual o melhor trajeto de carro entre a origem
 // (@o?) e o destino especificado pelo endereço
 // cep/face/num. O percurso na representação
@@ -195,35 +178,29 @@ void p_txt_output_shortest_route(type_txt TXTFILE, type_list vertices, char orig
 // o fim do percurso. As linhas devem ser grossas,
 // mas menos espessas que as arestas da AGM
 void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_hashtable blocks_hashtable, type_graph via_graph, type_property origin_property, char cep[], char cardinal_direction, int house_number, char shortest_route_color[], char fastest_route_color[]){
-    // achar o vertice mais proximo da property
-    // pegar o cep for no retangulo (pela hash) verificar o vertice mais proximo 
-
-       // achar o vertice mais proximo da property
-
-    // pegar o id desse vertice = source_id
-    // achar o vertice mais proximo do cep dado
-    // pegar o id desse vertice = destination_id
+    // Finding the closest vertex to the origin property
     double minimum_distance_point_origin[2];
     int found_minimum_distance = find_minimum_distance_to_property(blocks_hashtable, origin_property, minimum_distance_point_origin);
-    // se nao achou 'e pq o cep nao correspondia a nenhum bloco que esta la
+    // If it didn't find the minimum distance to a vertex is because the block with that cep isn't there anymore
     if(found_minimum_distance == 0) return;
 
     QP_minimum_distance_point[0] = minimum_distance_point_origin[0];
     QP_minimum_distance_point[1] = minimum_distance_point_origin[1];
     QP_dist = __INT_MAX__;
     traverse_verticies_with_conditional_action_graph(via_graph, (void*)traverse_action_origin_p_, (void*)traverse_condition_p_);
+
     //AQUIDE destroi property?
 
+    // Finding the closest vertex to the destination property
     double minimum_distance_point_destination[2];
     type_property destination_property = new_property(cep, cardinal_direction, house_number, "");
+    // If it didn't find the minimum distance to a vertex is because the block with that cep isn't there anymore
     found_minimum_distance = find_minimum_distance_to_property(blocks_hashtable, destination_property, minimum_distance_point_destination);
     if(found_minimum_distance == 0) return;
-
 
     QP_minimum_distance_point[0] = minimum_distance_point_destination[0];
     QP_minimum_distance_point[1] = minimum_distance_point_destination[1];
     QP_dist = __INT_MAX__;
-
     traverse_verticies_with_conditional_action_graph(via_graph, (void*)traverse_action_destination_p_, (void*)traverse_condition_p_);
     
     double xi = get_vertex_x(QP_origin_vertex);
@@ -231,34 +208,36 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
     double xf = get_vertex_x(QP_destination_vertex);
     double yf = get_vertex_y(QP_destination_vertex);
 
+    // Inserting origin point and destination point in svg
     insert_circle_in_svg(SVGFILE, xi, yi, 10, "Black", "Black", 1);
     insert_circle_in_svg(SVGFILE, xf, yf, 10, "Pink", "Pink", 1);
-
-    // insert_circle_in_svg(SVGFILE, minimum_distance_point_origin[0], minimum_distance_point_origin[1], 10, "Black", "Black", 1);
-    // insert_circle_in_svg(SVGFILE, minimum_distance_point_destination[0], minimum_distance_point_destination[1], 10, "Pink", "Pink", 1);
 
     char *sourceid = get_vertex_id(QP_origin_vertex);
     char *destinationid = get_vertex_id(QP_destination_vertex);
 
+
+    // Finding shortest solution
     type_list shortest_solution = dijkstras_algorithm_with_destination_in_graph(via_graph, sourceid, destinationid, (void*)_get_edge_length);
-    
+    // Generating output    
     start_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, 1, shortest_route_color, 2);
     p_svg_output(SVGFILE, shortest_solution, shortest_route_color, 4);
-    int r = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+    int r = rand(); // Returns a pseudo-random integer between 0 and RAND_MAX.
     char id[20];
     sprintf(id, "%d%c", r, '\0');
     end_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, id, 5, shortest_route_color, shortest_route_color, 2, shortest_route_color, 5, "indefinite");
     p_txt_output_shortest_route(TXTFILE, shortest_solution, sourceid, destinationid);
 
 
-
+    // Finding fastest solution
     type_list fastest_solution =  dijkstras_algorithm_with_destination_in_graph(via_graph, sourceid, destinationid, (void*)_get_fastest_route_time);
+    // Generating output
     start_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, 1, fastest_route_color, 2);
     p_svg_output(SVGFILE, fastest_solution, fastest_route_color, 1);
-    r = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+    r = rand(); // Returns a pseudo-random integer between 0 and RAND_MAX.
     sprintf(id, "%d%c", r, '\0');
     end_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, id, 5, fastest_route_color, fastest_route_color, 2, fastest_route_color, 4, "indefinite");
     p_txt_output_fastest_route(TXTFILE, fastest_solution, sourceid, destinationid);
 
+    //AQUIDE clean up lists
 } 
 

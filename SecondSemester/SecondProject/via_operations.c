@@ -22,8 +22,6 @@ void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]
         return;
     }
 
-    //AQUIDE ver de onde eu tenho que pegar o box para o .svg
-    // Random big values!
     VO_minx = __INT_MAX__;
     VO_miny = __INT_MAX__;
     VO_maxx = 0;
@@ -73,7 +71,7 @@ void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]
     free(ldir);
     free(lesq);
 
-    //setting view_box so that the user can access values from main
+    // setting view_box so that the user can access values from main
     view_box[0] = VO_minx;
     view_box[1] = VO_miny;
     view_box[2] = VO_maxx;

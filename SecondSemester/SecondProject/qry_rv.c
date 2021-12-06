@@ -75,6 +75,14 @@ void _rv_get_id_action(type_vertex vertex){
     char *id = get_vertex_id(vertex);
     QRV_ID = id;
 }
+void _rv_do_nothing_edge_destroi(type_graphinfos from_vertex, type_graphinfos edge, type_graphinfos to_vertex){
+    return;
+}
+
+void _rv_do_nothing_vertex_destroi(type_graphinfos vertex){
+    return;
+}
+
 
 // Calcule a árvore geradora mínima do subgrafo
 // com os vértices que estão dentro da região
@@ -96,7 +104,6 @@ void _rv_get_id_action(type_vertex vertex){
 // região x,y,w,h com um retângulo de bordas
 // grossas e tracejadas. ATENÇÃO: Indicar a raiz
 // da AGM
-
 void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, double y, double w, double h, double f){
     QRV_SVGFILE = SVGFILE;
     set_txt_file(TXTFILE);
@@ -119,4 +126,9 @@ void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, doubl
     // and reducing the speed of some edges
     breadth_first_search_traversal_with_conditional_actions_in_graph(mst, QRV_ID, (void*)_rv_reduce_speed_action_vertex, (void*)_rv_reduce_speed_condition_vertex, (void*)_rv_reduce_speed_action_edge, (void*)_rv_reduce_speed_condition_edge);
     insert_dasharray_rect_in_svg(SVGFILE, x, y, w, h, "Transparent", "Red", 4, 4);
+
+    // Clean up
+    destroi_graph(subgraph, (void*)_rv_do_nothing_vertex_destroi, (void*)_rv_do_nothing_edge_destroi);
+    kruskals_destroi_solution_graph(mst);
+    destroi_rectangle(rectangle);
 }

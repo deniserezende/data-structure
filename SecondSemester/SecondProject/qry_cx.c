@@ -59,6 +59,13 @@ void cx_vertex_action_svg(type_vertex vertex){
     QCX_index++;
 }
 
+void _cx_do_nothing_edge_destroi(type_graphinfos from_vertex, type_graphinfos edge, type_graphinfos to_vertex){
+    return;
+}
+
+void _cx_do_nothing_vertex_destroi(type_graphinfos vertex){
+    return;
+}
 
 // Calcule as regiões isoladas. Considere
 // inacessível as regiões não conectas ou se
@@ -88,5 +95,7 @@ void cx(type_svg SVGFILE, type_txt TXTFILE, type_graph via_graph, double limiar)
     QCX_TXTFILE = TXTFILE;
     traverse_graph_conditional_actions(via_graph, (void*)cx_vertex_action_svg, (void*)cx_vertex_condition_true, (void*)cx_edge_action, (void*)cx_edge_condition);
 
+    // Clean up
+    destroi_graph(subgraph, (void*)_cx_do_nothing_vertex_destroi, (void*)_cx_do_nothing_edge_destroi);
     free(solution);
 }

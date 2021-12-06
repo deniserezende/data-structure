@@ -1,5 +1,5 @@
 //
-//  qryoperations.c 
+//  qry_operations.c 
 //  
 //
 //  Created by Denise F. de Rezende on 25/05/21.
@@ -72,7 +72,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                         cx(svg_temp_file, txtfile, via_graph, limiar);
                         insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     }
-                    else if(strncmp(line, "p?", 2) == 0){ //cep face num cmc cmr
+                    else if(strncmp(line, "p?", 2) == 0){
                             sscanf(line, "%s %s %c %d %s %s", helper, cep, &cardinal_direction, &house_number, shortest_route_color, fastest_route_color); 
                             insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>p?<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
@@ -90,6 +90,7 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
     insert_via_in_svg(svgfile, via_graph);
     insert_svg_file_in_other_svg_file("deniserezendeqrytempfile.svg", svgfile);
     remove("deniserezendeqrytempfile.svg");
+    if(property != NULL) remove_property(property);
 
     free(line);
     free(helper);

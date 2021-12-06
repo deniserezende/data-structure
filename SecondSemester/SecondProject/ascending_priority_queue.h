@@ -59,7 +59,6 @@ int conditionally_change_item_priority_in_ascending_priority_queue(type_dpqueue 
 // However if the priority queue is empty then NULL is returned
 type_apqitems pull_item_in_ascending_priority_queue(type_apqueue queue);
 
-
 // Pre-condition: The priority queue has to have been created
 // Post-condition: The item has NOT been removed from the priority queue, item is returned to the user
 // However if the priority queue is empty then NULL is returned

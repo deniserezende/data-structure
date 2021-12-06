@@ -52,6 +52,7 @@ long convert_base36_to_base10(char *base36){
 char* format_cep(char cep[]){
     char* cep_without_hyphen = remove_all_occurrences_of_char(cep, '-');
     char* cep_without_special_characters = remove_all_occurrences_of_char(cep_without_hyphen, '.');
+    free(cep_without_hyphen);
 
     return cep_without_special_characters;
 }

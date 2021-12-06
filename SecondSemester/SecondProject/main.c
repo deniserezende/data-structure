@@ -58,47 +58,35 @@ int main(int argc, char *argv[]) {
     // --------------------------------------------------- VIA FILE ---------------------------------------------------
     via_fullpath = get_via_fullpath(via_filename, input_path);
     if(via_fullpath != NULL) get_via_input(via_fullpath, via_graph, viewbox_via);
-    printf("via=%s\n", via_fullpath);
-
 
     // --------------------------------------------------- GEO FILE ---------------------------------------------------
     geo_fullpath = get_geo_fullpath(geo_filename, input_path);
-    printf("geo=%s\n", geo_fullpath);
     cityblocks_avl = get_geo_input(geo_fullpath, cityblocks_avl, cityblocks_hashtable, viewbox_geo);
-    printf("done geo\n");
-    // --------------------------------------------------- OUTPUT FILE SVG 1 ---------------------------------------------------
-    
+
+    // --------------------------------------------------- OUTPUT FILE SVG 1 ---------------------------------------------------    
     char* my_name = (char*)malloc(sizeof(char) * 17);
     sprintf(my_name, "Denise Rezende%c", '\0');
 
     // Getting full path for the first output file
     geo_svg_fullpath = get_one_named_svg_fullpath(geo_filename, output_path);
-    printf("geo_svg_fullpath=%s\n", geo_svg_fullpath);
    
     // Creating svg output file based on .geo
     type_svg geo_svgfile = start_new_svg_file_with_viewbox(geo_svg_fullpath, viewbox_geo[0] - DEFAULT_VIEW_BOX_V, viewbox_geo[1] - DEFAULT_VIEW_BOX_V, viewbox_geo[2]-viewbox_geo[0]+2*DEFAULT_VIEW_BOX_V, viewbox_geo[3]-viewbox_geo[1]+2*DEFAULT_VIEW_BOX_V);
     insert_comment_in_svg(geo_svgfile, my_name);
     insert_blocks_in_svg(geo_svgfile, cityblocks_avl);
     end_svg_file(geo_svgfile);
-    printf("done geo svg\n");
-
 
     // Getting full path for the second output file
     via_svg_fullpath = get_two_named_svg_fullpath(geo_filename, via_filename, output_path);
-    printf("via_svg_fullpath=%s\n", via_svg_fullpath);
 
     // Creating svg output file based on .via
     type_svg via_svgfile = start_new_svg_file_with_viewbox(via_svg_fullpath, viewbox_via[0] - DEFAULT_VIEW_BOX_V, viewbox_via[1] - DEFAULT_VIEW_BOX_V, viewbox_via[2]-viewbox_via[0]+2*DEFAULT_VIEW_BOX_V, viewbox_via[3]-viewbox_via[1]+2*DEFAULT_VIEW_BOX_V);
     insert_comment_in_svg(via_svgfile, my_name);
     insert_via_in_svg(via_svgfile, via_graph);
     end_svg_file(via_svgfile);
-    printf("done via svg\n\n\n");
-
-
 
     // --------------------------------------- QRY FILE AND OTHER OUTPUT FILES -------------------------------------------
     qry_fullpath = get_qry_fullpath(qry_filename, input_path);
-    printf("qry_fullpath=%s\n", qry_fullpath);
 
     if(qry_fullpath != NULL){
         // Getting fullpath for the txt and svg (output files)
@@ -112,28 +100,35 @@ int main(int argc, char *argv[]) {
         insert_comment_in_svg(qry_svgfile, my_name);
         
         // Calling function to deal with qryfile
-        printf("Calling function to deal with qryfile\n");
         cityblocks_avl = get_qry_input_and_generate_output(qry_fullpath, output_path, geo_filename, txtfile, qry_svgfile, cityblocks_avl, cityblocks_hashtable, via_graph, viewbox_via);
 
         // Ending output files
         end_svg_file(qry_svgfile);
         end_txt_file(txtfile);
 
+        // Clean up
         free(txt_fullpath);
         free(second_svg_fullpath);
         free(qry_fullpath);
+        free(qry_filename);
     }
 
-
-    free(geo_fullpath);
-    free(geo_svg_fullpath);
-    free(via_svg_fullpath);
+    // Clean up
+    if(input_path != NULL) free(input_path);
+    if(geo_filename != NULL) free(geo_filename);
+    if(geo_fullpath != NULL) free(geo_fullpath);
+    if(geo_svg_fullpath != NULL) free(geo_svg_fullpath);
+    if(via_svg_fullpath != NULL) free(via_svg_fullpath);
+    if(viewbox_geo != NULL) free(viewbox_geo);
+    if(viewbox_via != NULL) free(viewbox_via);
+    if(via_filename != NULL) free(via_filename);
+    if(via_fullpath != NULL) free(via_fullpath);
+    if(output_path != NULL) free(output_path);
 
     // DEALOCATING
     destroi_graph(via_graph, (void*)deallocate_vertex, (void*)deallocate_edge);
     destroi_hash_table(cityblocks_hashtable, (void*)deallocate_cityblocks_hashtable);
     destroi_mMl_avl_tree(cityblocks_avl, (void*)deallocate_cityblocks_avl);
-    printf("FIM.\n");
 }
 
 void deallocate_cityblocks_avl(type_rect rect_block){

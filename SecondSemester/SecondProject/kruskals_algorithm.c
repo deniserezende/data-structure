@@ -169,6 +169,14 @@ void _kruskals_edges_action_edge(VERTEX* from_vertex, EDGE* edge, VERTEX* to_ver
     insert_item_in_ascending_priority_queue(KA_edges, key, kedge);
 }
 
+void _kruskals_do_nothing_edge_destroi(type_graphinfos from_vertex, type_graphinfos edge, type_graphinfos to_vertex){
+    return;
+}
+
+void _kruskals_do_nothing_vertex_destroi(type_graphinfos vertex){
+    return;
+}
+
 VERTEX* _kruskals_new_vertex_for_graph_aux(GRAPH * graph, char id[]){
 	VERTEX *vertex_node = malloc(sizeof(VERTEX));
     vertex_node->other_data = malloc(sizeof(DATA));
@@ -260,5 +268,13 @@ type_graph kruskals_algorithm_in_graph(type_graph graph, type_graphptrf_onetypei
 
 	//AQUIDE cleanup function desalocar memória do KRUSKALS_DATA
     _kruskals_traverse_graph_conditional_actions(graph, (void*)_kruskals_clean_up_vertices, (void*)_kruskals_true_vertex, (void*)_kruskals_do_nothing_edge, (void*)_kruskals_false_edge);
-    return solution_graph;
+	destroi_disjoint_sets(union_find);
+	destroi_ascending_priority_queue(edges);
+
+	return solution_graph;
+}
+
+type_graph kruskals_destroi_solution_graph(type_graph solution_graph){
+	destroi_graph(solution_graph, (void*)_kruskals_do_nothing_vertex_destroi, (void*)_kruskals_do_nothing_edge_destroi);
+    return NULL;
 }

@@ -189,8 +189,6 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
     QP_dist = __INT_MAX__;
     traverse_verticies_with_conditional_action_graph(via_graph, (void*)traverse_action_origin_p_, (void*)traverse_condition_p_);
 
-    //AQUIDE destroi property?
-
     // Finding the closest vertex to the destination property
     double minimum_distance_point_destination[2];
     type_property destination_property = new_property(cep, cardinal_direction, house_number, "");
@@ -204,7 +202,7 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
     traverse_verticies_with_conditional_action_graph(via_graph, (void*)traverse_action_destination_p_, (void*)traverse_condition_p_);
     
     double xi = get_vertex_x(QP_origin_vertex);
-    double yi = get_vertex_y(QP_origin_vertex);
+    double yi = get_vertex_y(QP_origin_vertex); 
     double xf = get_vertex_x(QP_destination_vertex);
     double yf = get_vertex_y(QP_destination_vertex);
 
@@ -238,6 +236,9 @@ void p_(type_svg SVGFILE, type_txt TXTFILE, type_mMlavltree blocks_avl, type_has
     end_insert_animated_circle_with_multiple_points_in_svg(SVGFILE, id, 5, fastest_route_color, fastest_route_color, 2, fastest_route_color, 4, "indefinite");
     p_txt_output_fastest_route(TXTFILE, fastest_solution, sourceid, destinationid);
 
-    //AQUIDE clean up lists
+    // Clean up
+    remove_property(destination_property);
+    shortest_solution = dijkstras_destroi_solution_array(shortest_solution);
+    fastest_solution = dijkstras_destroi_solution_array(fastest_solution);
 } 
 

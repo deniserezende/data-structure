@@ -197,6 +197,13 @@ type_list dijkstras_algorithm_with_destination_in_graph(type_graph graph, char s
 	solution_array = _dijkstras_algorithm_with_destination_in_graph_aux(graph_, source_node, destination_node, priority_queue, (void*)get_edge_value, solution_array);
 	
     //AQUIDE cleanup function desalocar memória do DIJKSTRA DATA
+    // Clean up
     _dijkstras_traverse_graph_verticies_with_action(graph, (void*)_dijkstras_clean_up_vertices);
+    destroi_ascending_priority_queue(priority_queue);
     return solution_array;
+}
+
+type_list dijkstras_destroi_solution_array(type_list solution_array){
+    destroi_list(solution_array);
+    return NULL;
 }

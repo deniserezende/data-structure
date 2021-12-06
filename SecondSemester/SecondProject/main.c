@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
         // Getting fullpath for the txt and svg (output files)
         txt_fullpath = get_txt_fullpath(geo_filename, qry_filename, output_path);
         second_svg_fullpath = get_two_named_svg_fullpath(geo_filename, qry_filename, output_path);
-        
+
         // Starting both output files
         type_svg qry_svgfile = start_new_svg_file_with_viewbox(second_svg_fullpath, viewbox_via[0] - DEFAULT_VIEW_BOX_V, viewbox_via[1] - DEFAULT_VIEW_BOX_V, viewbox_via[2]-viewbox_via[0]+2*DEFAULT_VIEW_BOX_V, viewbox_via[3]-viewbox_via[1]+2*DEFAULT_VIEW_BOX_V);
         type_txt txtfile = start_new_txt_file(txt_fullpath);
@@ -109,21 +109,24 @@ int main(int argc, char *argv[]) {
         // Clean up
         free(txt_fullpath);
         free(second_svg_fullpath);
-        free(qry_fullpath);
+        if(qry_fullpath != NULL && strcmp(qry_fullpath, qry_filename) != 0) free(qry_fullpath);
         free(qry_filename);
     }
 
     // Clean up
     if(input_path != NULL) free(input_path);
+
+    if(geo_fullpath != NULL && strcmp(geo_fullpath, geo_filename) != 0) free(geo_fullpath);
     if(geo_filename != NULL) free(geo_filename);
-    if(geo_fullpath != NULL) free(geo_fullpath);
     if(geo_svg_fullpath != NULL) free(geo_svg_fullpath);
     if(via_svg_fullpath != NULL) free(via_svg_fullpath);
+
+    if(via_fullpath != NULL && strcmp(via_fullpath, via_filename) != 0) free(via_fullpath);
+    if(via_filename != NULL) free(via_filename);
+    if(output_path != NULL) free(output_path);
+
     if(viewbox_geo != NULL) free(viewbox_geo);
     if(viewbox_via != NULL) free(viewbox_via);
-    if(via_filename != NULL) free(via_filename);
-    if(via_fullpath != NULL) free(via_fullpath);
-    if(output_path != NULL) free(output_path);
 
     // DEALOCATING
     destroi_graph(via_graph, (void*)deallocate_vertex, (void*)deallocate_edge);

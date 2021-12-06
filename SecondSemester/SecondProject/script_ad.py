@@ -20,6 +20,9 @@ subprocess.call(["make", "clean"])
 subprocess.call(["make", "t2"])
 print("\n")
 
+report_path = "/Users/Denise/Dropbox/UEL/UniversitySubjectsGitHub/DataStructureGitHub/DataStructure/SecondSemester/SecondProject/output_python.txt"
+report = open(report_path, 'w')
+
 geo = [] 
 via = []
 files = []
@@ -48,17 +51,24 @@ subdir.sort()
 count = 0
 for files_in_subqry in subqry:
     for j in files_in_subqry:
-        print(f"./t2 -e {BED} -o {BSD} -f {geo[count]} -v {via[count]} -q {subdir[count] + '/' + j}")
+        data = f"./t2 -e {BED} -o {BSD} -f {geo[count]} -v {via[count]} -q {subdir[count] + '/' + j}\n"
+        report.write(data)
         subprocess_ini = datetime.datetime.now()
         subprocess.call(["time", "./t2", "-e", BED, "-o", BSD, "-f", geo[count], "-v", via[count], "-q", subdir[count] + "/" + j])
         subprocess_end = datetime.datetime.now()
-        print(f"time={str(subprocess_end - subprocess_ini)}")
-        print("\n")
+        time_report = f"time={str(subprocess_end - subprocess_ini)}\n\n"
+        report.write(time_report)
 
+        print(data)         
+        print(time_report)          
 
     count += 1 
 
 
 fin = datetime.datetime.now()
 
-print(f"Tempo para rodar:\n{str(fin - ini)}")
+total_time_report = f"Tempo para rodar:\n{str(fin - ini)}"
+report.write(total_time_report)
+report.close()
+
+

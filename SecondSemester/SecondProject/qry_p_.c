@@ -145,8 +145,6 @@ void p_svg_output(type_svg SVGFILE, type_list vertices, char color[], double str
         x = x2;
         y = y2;
     }
-
-    destroi_list(vertices);
 }
 
 // AQUIDE falta descrever o caminho!!!

@@ -28,7 +28,6 @@ int empty_graph(type_graph graph);
 
 // Pre-condition: The graph exists
 // Post-condition: None
-// See (1)
 int get_amount_of_vertices_in_graph(type_graph graph);
 
 // Pre-condition: The graph exists.

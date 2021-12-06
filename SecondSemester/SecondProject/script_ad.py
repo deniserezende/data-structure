@@ -70,5 +70,6 @@ fin = datetime.datetime.now()
 total_time_report = f"Tempo para rodar:\n{str(fin - ini)}"
 report.write(total_time_report)
 report.close()
+print(total_time_report)
 
 

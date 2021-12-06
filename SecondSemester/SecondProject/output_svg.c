@@ -124,8 +124,6 @@ int insert_svg_file_in_other_svg_file(char* origin_svgfilename, type_svg destina
     char *line = (char*)malloc(20000 * sizeof(char));
     while(!feof(origin)){ 
         fscanf(origin, "\n%[^\n]\ns", line);
-        //printf("[%ld]\n", strlen(line));
-        //printf("[%s]\n", line);
         if(strncmp(line,"<svg ", 4) != 0 && strcmp(line,"xmlns=\"http://www.w3.org/2000/svg\"") != 0 && strcmp(line,"xmlns:xlink=\"http://www.w3.org/1999/xlink\" >") != 0){
             if(strcmp(line, "</svg>") != 0){
                 insert_string_in_svg(destination, line);

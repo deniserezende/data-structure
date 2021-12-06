@@ -58,7 +58,6 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                 sscanf(line, "%s %lf %lf %lf %lf", helper, &x, &y, &w, &h);
                 insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>catac<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                 blocks_avl = catac(svg_temp_file, txtfile, blocks_avl, blocks_table, via_graph, x, y, w, h);
-                printf("catac falta detalhes\n");
                 insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             }
             else if(strncmp(line, "rv", 2) == 0){
@@ -71,8 +70,6 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
                         sscanf(line, "%s %lf", helper, &limiar);
                         insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>cx<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                         cx(svg_temp_file, txtfile, via_graph, limiar);
-
-                        printf("cx fim implementado\n");
                         insert_string_in_txt(txtfile, "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     }
                     else if(strncmp(line, "p?", 2) == 0){ //cep face num cmc cmr
@@ -87,7 +84,6 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
         // "Resets" the string
         strcpy(line, "\0");
     }
-    printf("SVGTIME\n\n\n");
 
     end_svg_file(svg_temp_file);
     insert_blocks_in_svg(svgfile, blocks_avl);
@@ -95,7 +91,6 @@ type_mMlavltree get_qry_input_and_generate_output(char *qryfilename, char *outpu
     insert_svg_file_in_other_svg_file("deniserezendeqrytempfile.svg", svgfile);
     remove("deniserezendeqrytempfile.svg");
 
-    printf("coloquei tudo\n");
     free(line);
     free(helper);
     free(cep);

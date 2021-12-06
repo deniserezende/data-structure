@@ -114,13 +114,6 @@ int _find_item_in_descending_priority_queue(type_dpqueue queue, type_dpqitems it
 	int lower = 0;
 	int upper = stru->next_item;
 
-	// for(int i=0; i <= stru->next_item; i++){
-	// 	NODE *current = stru->vector[i];
-	// 	if((long)check_if_equal(item, current->item) == 0){
-	// 		return i;
-	// 	}
-	// }
-	// return -1;
 	for(int i=stru->next_item; i >= 0; i--){
 		NODE *current = stru->vector[i];
 		if(((long)check_if_equal(item, current->item)) == 0){
@@ -159,21 +152,6 @@ void _sort_item_by_priority_in_p_queue(STRUCTURE *stru, int unsorted_item_index)
 		else break;
 	}
 }
-
-	// correcting its place opcao 2
-	// merge sort que pega o meio e ve para que lado deve ir
-	// type_dpqitems aux;
-	// int size = stru->size;
-	// int last_element = stru->size - 1;
-	// int current_space = stru->next_free_space;
-	// for(int i=last_element; i < stru->size; i++){
-	// 	if(compare(stru->vector[stru->next_free_space], stru->vector[i] < 0)){
-	// 		aux = stru->vector[stru->next_free_space];
-	// 		stru->vector[stru->next_free_space] = stru->vector[i];
-	// 		stru->vector[i] = aux;
-	// 	}
-	// 	else break;
-	// }
 
 // AQUIDE EFICIENCIA = DAR O VALOR ANTIGO PARA ELE!!!
 int change_item_priority_in_descending_priority_queue(type_dpqueue queue, long new_priority, type_dpqitems item, type_dpqptrf_twoitems check_if_equal){
@@ -225,6 +203,7 @@ type_dpqitems pull_item_in_descending_priority_queue(type_dpqueue queue){
 
 type_dpqitems peek_item_in_descending_priority_queue(type_dpqueue queue){
 	STRUCTURE *stru = queue;
+	if(empty_descending_priority_queue(queue)) return NULL;	
 	NODE *highest = stru->vector[stru->next_item];
 	return highest->item;
 }
@@ -258,52 +237,3 @@ void print_descending_priority_queue_with_condition(type_dpqueue queue, type_dpq
 	}
 	printf("\n");
 }
-
-
-// compare should return 0 if equal
-// -1 if the element to be inserted is less than the other
-// 1 if the elemtent to be inserted is more than the other
-// element to be inserted - other
-
-// template<typename I>
-// I BinarySearch(I begin, I end)
-// {
-//     I lower = begin;
-//     I upper = end;
-//     while (lower < upper)
-//     {
-//         I mid = lower + std::distance(upper, lower) / 2;
-//         if(key == *mid)
-//         {
-//             return mid;
-//         }
-//         if(key < *mid) {
-//             upper = mid;
-//         }
-//         else {
-//             lower = mid;
-//         }
-//     }
-
-//     return end;
-// }
-
-// int _binary_search(type_dpqitems *array, int left, int right, type_dpqitems value, type_dpqptrf_twoitems check_if_equal) { 
-//     if (right >= left) { 
-//         int mid = left + (right - left) / 2; 
-// 		NODE *item = array[mid];
-// 		long value_of_equality = check_if_equal(item->item, value);
-// 		if(value_of_equality == 0){
-// 			return mid;
-// 		}
-// 		if(item->priority > value->priority){
-// 			return binarySearch(array, mid+1, right, x); 
-// 		}
-//         if (arr[mid] == x) 
-//             return mid; 
-//         if (arr[mid] > x) 
-//             return binarySearch(arr, left, mid - 1, x); 
-//         return binarySearch(arr, mid + 1, right, x); 
-//     } 
-//     return -1; 
-// } 

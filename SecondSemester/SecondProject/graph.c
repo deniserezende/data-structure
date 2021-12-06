@@ -40,7 +40,7 @@ typedef struct vertex{
 	char id[41];
 	type_graphinfos *vertex_info;
 	type_list edges;
-	DATA *other_data;
+	DATA* other_data;
 	void* data_for_other_algorithms;
 }VERTEX;
 
@@ -179,7 +179,6 @@ int empty_graph(type_graph graph){
 
 
 
-// returns the id of the inserted info
 int add_vertex_to_graph(type_graph graph, char id[]){
 	GRAPH *graph_ = graph;
 	VERTEX *vertex = _find_vertex_by_id_in_graph(graph_, id);
@@ -192,10 +191,12 @@ int add_vertex_to_graph(type_graph graph, char id[]){
 	return 0;
 }
 
-void set_vertex_info_in_graph(type_graph graph, char vertex_id[], type_graphinfos vertex_info){
+int set_vertex_info_in_graph(type_graph graph, char id[], type_graphinfos vertex_info){
 	GRAPH *graph_ = graph;
-	VERTEX *vertex = _find_vertex_by_id_in_graph(graph_, vertex_id);
+	VERTEX *vertex = _find_vertex_by_id_in_graph(graph_, id);
+	if(vertex == NULL) return 0;
 	vertex->vertex_info = vertex_info;
+	return 1;
 }
 
 type_graphinfos get_vertex_info_in_graph(type_graph graph, char id[]){
@@ -227,9 +228,7 @@ int add_edge_to_graph(type_graph graph, char from_vertex_id[], char to_vertex_id
 			graph_->amount_of_edges++;
 			return 1;
 		}
-		else printf("to_Vertex == NULL");
 	}
-	else printf("from_vertex == NULL");
 	return 0;
 }
 
@@ -239,7 +238,6 @@ int set_edge_info_in_graph(type_graph graph, char from_vertex_id[], char to_vert
 	VERTEX *from_vertex_node = _find_vertex_by_id_in_graph(graph_, from_vertex_id);
 	
 	if(from_vertex_node != NULL){
-		// _find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
 		EDGE *edge_node = _find_edge_by_id_in_edges_list_in_graph(from_vertex_node->edges, to_vertex_id);
 
 		if(edge_node != NULL){
@@ -318,10 +316,12 @@ void print_graph(type_graph graph, type_graphptrf_onetypeinfo print_vertex, type
 	GRAPH *graph_ = graph; 
 	if(graph_ == NULL) return;
 
-	set_current_to_first_item_in_list(graph_->vertices);
 	if(empty_list(graph_->vertices)){
-		printf("Graph is empty.\n"); return;
+		printf("Graph is empty.\n"); 
+		return;
 	}
+	
+	set_current_to_first_item_in_list(graph_->vertices);
 
 	printf("----------------------\n");
 	int done;
@@ -458,7 +458,8 @@ void traverse_graph_conditional_actions(type_graph graph, type_lptrf_oneitem ver
 	if(graph_ == NULL) return;
 	
 	if(empty_list(graph_->vertices)){
-		printf("Graph is empty.\n"); return;
+		printf("Graph is empty.\n"); 
+		return;
 	}
 
 	set_current_to_first_item_in_list(graph_->vertices);
@@ -496,49 +497,6 @@ void traverse_graph_conditional_actions(type_graph graph, type_lptrf_oneitem ver
 
 	return;	
 }
-
-
-void traverse_graph_conditional_actions_plus_vertex_condition_is_no_edges(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_threeitems edge_action, type_lptrf_oneitem edge_condition){
-	GRAPH *graph_ = graph; 
-	if(graph_ == NULL) return;
-	
-	if(empty_list(graph_->vertices)){
-		printf("Graph is empty.\n"); return;
-	}
-
-	set_current_to_first_item_in_list(graph_->vertices);
-
-	int done;
-	do{
-		done = is_current_last_item_in_list(graph_->vertices);
-		VERTEX *current_vertex = get_current_item_in_list(graph_->vertices);		
-
-		if(current_vertex->edges == NULL || empty_list(current_vertex->edges)){
-			vertex_action(current_vertex->vertex_info);
-			move_current_forward_in_list(graph_->vertices);
-			continue;
-		} 
-
-		int done_;
-		set_current_to_first_item_in_list(current_vertex->edges);
-		do {
-			done_ = is_current_last_item_in_list(current_vertex->edges);
-			EDGE *current_edge = get_current_item_in_list(current_vertex->edges);
-			
-			if(edge_condition(current_edge->edge_info)){
-				edge_action(current_vertex->vertex_info, current_edge->edge_info, (current_edge->to)->vertex_info);
-			}
-			
-			move_current_forward_in_list(current_vertex->edges);
-		}while(!done_);
-
-
-		move_current_forward_in_list(graph_->vertices);
-	}while (!done);
-
-	return;	
-}
-
 
 int traverse_verticies_until_conditional_action_graph(type_graph graph, type_lptrf_oneitem vertex_action, type_lptrf_oneitem vertex_condition){
 	GRAPH *graph_ = graph; 
@@ -847,96 +805,3 @@ void breadth_first_search_traversal_with_conditional_actions_in_graph(type_graph
 
     return;
 }
-
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-int G_time;
-int G_order_index;
-
-VERTEX* _find_unvisited_vertex_for_depth_first_search(GRAPH* graph, int order[]){
-	int done;
-	int i = G_order_index;
-	size_t n = sizeof(&order) / sizeof(order[0]);
-	if(i >= n) return NULL;
-	int next = order[i];
-
-	set_current_to_first_item_in_list(graph->vertices);
-	for(int j = 1; j < next; j++){
-		move_current_forward_in_list(graph->vertices);
-	}
-
-	VERTEX * current_vertex = get_current_item_in_list(graph->vertices);
-	G_order_index++;
-	if(current_vertex->other_data->dfs_visited == 0) return current_vertex;
-
-	return _find_unvisited_vertex_for_depth_first_search(graph, order);
-}
-
-void _depth_first_search_visit_start(VERTEX* vertex){
-	G_time++;
-	vertex->other_data->dfs_visited = 1;
-	vertex->other_data->dfs_starting_time = G_time;
-}
-
-void _depth_first_search_visit_finnish(VERTEX* vertex){
-	G_time++;
-	vertex->other_data->dfs_finnishing_time = G_time;
-}
-
-void _traverse_depth_first_search_with_conditional_actions_in_graph(type_graph graph, int order[], VERTEX* from_vertex, VERTEX* vertex, type_lptrf_oneitem vertex_action_one, type_lptrf_oneitem vertex_action_two){
-	_depth_first_search_visit_start(vertex);
-	vertex_action_one(vertex->vertex_info);
-
-	if(vertex->edges == NULL || empty_list(vertex->edges)){
-		return; // stuck
-	}
-
-	set_current_to_first_item_in_list(vertex->edges);
-	EDGE* edge;
-	int done;
-	do{
-		done = is_current_last_item_in_list(vertex->edges);
-		edge = get_current_item_in_list(vertex->edges);
-		if(edge->to->other_data->dfs_visited == 0) break;
-		move_current_forward_in_list(vertex->edges);
-	}while(!done);
-
-	VERTEX* _next_vertex;
-	VERTEX* _from_vertex;
-	if(edge->to->other_data->dfs_visited == 1){
-		_next_vertex = _find_unvisited_vertex_for_depth_first_search(graph, order);
-		if(_next_vertex == NULL) return; // done
-		_from_vertex = NULL;
-	}
-	else{ // if edge has not been visited
-		_next_vertex = edge->to;
-		_from_vertex = vertex;
-	}
-
-	_traverse_depth_first_search_with_conditional_actions_in_graph(graph, order, _from_vertex, _next_vertex, vertex_action_one, vertex_action_two);
-	_depth_first_search_visit_finnish(vertex);
-	vertex_action_two(vertex->vertex_info);
-}
-
-void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph_action(VERTEX* vertex){
-	vertex->other_data->dfs_visited = 0;
-	vertex->other_data->dfs_starting_time = 0;
-	vertex->other_data->dfs_finnishing_time = 0;
-}
-
-void _set_up_depth_first_search_traversal_with_conditional_actions_in_graph(type_graph graph){
-	G_time = 0;
-	_traverse_graph_verticies_with_action(graph, (void*)_set_up_depth_first_search_traversal_with_conditional_actions_in_graph_action);
-}
-
-void depth_first_search_traversal_with_actions_in_graph(type_graph graph, int order[], type_lptrf_oneitem vertex_action_one, type_lptrf_oneitem vertex_action_two){
-	GRAPH *graph_ = graph; 
-	if(graph_ == NULL || empty_graph(graph_)) return;
-	_set_up_depth_first_search_traversal_with_conditional_actions_in_graph(graph_);
-
-	G_order_index = 0;
-	VERTEX* vertex = _find_unvisited_vertex_for_depth_first_search(graph, order);
-    _traverse_depth_first_search_with_conditional_actions_in_graph(graph_, order, NULL, vertex, vertex_action_one, vertex_action_two);
-}
-

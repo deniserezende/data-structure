@@ -8,7 +8,7 @@ typedef struct element_set{
 }ELEMENT;
 
 int main(){
-    type_disjoint_sets sets = start_disjoint_sets(10);
+    type_disjoint_sets sets = create_disjoint_sets(10);
 
     ELEMENT* element = malloc(sizeof(ELEMENT));
     element->value = 0;

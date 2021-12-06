@@ -131,11 +131,6 @@ long _condition_vertex_for_galgorithms(VERTEX* vertex){
     return 0;
 }
 
-void print_(VERTEX* vertex){
-    printf("%ld ", vertex->data_for_other_algorithms->dijkstra_tmp_value);
-
-}
-
 long _print_condition_dijkstra(VERTEX* vertex){
     if(vertex->data_for_other_algorithms->dijkstra_tmp_value == __INT_MAX__) return 0;
     return 1;

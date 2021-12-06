@@ -155,8 +155,6 @@ void _DFS_depth_first_search_with_actions_in_graph(type_graph graph, int order[]
 	    VERTEX* vertex = _DFS_find_unvisited_vertex_for_depth_first_search(graph, order, i);//, &new_i);
         if(vertex == NULL) continue;//break;
         _DFS_(vertex, vertex_action_one, vertex_action_two);
-		printf("i=%d\n", i); 
-		printf("DFS_index_components=%d\n", DFS_index_components); 
         DFS_index_components++;
     }
     
@@ -210,7 +208,6 @@ void _SCCA_compute_visit(VERTEX* vertex){
 }
 
 void _SCCA_output_ending(VERTEX* vertex){
-	printf("DFS_index_components no _SCCA_output_ending = %d\n", DFS_index_components);
     vertex->data_for_other_algorithms->DFS_component = DFS_index_components;
 }
 

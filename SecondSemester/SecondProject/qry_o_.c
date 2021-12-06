@@ -2,7 +2,7 @@
 #include "qry_o_.h"
 
 
-void _find_minimum_distance_to_property_o_(type_hashtable cityblocks_hash, type_property property, double minimum_distance_point[2]){
+int _find_minimum_distance_to_property_o_(type_hashtable cityblocks_hash, type_property property, double minimum_distance_point[2]){
     char* cep = get_property_cep(property);
     //long cep_key = get_property_cep_key(property);
     long cep_key = format_cep_from_base36_to_base10(cep);
@@ -10,7 +10,8 @@ void _find_minimum_distance_to_property_o_(type_hashtable cityblocks_hash, type_
     set_id(cep);
     type_hashitem block = lookup_item_in_hash_table(cityblocks_hash, cep_key, (void*)get_key_from_block, (void*)verify_block_found);
     if(block == NULL){
-        printf("vish! Block == NULL no O \n");
+        printf("Bloco correspondente ao cep dado não foi encontrado\n");
+        return 0;
     }
     double x = get_rect_x(block);
     double y = get_rect_y(block);
@@ -80,6 +81,7 @@ void _find_minimum_distance_to_property_o_(type_hashtable cityblocks_hash, type_
         minimum_distance_point[0] = x+w;
         minimum_distance_point[1] = y+h;  
     }
+    return 1;
 }
 
 // Armazena no registrador r a posição geográfica
@@ -94,7 +96,8 @@ type_property o_(type_svg SVGFILE, type_txt TXTFILE, type_hashtable blocks_hash,
 
     // svg output
     double x_y[2];
-    _find_minimum_distance_to_property_o_(blocks_hash, property, x_y);
+    int found_minimum_distance = _find_minimum_distance_to_property_o_(blocks_hash, property, x_y);
+    if(found_minimum_distance == 0) return NULL;
     insert_line_in_svg(SVGFILE, x_y[0], x_y[1], x_y[0], viewbox[1], "Purple", 2);
     char house_number_string[10];
     sprintf(house_number_string, "%d", house_number);

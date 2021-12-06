@@ -41,18 +41,6 @@ type_mMlavltree get_geo_input(char *geo_fullpath, type_mMlavltree cityblocks_tre
     double stroke_width;
 
     type_rect block;
- 
-    // Creating a pointer to the function
-    long(*compare_rects_x_ptr)(type_rect, type_rect);
-    compare_rects_x_ptr = compare_rectangles_by_x_coordinate;
-
-    // Creating a pointer to the function
-    long(*get_rect_key_ptr)(type_rect);
-    get_rect_key_ptr = get_key_from_block;
-
-    // Creating a pointer to the function
-    long(*compare_rect_blocks_cep_ptr)(type_rect, type_rect);
-    compare_rect_blocks_cep_ptr = compare_rect_blocks_cep;
 
     while(!feof(geofile)){
         fscanf(geofile, "\n%[^\n]s\n", line);
@@ -69,8 +57,8 @@ type_mMlavltree get_geo_input(char *geo_fullpath, type_mMlavltree cityblocks_tre
                 add_rectangles_stroke_width(block, stroke_width);
                 insert_data_in_rect(block, block_data);
 
-                insert_item_in_hash_table(cityblocks_table, block,  get_key_from_block(block), (void*)get_rect_key_ptr, (void*)compare_rect_blocks_cep_ptr);
-                cityblocks_tree = insert_item_in_mMl_avl_tree(cityblocks_tree, block, (void*)compare_rects_x_ptr);
+                insert_item_in_hash_table(cityblocks_table, block,  get_key_from_block(block), (void*)get_key_from_block, (void*)compare_rect_blocks_cep);
+                cityblocks_tree = insert_item_in_mMl_avl_tree(cityblocks_tree, block, (void*)compare_rectangles_by_x_coordinate);
                 //adicionar uma lista e nao o bloco!
             }
             else if(strncmp(line, "nx", 2) == 0){

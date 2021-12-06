@@ -84,7 +84,7 @@ void print_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem print_it
     type_list vertical_list;
     type_list horizontal_list;
 
-    printf("Start\n");
+    printf("s------------------------------\n");
     for(int i = 0; i < TABLE_SIZE; i=i+1){
         printf("%d", i);
         if(hashtable[i] == NULL){
@@ -116,7 +116,7 @@ void print_hash_table(type_hashtable hash_table, type_hashtptrf_oneitem print_it
         }
         printf("\n");
     }
-    printf("End\n");
+    printf("f------------------------------\n");
 }
 
 unsigned int collision_in_hash_table_aux(type_hashtable hash_table, int index, type_hashitem collision_item, long collision_item_key, type_lptrf_oneitem get_item_key, type_lptrf_twoitems compare_item_unformatted_key){

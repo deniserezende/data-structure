@@ -29,7 +29,7 @@ void commandline(int argc, char *argv[], char **input_path, char **geo_filename,
                     sprintf(*qry_filename, "%s", argv[i]); // Copies the value of argv
                 }
                 else if(strcmp("-v", argv[i]) == 0){
-                    i++; // After the "-pm" comes the pm filename
+                    i++; // After the "-v" comes the v filename
                     *via_filename = malloc((strlen(argv[i])+1) *sizeof(char));
                     sprintf(*via_filename, "%s", argv[i]); // Copies the value of argv
                     }

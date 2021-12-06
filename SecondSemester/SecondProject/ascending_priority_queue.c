@@ -2,8 +2,6 @@
 #include "ascending_priority_queue.h"
 
 
-
-
 void set_ascending_priority_queue_max_size(int size){
     set_descending_priority_queue_max_size(size);
 }

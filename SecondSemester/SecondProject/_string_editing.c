@@ -13,6 +13,7 @@
 #include <ctype.h>
 #include "_string_editing.h"
 
+
 char* remove_all_occurrences_of_char(char* str, char c){
     char *result = malloc(sizeof(char) * strlen(str) + 2);
     sprintf(result, "%s%c", str, '\0');
@@ -25,6 +26,7 @@ char* remove_all_occurrences_of_char(char* str, char c){
 
     return result;
 }
+
 
 long convert_base36_to_base10(char *base36){
     char tmp;
@@ -43,7 +45,6 @@ long convert_base36_to_base10(char *base36){
             }
         }
     }
-
     return result;
 }
 
@@ -55,6 +56,7 @@ char* format_cep(char cep[]){
     return cep_without_special_characters;
 }
 
+
 long format_cep_from_base36_to_base10(char cep[]){
     char* cep_without_hyphen = remove_all_occurrences_of_char(cep, '-');
     char* cep_without_special_characters = remove_all_occurrences_of_char(cep_without_hyphen, '.');
@@ -65,6 +67,7 @@ long format_cep_from_base36_to_base10(char cep[]){
 
     return result;
 }
+
 
 long format_cpf(char cpf[]){
     char* cpf_without_hyphen = remove_all_occurrences_of_char(cpf, '-');

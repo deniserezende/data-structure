@@ -1,6 +1,0 @@
-==31080== Memcheck, a memory error detector
-==31080== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==31080== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==31080== Command: ./t2 -e /home/pjr/Downloads/t2 -o /home/pjr/Downloads/output -f c1.geo -v c1-v.via -q c1/cx5-r10-e3.qry
-==31080== Parent PID: 30946
-==31080== 

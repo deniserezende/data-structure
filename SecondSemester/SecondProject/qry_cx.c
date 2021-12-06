@@ -80,12 +80,6 @@ void cx_vertex_action_svg(type_vertex vertex){
     _report_vertex_txt_(vertex);
     char* string = malloc(sizeof(char) * 60);
     
-    if(QCX_solution[QCX_index] != 122){
-    printf("QCX_index=%d\n", QCX_index);
-    printf("QCX_solution[QCX_index]=%d\n", QCX_solution[QCX_index]);        
-    }
-
-    
     sprintf(string, "REGIÃO %s", colors[QCX_solution[QCX_index]%145]);
     insert_string_in_txt(QCX_TXTFILE, string);
     free(string);
@@ -125,10 +119,6 @@ void cx(type_svg SVGFILE, type_txt TXTFILE, type_graph via_graph, double limiar)
     set_txt_file(TXTFILE);
     QCX_TXTFILE = TXTFILE;
     traverse_graph_conditional_actions(via_graph, (void*)cx_vertex_action_svg, (void*)cx_vertex_condition_true, (void*)cx_edge_action, (void*)cx_edge_condition);
-
-
-    // // AQUIDE fazer algo no svg
-    // traverse_graph_conditional_actions_plus_vertex_condition_is_no_edges(via_graph, (void*)cx_vertex_action, (void*)cx_edge_action, (void*)cx_edge_condition);
 
     free(solution);
 }

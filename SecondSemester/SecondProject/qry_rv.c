@@ -51,17 +51,6 @@ long _kruskals_get_edge_length(type_edge edge){
     return (long)get_edge_length(edge);
 }
 
-
-void _kruskals_print_vertex(type_vertex vertex){
-    char* id = get_vertex_id(vertex);
-    printf("%s", id);
-}
-
-void _kruskals_print_edge(type_edge edge){
-    char* id = get_edge_id(edge);
-    printf("%s", id);
-}
-
 long _rv_reduce_speed_condition_vertex(type_graphinfos vertex){
     return 1;
 }
@@ -120,14 +109,9 @@ void rv(type_svg SVGFILE,type_txt TXTFILE, type_graph via_graph, double x, doubl
     
     // achar os elementos que estao na regiao dada => criando um subgrafo
     type_graph subgraph = duplicate_graph_with_conditionals(via_graph, (void*)_rv_graph_duplicate_vertex_condition, (void*)_rv_graph_duplicate_edge_condition);
-    print_graph(subgraph, (void*)_kruskals_print_vertex, (void*)_kruskals_print_edge);
 
     // aplicar o kruskal para achar a arvore geradora minima do subgrafo
     type_graph mst = kruskals_algorithm_in_graph(subgraph, (void*)_kruskals_get_edge_length);
-
-
-    print_graph(mst, (void*)_kruskals_print_vertex, (void*)_kruskals_print_edge);
-
 
     // COMO DETERMINAR A RAIZ DESSA ARVORE??????????????
     // é o cara que ninguem aponta para ele

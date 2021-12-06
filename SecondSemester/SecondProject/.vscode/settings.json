@@ -51,6 +51,7 @@
         "disjoint_sets.h": "c",
         "ios": "c",
         "txt.h": "c",
-        "strongly_connected_components_algorithm.h": "c"
+        "strongly_connected_components_algorithm.h": "c",
+        "stdlib.h": "c"
     }
 }

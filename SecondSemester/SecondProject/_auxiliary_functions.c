@@ -11,9 +11,11 @@ double QAF_y1, QAF_y2;
 type_txt QAF_TXTFILE;
 #define QAF_SIZE_DOUBLESTR 10
 
+
 void set_id(char id[]){
     sprintf(QAF_ID, "%s%c", id, '\0');
 }
+
 
 void set_x1_x2_y1_y2(double x1, double x2, double y1, double y2){
     QAF_x1 = x1;
@@ -21,6 +23,7 @@ void set_x1_x2_y1_y2(double x1, double x2, double y1, double y2){
     QAF_y1 = y1;
     QAF_y2 = y2;
 }
+
 
 long traverse_side_rect_in_rect_(type_mMlavlitems item, type_mMlavlitems lminimum, type_mMlavlitems lmaximum, type_mMlavlitems rminimum, type_mMlavlitems rmaximum){
     double lmin = get_rect_x(lminimum);
@@ -39,6 +42,7 @@ long traverse_side_rect_in_rect_(type_mMlavlitems item, type_mMlavlitems lminimu
     else return 00;
 }
 
+
 long condition_rect_in_rect_(type_mMlavlitems item){
     double x = get_rect_x(item);
     double height = get_rect_height(item);
@@ -55,10 +59,12 @@ long condition_rect_in_rect_(type_mMlavlitems item){
     return 0;
 }
 
+
 long get_key_from_block(type_rect block){
     type_block block_data = get_rect_data(block);
     return(get_block_formatted_cep(block_data));
 }
+
 
 long compare_rect_blocks_cep(type_rect block1, type_rect block2){
     type_block block_data1 = get_rect_data(block1);
@@ -73,9 +79,11 @@ long verify_block_found(type_rect block){
     return 0;
 }
 
+
 void set_txt_file(type_txt txtfile){
     QAF_TXTFILE = txtfile;
 }
+
 
 void _report_block_txt_(type_rect block_rect){
     insert_string_in_txt(QAF_TXTFILE, "");
@@ -99,6 +107,7 @@ void _report_block_txt_(type_rect block_rect){
     free(w_h_string);
 }
 
+
 void _report_property_txt_(type_property property){
     char *cardinal_direction = malloc(sizeof(char)*3);
     sprintf(cardinal_direction, "%c%c", get_property_cardinal_direction(property), '\0');
@@ -115,6 +124,7 @@ void _report_property_txt_(type_property property){
     free(cardinal_direction);
     free(tmp);
 }
+
 
 void _report_property_lease_available(){
     char *string = malloc(sizeof(char) * 15);
@@ -150,6 +160,7 @@ void _report_vertex_txt_(type_vertex vertex){
     free(id_string);
     free(x_y_string);
 }
+
 
 void _report_edge_txt_(type_edge edge){
     insert_string_in_txt(QAF_TXTFILE, "");

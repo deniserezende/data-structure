@@ -20,7 +20,6 @@ char* get_block_cep(type_block block);
 
 long compare_blocks_cep(type_block block1, type_block block2);
 
-// Removes the block, so that it does not exist anymore
 void remove_block(type_block block);
 
 #endif /* block_h */

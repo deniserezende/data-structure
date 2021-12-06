@@ -2,8 +2,6 @@
 // Finding the representative of the set containing a given element; 
 // and Merging two sets.
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,7 +21,7 @@ typedef struct structure{
 }ALL_SETS;
 
 
-type_disjoint_sets start_disjoint_sets(int max_of_sets){
+type_disjoint_sets create_disjoint_sets(int max_of_sets){
     ALL_SETS* sets = malloc(sizeof(ALL_SETS));
     sets->vector = malloc(sizeof(DISJOINT_SET) * max_of_sets);
     sets->next_free_space = 0;
@@ -32,7 +30,7 @@ type_disjoint_sets start_disjoint_sets(int max_of_sets){
 }
 
 
-// Making a new set containing a new element; 
+// Making a new set.
 int making_a_new_set_containing_a_new_element(type_disjoint_sets sets, type_dsitem item){
     ALL_SETS* sets_ = sets;
     DISJOINT_SET *disjoint_set = malloc(sizeof(DISJOINT_SET));
@@ -45,7 +43,6 @@ int making_a_new_set_containing_a_new_element(type_disjoint_sets sets, type_dsit
 }
 
 
-
 DISJOINT_SET* _finding_the_representative_of_the_set_containing_element_in_disjoint_sets(DISJOINT_SET *p){
     if(p->parent == NULL) return p;
 
@@ -53,7 +50,8 @@ DISJOINT_SET* _finding_the_representative_of_the_set_containing_element_in_disjo
     return p->parent;
 }
 
-// Finding the representative of the set containing a given element; 
+
+// Finding the representative of the set containing a given element.
 int finding_the_representative_of_the_set_containing_element_in_disjoint_sets(type_disjoint_sets sets, int index){
     ALL_SETS* sets_ = sets;
     DISJOINT_SET* node;    
@@ -70,7 +68,7 @@ int finding_the_representative_of_the_set_containing_element_in_disjoint_sets(ty
 }
 
 
-// and Merging two sets.
+// Merging two sets.
 void merging_two_sets_in_disjoint_sets(type_disjoint_sets sets, int index_set_one, int index_set_two){
     ALL_SETS* sets_ = sets;
 
@@ -82,7 +80,17 @@ void merging_two_sets_in_disjoint_sets(type_disjoint_sets sets, int index_set_on
     return;
 }
 
-int get_disjoint_sets_max(type_disjoint_sets sets){
+
+int get_disjoint_sets_max_size(type_disjoint_sets sets){
     ALL_SETS* sets_ = sets;
     return sets_->size;
+}
+
+
+void destroi_disjoint_sets(type_disjoint_sets sets){
+    ALL_SETS* sets_ = sets;
+    for(int i=0; i < sets_->size; i++){
+        free(sets_->vector[i]);
+    }
+    free(sets_);
 }

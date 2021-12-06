@@ -25,7 +25,7 @@ int find_minimum_distance_to_property(type_hashtable cityblocks_hash, type_prope
     set_id(cep);
     type_hashitem block = lookup_item_in_hash_table(cityblocks_hash, cep_key, (void*)get_key_from_block, (void*)verify_block_found);
     if(block == NULL){
-        printf("Bloco correspondente ao cep nao foi encontrado\n");
+        printf("Bloco correspondente ao cep dado não foi encontrado\n");
         return 0;
     }
     double x = get_rect_x(block);
@@ -130,7 +130,7 @@ void p_svg_output(type_svg SVGFILE, type_list vertices, char color[], double str
     int done;
     type_vertex vertex;
     if(empty_list(vertices)){
-        printf("EMPTY LIST OF VERTICES REPRESENTING PATH\n");
+        printf("Empty list of vertices representing path\n");
         return;
     }
     set_current_to_last_item_in_list(vertices);
@@ -164,49 +164,6 @@ void p_svg_output(type_svg SVGFILE, type_list vertices, char color[], double str
 
     destroi_list(vertices);
 }
-
-
-// void p_txt_output(type_txt TXTFILE, type_list vertices){
-//     int done;
-//     type_vertex vertex;
-//     if(empty_list(vertices)){
-//         printf("EMPTY LIST OF VERTICES REPRESENTING PATH\n");
-//         return;
-//     }
-//     set_current_to_last_item_in_list(vertices);
-//     vertex = get_current_item_in_list(vertices);
-    
-//     if(is_current_first_item_in_list(vertices)){
-//         printf("Only one element\n");
-//         return;
-//     }
-    
-//     char* id1 = get_vertex_id(vertex);
-//     char* id2;
-//     char string_for_txt[150];
-
-//     move_current_backward_in_list(vertices);
-//     printf("é aqui?\n");
-//     while(!is_current_first_item_in_list(vertices)){
-//         printf("é aqui?4\n");
-//         vertex = get_current_item_in_list(vertices);
-//         printf("é aqui?1\n");
-
-//         id2 = get_vertex_id(vertex);
-//         printf("é aqui?1.1\n");
-//         sprintf(string_for_txt, "Vá do vértice  ao vértice ");
-//         printf("é aqui?1.2\n");
-//         insert_string_in_txt(TXTFILE, string_for_txt);
-//         printf("é aqui?2\n");
-
-//         move_current_backward_in_list(vertices);
-//         printf("é aqui?3\n");
-//         id1 = id2;
-//     }
-//     free(string_for_txt);
-//     destroi_list(vertices);
-//     printf("fim é aqui?\n");
-// }
 
 // AQUIDE falta descrever o caminho!!!
 void p_txt_output_fastest_route(type_txt TXTFILE, type_list vertices, char origin[], char destination[]){

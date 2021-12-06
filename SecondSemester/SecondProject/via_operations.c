@@ -15,15 +15,6 @@ void save_min_and_max_via(double x, double y){
     if(y <= VO_miny) VO_miny = y;
 }
 
-void print_vertex(type_vertex vertex){
-    printf("%s", get_vertex_id(vertex));
-    // printf("x=%lf\ty=%lf\n", get_vertex_x(vertex), get_vertex_y(vertex));    
-}
-
-void print_edge(type_edge edge){
-    printf("%s", get_edge_id(edge));
-}
-
 void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]){
     FILE *viafile = fopen(via_fullpath, "r");
 
@@ -67,14 +58,9 @@ void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]
                 add_edge_to_graph(via_graph, id1, id2);
                 set_edge_info_in_graph(via_graph, id1, id2, edge);
             }
-            else {
-                //printf("line=%s\n", line);
-            }
         // "Resets" the string
         strcpy(line, "\0");
     }
-    //sprint_graph(via_graph, (void*)print_vertex, (void*)print_edge);
-    //printf("\n------------------------------------------------\n");
 
     free(line);
     free(helper);

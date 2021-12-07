@@ -42,7 +42,6 @@ void get_via_input(char via_fullpath[], type_graph via_graph, double view_box[4]
 
     while(!feof(viafile)){
         fscanf(viafile, "\n%[^\n]s\n", line);
-        
         if(strncmp(line, "v", 1) == 0){
             sscanf(line, "%s %s %lf %lf", helper, id, &x, &y);
             save_min_and_max_via(x, y);

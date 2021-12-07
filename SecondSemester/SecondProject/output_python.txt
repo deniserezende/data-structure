@@ -1,0 +1,254 @@
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/crv3-ps.qry
+time=0:00:00.655693
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rvsim-cx3.qry
+time=0:00:00.053221
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv25e10.qry
+time=0:00:00.063352
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/cx3r3-ps.qry
+time=0:00:00.037644
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv3-cx10.qry
+time=0:00:00.037103
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/perc-simples1.qry
+time=0:00:00.025978
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv10.qry
+time=0:00:00.031394
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/perc-simples2.qry
+time=0:00:00.024887
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/perc-simples3.qry
+time=0:00:00.029325
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/catac-centrosul-cidade-amplo.qry
+time=0:00:00.025627
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/catac-quadra-alet.qry
+time=0:00:00.025484
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/perc-estr10.qry
+time=0:00:00.039384
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv3-cx3.qry
+time=0:00:00.064309
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv-simples.qry
+time=0:00:00.031720
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rvsim-cx15.qry
+time=0:00:00.041011
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/crv10e10.qry
+time=0:00:00.063114
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv10-cx5.qry
+time=0:00:00.067214
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv10c2e3.qry
+time=0:00:00.047628
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/cx5-r10-e3.qry
+time=0:00:00.050244
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv3.qry
+time=0:00:00.025149
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv10-cx3.qry
+time=0:00:00.053977
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/perc-estr25.qry
+time=0:00:00.059408
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/catac-meio-cidade-amplo.qry
+time=0:00:00.035763
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv25-cx5.qry
+time=0:00:00.060965
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/catac-quadra-alet-muito-estreito.qry
+time=0:00:00.046562
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv25.qry
+time=0:00:00.049303
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/rv25-cx3.qry
+time=0:00:00.084711
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c1.geo -v c1-v.via -q c1/perc-estr3.qry
+time=0:00:00.057836
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/crv3-ps.qry
+time=0:00:01.133621
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rvsim-cx3.qry
+time=0:00:03.068022
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv25e10.qry
+time=0:00:05.881976
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/cx3r3-ps.qry
+time=0:00:03.055802
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv3-cx10.qry
+time=0:00:02.851784
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/perc-simples1.qry
+time=0:00:01.150822
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv10.qry
+time=0:00:00.928297
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/perc-simples2.qry
+time=0:00:01.439710
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/perc-simples3.qry
+time=0:00:01.307442
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/catac-centrosul-cidade-amplo.qry
+time=0:00:00.979776
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/catac-quadra-alet.qry
+time=0:00:00.905991
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/perc-estr10.qry
+time=0:00:05.754383
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv3-cx3.qry
+time=0:00:02.910024
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv-simples.qry
+time=0:00:00.910457
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rvsim-cx15.qry
+time=0:00:02.755360
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/crv10e10.qry
+time=0:00:05.742169
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv10-cx5.qry
+time=0:00:02.933564
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv10c2e3.qry
+time=0:00:01.741516
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/cx5-r10-e3.qry
+time=0:00:03.735151
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv3.qry
+time=0:00:00.913244
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv10-cx3.qry
+time=0:00:02.929199
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/perc-estr25.qry
+time=0:00:09.999763
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/catac-meio-cidade-amplo.qry
+time=0:00:00.995541
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv25-cx5.qry
+time=0:00:02.999357
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/catac-quadra-alet-muito-estreito.qry
+time=0:00:00.912856
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv25.qry
+time=0:00:00.957599
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/rv25-cx3.qry
+time=0:00:03.047806
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c2.geo -v c2-v.via -q c2/perc-estr3.qry
+time=0:00:01.757059
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/crv3-ps.qry
+time=0:00:06.104902
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rvsim-cx3.qry
+time=0:00:11.869738
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv25e10.qry
+time=0:00:18.519608
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/cx3r3-ps.qry
+time=0:00:13.761078
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv3-cx10.qry
+time=0:00:11.561954
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/perc-simples1.qry
+time=0:00:05.755012
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv10.qry
+time=0:00:03.641787
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/perc-simples2.qry
+time=0:00:04.022481
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/perc-simples3.qry
+time=0:00:06.057077
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/catac-centrosul-cidade-amplo.qry
+time=0:00:03.933768
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/catac-quadra-alet.qry
+time=0:00:03.601619
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/perc-estr10.qry
+time=0:00:18.099084
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv3-cx3.qry
+time=0:00:12.070538
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv-simples.qry
+time=0:00:03.719386
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rvsim-cx15.qry
+time=0:00:11.307560
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/crv10e10.qry
+time=0:00:18.560386
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv10-cx5.qry
+time=0:00:11.742954
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv10c2e3.qry
+time=0:00:07.413567
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/cx5-r10-e3.qry
+time=0:00:15.419617
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv3.qry
+time=0:00:03.789870
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv10-cx3.qry
+time=0:00:12.305415
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/perc-estr25.qry
+time=0:00:44.853805
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/catac-meio-cidade-amplo.qry
+time=0:00:04.008589
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv25-cx5.qry
+time=0:00:11.913139
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/catac-quadra-alet-muito-estreito.qry
+time=0:00:03.649939
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv25.qry
+time=0:00:03.680512
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/rv25-cx3.qry
+time=0:00:11.964598
+
+./t2 -e /Users/Denise/Downloads/t2 -o /Users/Denise/Downloads/output -f c3.geo -v c3-v.via -q c3/perc-estr3.qry
+time=0:00:07.353320
+
+Tempo para rodar:
+0:06:10.365097
